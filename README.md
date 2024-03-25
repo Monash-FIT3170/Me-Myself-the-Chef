@@ -11,3 +11,4 @@ Vincent Ha (32518714): vhaa0001@student.monash.edu
 Lachlan Lu (33107327): lluu0029@student.monash.edu
 Annie Ho (3156581): ahoo0034@student.monash.edu
 Kevin Cody (31491898): kcod0001@student.monash.edu
+Alana Vanzo (31458394): avan0035@student.monash.edu
