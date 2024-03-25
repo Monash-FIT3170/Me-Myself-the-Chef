@@ -14,3 +14,4 @@
 - Alana Vanzo (31458394): avan0035@student.monash.edu
 - Ashley Warden (32473354): awar0023@student.monash.edu
 - Ray Lin (33156859): rlin0032@student.monash.edu
+- Daniel Truong (33158312): dtru0010@student.monash.edu
