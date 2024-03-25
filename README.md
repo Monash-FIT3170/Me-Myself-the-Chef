@@ -15,3 +15,4 @@
 - Ashley Warden (32473354): awar0023@student.monash.edu
 - Ray Lin (33156859): rlin0032@student.monash.edu
 - Daniel Truong (33158312): dtru0010@student.monash.edu
+- Joseph Ti (29274281): jtii0002@student.monash.edu
