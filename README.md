@@ -1,8 +1,8 @@
 # Me-Myself-the-Chef
 
-- Xiao Hao Zheng (29493641)
+- Xiao Hao Zheng (29493641): xzhe0014@student.monash.edu
 - Eilish Horsfall (31578039): ehor0012@student.monash.edu
-- Shekah Alayadhi (32248407)
+- Shekah Alayadhi (32248407): shekah0023@student.monash.edu
 - Yuhan Zhou (31468748): yzho0151@student.monash.edu
 - Shekah Alayadhi (32248407): sala0023@student.monash.edu
 - Yuhan Zhou (31468748): yzho0151@student.monash.edu
