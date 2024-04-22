@@ -17,3 +17,4 @@
 - Daniel Truong (33158312): dtru0010@student.monash.edu
 - Joseph Ti (29274281): jtii0002@student.monash.edu
 - Thomas Pang (31474578): tpan0022@student.monash.edu
+- Terence Bai (33157642): tbai0012@student.monash.edu
