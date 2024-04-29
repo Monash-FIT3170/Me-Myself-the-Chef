@@ -115,9 +115,9 @@ async function initial() {
   }
   
 const userData = {
-  username: "app_user1",
-  email: "appuser@example.com1",
-  password: "appuser_pass1",
+  username: "app_user11",
+  email: "appuser0@example.com11",
+  password: "appuser_pass10",
   roles: ["user"] // or ["admin"] or any other roles you support
 };
 
@@ -130,6 +130,7 @@ fetch('http://localhost:8080/api/auth/signup', {
 })
 .then(response => {
   if (!response.ok) {
+    console.log("Error response", response);
     throw new Error('Network response was not ok');
   }
   return response.json();
