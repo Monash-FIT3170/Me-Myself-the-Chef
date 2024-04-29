@@ -1,17 +1,17 @@
 const db = require("../models");
 const ROLES = db.ROLES;
-const User = db.user;
+const AppUser = db.appuser;
 
 checkDuplicateUsernameOrEmail = async (req, res, next) => {
   try {
     // Username
-    const usernameExists = await User.findOne({ username: req.body.username }).exec();
+    const usernameExists = await AppUser.findOne({ appuser: req.body.username }).exec();
     if (usernameExists) {
       return res.status(400).send({ message: "Failed! Username is already in use!" });
     }
 
     // Email
-    const emailExists = await User.findOne({ email: req.body.email }).exec();
+    const emailExists = await AppUser.findOne({ appuser: req.body.email }).exec();
     if (emailExists) {
       return res.status(400).send({ message: "Failed! Email is already in use!" });
     }

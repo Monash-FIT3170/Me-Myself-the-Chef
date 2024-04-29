@@ -34,8 +34,8 @@ db.mongoose
   .then(() => {
     console.log("Successfully connect to MongoDB.");
     initial();
-    testappuser();
-    testadduser();
+    // testappuser();
+    // testadduser();
   })
   .catch(err => {
     console.error("Connection error", err);
@@ -115,9 +115,9 @@ async function initial() {
   }
   
 const userData = {
-  username: "example_username",
-  email: "example@example.com",
-  password: "example_password",
+  username: "app_user1",
+  email: "appuser@example.com1",
+  password: "appuser_pass1",
   roles: ["user"] // or ["admin"] or any other roles you support
 };
 
