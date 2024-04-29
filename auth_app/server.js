@@ -20,6 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 const db = require("./models");
 const dbConfig = require("./config/db.config");
 const Role = db.role;
+const AppUser = db.appuser;
+const User = db.user;
 
 const uri = "mongodb+srv://cheetah5i89:OwnLj9rEoEO0V0qo@testdatabase.486pb2d.mongodb.net/?retryWrites=true&w=majority&appName=TestDatabase";
 
@@ -32,6 +34,8 @@ db.mongoose
   .then(() => {
     console.log("Successfully connect to MongoDB.");
     initial();
+    testappuser();
+    testadduser();
   })
   .catch(err => {
     console.error("Connection error", err);
@@ -108,5 +112,60 @@ async function initial() {
     }
   } catch (err) {
     console.error("Error adding roles:", err);
+  }
+  
+const userData = {
+  username: "example_username",
+  email: "example@example.com",
+  password: "example_password",
+  roles: ["user"] // or ["admin"] or any other roles you support
+};
+
+fetch('http://localhost:8080/api/auth/signup', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(userData)
+})
+.then(response => {
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+})
+.then(data => {
+  console.log('Signup successful:', data);
+})
+.catch(error => {
+  console.error('Error during signup:', error);
+});
+}
+
+async function testappuser() {
+  try {
+    const count = await AppUser.estimatedDocumentCount();
+    if (count === 0) {
+      await Promise.all([
+        new AppUser({ name: "test", email: "testemail", password: "testpass" }).save(),
+      ]);
+      console.log("AppUser added successfully.");
+    } else {
+      console.log("AppUseralready exist.");
+    }
+  } catch (err) {
+    console.error("Error adding AppUser:", err);
+  }
+}
+
+async function testadduser() {
+  try {
+    const count = await AppUser.estimatedDocumentCount();
+      await Promise.all([
+        new User({ name: "test", email: "testemail", password: "testpass" }).save(),
+      ]);
+      console.log("User added successfully.");
+  } catch (err) {
+    console.error("Error adding User:", err);
   }
 }
