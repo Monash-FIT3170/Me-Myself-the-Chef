@@ -9,7 +9,7 @@
     <body>
 
         <!-- Nav bar -->
-        <!-- NOTE: navbar-expand-md class is responsible for collpasing below medium breakpoint, edit to change -->
+        <!-- NOTE: navbar-expand-md class is responsible for collapsing below medium breakpoint, edit to change -->
         <nav class="navbar navbar-expand-md bg-body-tertiary">
             <div class="container-fluid">
                 
@@ -25,7 +25,8 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarNav">
-
+                    
+                    <!-- The header links -->
                     <ul class="navbar-nav ms-auto">
 
                         <li class="nav-item px-2">
@@ -41,6 +42,7 @@
                         </li>
                         
                         <!-- TODO: possibly some dynamic imagery to show whether they're signed in or not-->
+                        <!-- Also the login favicon currently is black, doesn't look amazing-->
                         <a class="navbar-brand px-4" href="#">
                             <img src="../static/images/person-circle.svg" alt="Login" width="30" height="30">
                         </a>
@@ -52,7 +54,7 @@
 
         <div class="container">
 
-            <!-- This is the root div which React will replace with your content -->
+            <!-- This is the root div which React will surround with your content -->
             <div id="root"></div>
         
         </div>        
