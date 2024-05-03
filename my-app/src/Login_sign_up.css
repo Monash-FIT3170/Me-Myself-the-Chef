@@ -1,0 +1,34 @@
+.main_box {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form {
+    padding: 40px 40px;
+    width: 50%;
+    flex: 300px;
+}
+
+.login_image {
+    width: 50%;
+    flex: 300px;
+    height: auto;
+}
+
+.link {
+    color: #5f926e;
+}
+
+.login_button{
+    padding: 2px 40px;
+    border-radius: 20px;
+    background-color: #5f926e;
+    color: white;
+}
+
+.input{
+    padding: 6px 6px;
+    border-radius: 5px;
+    background-color: #f3f3f3;
+    width: 100%;
+}
