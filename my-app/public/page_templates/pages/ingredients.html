@@ -66,7 +66,7 @@
             <div class="row flex-fill">
                 
                 <!-- Ingredients Pane-->
-                <div class="col-md-3 white_text" style="background-color:#458D59;">
+                <div class="col-md-3 white-text" style="background-color:#458D59;">
                     <div class="container">
     
                         <div class="row pt-5 text-center">
@@ -109,16 +109,46 @@
 
                     </div>
                 </div>
-    
+                
+                <!-- Ingredient search section of page-->
                 <div class="col-md-9 text-center" style="background-color:#7DE081;">
-    
+                    
                     <div class="container">
-    
-                        <div class="row">
-                            <p>Make your ingredients</p>
+                        
+                        <div class="row search_section">
+                            <h1 class="heading">Make your ingredients</h1>
                         </div>
-    
+
+                        <div class="row mt-4">
+                            <p>Type what ingredients you have here</p>
+                            <p>When you’re done, generate your recipes!</p>
+                        </div>
+
+                        <!-- Search bar-->
+                        <div class="row">
+
+                            <div class="search-bar-container">
+
+                                <p style="color:red;"><i>Placeholder search bar</i></p>
+
+                                <!-- TODO: autosearch bar must be done with React-->
+
+                                <!-- <ReactSearchAutocomplete items={suggestions} /> -->
+
+                                <!--
+                                    See:
+                                    - Tutorial: https://www.dhiwise.com/post/how-to-build-react-search-bar-with-suggestions
+                                    - Examples: https://www.npmjs.com/package/react-search-autocomplete
+
+                                -->
+
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Generate recipe button -->
+                    <button type="button" class="btn btn-light btn-lg" id="gen-button">Generate recipes</button>
+                    
                     
                 </div>
 

@@ -2,11 +2,19 @@ html, body{
     height:100%;
 }
 
-p {
+h1, h2, h3, h4, h5, h6, p {
     font-family: "Inter";
 }
 
-.white_text {
+.search_section {
+    margin-top: 10%;
+}
+
+.heading {
+    font-weight: 700;
+}
+
+.white-text {
     color: white;
 }
 
@@ -23,4 +31,24 @@ p {
     max-height: fit-content;
     margin-top: auto;
     margin-bottom: auto;
+}
+
+.search-bar-container {
+    max-width: 500px;
+    margin: auto;
+  }
+
+#gen-button {
+    position:absolute;
+    bottom:0;
+    right:0;
+    margin-bottom: 5%;
+    margin-right: 5%;
+    width: 15%;
+    height: 8%;
+    font-family: "Inter";
+    font-weight: 600;
+    --bs-btn-hover-bg: #f8f9fa;
+    --bs-btn-hover-border-color: #e3e3e3;
+    --bs-btn-active-bg: #e3e3e3;
 }
