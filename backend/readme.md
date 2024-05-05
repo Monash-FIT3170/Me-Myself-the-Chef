@@ -20,7 +20,7 @@
    ```
    npm run dev
    ```
-5. Go to `localhost:port` to see the page
+5. Go to `localhost:port` in your browser to see the page
 
 6. Change the upstream branch (optional)
    ```
@@ -29,6 +29,7 @@
 
 ### Links
 
+- [MERN Stack Tutorial](https://github.com/iamshaunjp/MERN-Stack-Tutorial)
 - [Express Docs](https://expressjs.com/en/5x/api.html)
 - [Mongoose Docs](https://mongoosejs.com/docs/index.html)
 - [Spoonacular Docs](https://spoonacular.com/food-api/docs)
