@@ -1,16 +1,31 @@
-exports.allAccess = (req, res) => {
+exports.allAccess = async (req, res) => {
+  try {
     res.status(200).send("Public Content.");
-  };
-  
-  exports.userBoard = (req, res) => {
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+exports.userBoard = async (req, res) => {
+  try {
     res.status(200).send("User Content.");
-  };
-  
-  exports.adminBoard = (req, res) => {
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+exports.adminBoard = async (req, res) => {
+  try {
     res.status(200).send("Admin Content.");
-  };
-  
-  exports.moderatorBoard = (req, res) => {
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+exports.moderatorBoard = async (req, res) => {
+  try {
     res.status(200).send("Moderator Content.");
-  };
-  
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};

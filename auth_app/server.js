@@ -97,16 +97,17 @@ async function signupNewUser() {
 })
 .then(response => {
   if (!response.ok) {
-    console.log("Error response", response);
-    throw new Error('Network response was not ok');
+    return response.json().then(data => {
+      throw new Error(data.message || 'Network response was not ok');
+    });
   }
   return response.json();
 })
 .then(data => {
-  console.log('Signup successful:', data);
+  console.log('Sign in successful:', data);
 })
 .catch(error => {
-  console.error('Error during signup:', error);
+  console.error('Error during sign in:', error);
 });
 }
 
