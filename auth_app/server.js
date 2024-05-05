@@ -58,45 +58,7 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
-
-// function Type 1
-// function initial() {
-//   Role.estimatedDocumentCount((err, count) => {
-//     if (!err && count === 0) {
-//       new Role({
-//         name: "user"
-//       }).save(err => {
-//         if (err) {
-//           console.log("error", err);
-//         }
-
-//         console.log("added 'user' to roles collection");
-//       });
-
-//       new Role({
-//         name: "moderator"
-//       }).save(err => {
-//         if (err) {
-//           console.log("error", err);
-//         }
-
-//         console.log("added 'moderator' to roles collection");
-//       });
-
-//       new Role({
-//         name: "admin"
-//       }).save(err => {
-//         if (err) {
-//           console.log("error", err);
-//         }
-
-//         console.log("added 'admin' to roles collection");
-//       });
-//     }
-//   });
-// }
-
-// function 2
+// Creates the roles if they don't already exist
 async function initial() {
   try {
     const count = await Role.estimatedDocumentCount();
@@ -113,15 +75,20 @@ async function initial() {
   } catch (err) {
     console.error("Error adding roles:", err);
   }
-  
-const userData = {
-  username: "app_user11",
-  email: "appuser0@example.com11",
-  password: "appuser_pass10",
-  roles: ["user"] // or ["admin"] or any other roles you support
-};
+}
 
-fetch('http://localhost:8080/api/auth/signup', {
+// demonstrates use of the API
+
+async function signupNewUser() {
+  const userData = {
+    username: "app_user12",
+    email: "appuser0@example.com12",
+    password: "appuser_pass10",
+    roles: ["user"] // or ["admin"] or any other roles you support
+  };
+
+
+  fetch('http://localhost:8080/api/auth/signup', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
@@ -142,6 +109,38 @@ fetch('http://localhost:8080/api/auth/signup', {
   console.error('Error during signup:', error);
 });
 }
+
+
+async function signInUser() {
+  const userData = {
+    username: "app_user12",
+    password: "appuser_pass10",
+  };
+
+
+  fetch('http://localhost:8080/api/auth/signin', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(userData)
+})
+.then(response => {
+  if (!response.ok) {
+    console.log("Error response", response);
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+})
+.then(data => {
+  console.log('SignIn successful:', data);
+})
+.catch(error => {
+  console.error('Error during signup:', error);
+});
+}
+
+// These functions add users directly without using the API
 
 async function testappuser() {
   try {
