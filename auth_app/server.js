@@ -114,14 +114,39 @@ async function initial() {
     console.error("Error adding roles:", err);
   }
   
+
+// Sample data
 const userData = {
-  username: "app_user11",
-  email: "appuser0@example.com11",
-  password: "appuser_pass10",
+  username: "app_user13",
+  email: "appuser0@example.com13",
+  password: "appuser_pass13",
   roles: ["user"] // or ["admin"] or any other roles you support
 };
 
-fetch('http://localhost:8080/api/auth/signup', {
+// Sign up using sample data.
+// fetch('http://localhost:8080/api/auth/signup', {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json'
+//   },
+//   body: JSON.stringify(userData)
+// })
+// .then(response => {
+//   if (!response.ok) {
+//     console.log("Error response", response);
+//     throw new Error('Network response was not ok');
+//   }
+//   return response.json();
+// })
+// .then(data => {
+//   console.log('Signup successful:', data);
+// })
+// .catch(error => {
+//   console.error('Error during signup:', error);
+// });
+
+// Sign in to an existing account.
+fetch('http://localhost:8080/api/auth/signin', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
@@ -130,16 +155,17 @@ fetch('http://localhost:8080/api/auth/signup', {
 })
 .then(response => {
   if (!response.ok) {
-    console.log("Error response", response);
-    throw new Error('Network response was not ok');
+    return response.json().then(data => {
+      throw new Error(data.message || 'Network response was not ok');
+    });
   }
   return response.json();
 })
 .then(data => {
-  console.log('Signup successful:', data);
+  console.log('Sign in successful:', data);
 })
 .catch(error => {
-  console.error('Error during signup:', error);
+  console.error('Error during sign in:', error);
 });
 }
 
