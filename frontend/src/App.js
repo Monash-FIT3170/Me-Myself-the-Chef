@@ -6,6 +6,7 @@ import Page1 from './views/first_page';
 import Page2 from './views/second_page';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import RecipeRecommendation from "./components/RecipeRecommendation";
 
 function App() {
 
@@ -36,7 +37,12 @@ function App() {
             <Route 
               path="/sign_up" 
               element={<SignUp />} 
-            /> 
+            />
+
+            <Route
+              path="/recipe_recommendation"
+              element={<RecipeRecommendation />}
+            />
 
           </Routes>
 
