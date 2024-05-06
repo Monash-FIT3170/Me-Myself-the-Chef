@@ -34,6 +34,7 @@ db.mongoose
   .then(() => {
     console.log("Successfully connect to MongoDB.");
     initial();
+    signInUser();
     // testappuser();
     // testadduser();
   })
@@ -115,7 +116,7 @@ async function signupNewUser() {
 async function signInUser() {
   const userData = {
     username: "app_user12",
-    password: "appuser_pass10",
+    password: "appuser_pass1",
   };
 
 
@@ -128,8 +129,9 @@ async function signInUser() {
 })
 .then(response => {
   if (!response.ok) {
-    console.log("Error response", response);
-    throw new Error('Network response was not ok');
+    return response.json().then(data => {
+      throw new Error(data.message || 'Network response was not ok');
+    });
   }
   return response.json();
 })
