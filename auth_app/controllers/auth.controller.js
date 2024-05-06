@@ -9,12 +9,13 @@ const AppUser = require("../models/appuser.model");
 
 exports.signup = async (req, res) => {
   try {
+    // create appUser object from request information
     const user = new AppUser({
       username: req.body.username,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 8)
     });
-
+    // and saves the user to the database
     const savedUser = await user.save();
 
     // User no longer Requires roles - thus this block is redundant
@@ -70,7 +71,7 @@ exports.signin = async (req, res) => {
         expiresIn: 86400, // 24 hours
       }
     );
-
+    // send response with signin information
     res.status(200).send({
       id: user._id,
       username: user.username,
