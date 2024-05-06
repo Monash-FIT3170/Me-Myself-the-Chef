@@ -1,4 +1,4 @@
-import '../../../public/static/css/login-signup.css';
+import '../css/login-signup.css';
 
 const Login = () => {
     return (
@@ -26,7 +26,7 @@ const Login = () => {
                     </form>
 
                 </div>
-                    <img className="login_image" src="placeholder_image.jpg"></img>
+                    <img className="login_image" src="/static/images/logo_small.png"></img>
             </section>
         </>
 

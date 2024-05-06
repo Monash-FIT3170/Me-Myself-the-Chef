@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 function Navbar() {
     return (
         <nav className="navbar navbar-expand-md bg-body-tertiary">
@@ -8,7 +9,7 @@ function Navbar() {
                 <a className="navbar-brand px-2" href="#">
                     {/* TODO: make an actual logo for this text */}
                     Me Myself the Chef
-                    <img src="../../public/static/images/logo_small.png"  height="50" alt="Logo" className="d-inline-block ms-2" />
+                    <img src="/static/images/logo_small.png"  height="50" alt="Logo" className="d-inline-block ms-2" />
                 </a>
 
                 {/* This button appears when the window is too small: hamburger button for showing the navbar items*/}
@@ -36,7 +37,7 @@ function Navbar() {
                         {/* TODO: possibly some dynamic imagery to show whether they're signed in or not*/}
                         {/* Also the login favicon currently is black, doesn't look amazing*/}
                         <a className="navbar-brand px-4" href="#">
-                            <img src="../../public/static/images/person-circle.svg" alt="Login" width="30" height="30" />
+                            <img src="/static/images/person-circle.svg" alt="Login" width="30" height="30" />
                         </a>
                     </ul>
                 </div>
