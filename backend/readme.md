@@ -1,5 +1,18 @@
 # Backend
 
+### Paths
+
+Get top 10 recipes via search query
+(returns list of IDs need to make another API call to get recipe info)
+e.g. http://localhost:4000/api/recipes/query/apple
+
+Get top 10 recipes via ingredients
+e.g. http://localhost:4000/api/recipes/ingredients/chicken,garlic
+
+Get a recipe information from ID (will store the recipe into the database so that we don't use multiple API calls to retrieve the same recipe)
+e.g. http://localhost:4000/api/recipes/id/590989
+
+
 ### Instructions
 
 1. Navigate to this folder
