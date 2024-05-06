@@ -33,6 +33,30 @@ const getRecipes = async (req, res) => {
 }
 
 
+const getRecipesByIngredients = async (req, res) => {
+    // Returns recipes with the specified ingredients
+    // http://localhost:4000/api/recipes/ingredients/chicken,garlic
+    let {ingredients} = req.params
+
+    const options = {
+        method: 'GET',
+        url: BASE_URL + 'recipes/findByIngredients',
+        params: {
+            ingredients: ingredients
+        },
+        headers: HEADERS
+    }
+    try {
+        const response = await axios.request(options)
+        console.log(response.data)
+        return res.status(200).json(response.data)
+    } catch (error) {
+        console.error(error)
+        return res.status(400).json(error)
+    }
+}
+
+
 const getRecipeInfo = async (req, res) => {
     // Returns full information for a specific recipe
     // Saves API calls by storing the recipe into MongoDB such that
@@ -82,5 +106,6 @@ const getRecipeInfo = async (req, res) => {
 
 module.exports = {
     getRecipes,
+    getRecipesByIngredients,
     getRecipeInfo
 }
