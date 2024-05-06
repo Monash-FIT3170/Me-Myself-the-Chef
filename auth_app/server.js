@@ -34,7 +34,7 @@ db.mongoose
   .then(() => {
     console.log("Successfully connect to MongoDB.");
     initial();
-    signInUser();
+    // signInUser();
     // testappuser();
     // testadduser();
   })
@@ -76,7 +76,6 @@ async function initial() {
   } catch (err) {
     console.error("Error adding roles:", err);
   }
-  testUser('hello');
 }
 
 // demonstrates use of the API
