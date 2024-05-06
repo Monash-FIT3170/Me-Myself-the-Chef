@@ -8,7 +8,8 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono&family=Inter:wght@100..900&display=swap" rel="stylesheet">
-        <link href="../static/css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="../css/base.css" rel="stylesheet">
     </head>
     <body>
 
@@ -20,8 +21,7 @@
                 <a class="navbar-brand px-2" href="#">
                     <!--TODO: make an actual logo for this text-->
                     Me Myself the Chef
-                    <!-- TODO: set link to be "%PUBLIC_URL%/page_templates/static/images/logo_small.png" -->
-                    <img src="../static/images/logo_small.png"  height="50" alt="Logo" class="d-inline-block ms-2">
+                    <img src="../images/logo_small.png"  height="50" alt="Logo" class="d-inline-block ms-2">
                 </a>
 
                 <!-- This button appears when the window is too small: hamburger button for showing the navbar items-->
@@ -30,7 +30,7 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    
+
                     <!-- The header links -->
                     <ul class="navbar-nav ms-auto">
 
@@ -45,12 +45,11 @@
                         <li class="nav-item px-2">
                             <a class="nav-link" href="#">Preferences</a>
                         </li>
-                        
+
                         <!-- TODO: possibly some dynamic imagery to show whether they're signed in or not-->
                         <!-- Also the login favicon currently is black, doesn't look amazing-->
                         <a class="navbar-brand px-4" href="#">
-                            <!-- TODO: set as "%PUBLIC_URL%/page_templates/static/images/person-circle.svg" -->
-                            <img src="../static/images/person-circle.svg" alt="Login" width="30" height="30">
+                            <img src="../images/person-circle.svg" alt="Login" width="30" height="30">
                         </a>
                     </ul>
                 </div>
@@ -66,7 +65,7 @@
             <div class="row flex-fill">
                 
                 <!-- Ingredients Pane-->
-                <div class="col-md-3 white_text" style="background-color:#458D59;">
+                <div class="col-md-3 white-text" style="background-color:#458D59;">
                     <div class="container">
     
                         <div class="row pt-5 text-center">
@@ -83,7 +82,7 @@
                                     <p>Beef</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <input type="image" id="delBeef" src="../static/images/bin.png" height="24px">
+                                    <input type="image" id="delBeef" src="../images/bin.png" height="24px">
                                 </div>
                             </div>
 
@@ -92,7 +91,7 @@
                                     <p>Tomatoes</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <input type="image" id="delTomatoes" src="../static/images/bin.png" height="24px">
+                                    <input type="image" id="delTomatoes" src="../images/bin.png" height="24px">
                                 </div>
                             </div>
 
@@ -101,7 +100,7 @@
                                     <p>Big Big Big Big Potatoes</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <input type="image" id="delPotatoes" src="../static/images/bin.png" height="24px">
+                                    <input type="image" id="delPotatoes" src="../images/bin.png" height="24px">
                                 </div>
                             </div>
 
@@ -111,52 +110,50 @@
                 </div>
     
                 <!-- Display Recipe Pane-->
-                <div class="col-md-9" style="background-color:#7DE081;">
+                <div class="col-md-9" style="background-color:#ECECEC;">
 
                     <div class="row pt-5 text-center">
                         <h2>Recipe Recommendations</h2>
                         <h5> You have 8 recommendations</h5>
-                        <div class="horiz_line"></div>
+                        <div class="horiz_line" style="background-color: #000000"></div>
                     </div>
-                    <!-- <div class="container">
-                        <div class="container">
-                            <h4>Recipe Recommendations</h4>
-                            <h6>You have 4 recipe recommendations</h6>
-                        </div>
-    
-                    </div> -->
 
+                <!-- Display recipe generation result -->
                     <div class="container">
                         <div class="row">
                           <div class="col-12 col-lg-6">
                             <div class="card mb-3" style="max-width: 540px;">
+                                <a href="#" class="card-link stretched-link"></a>
                                 <div class="row g-0">
                                   <div class="col-md-8">
                                     <div class="card-body">
-                                      <h5 class="card-title">Recipe 1</h5>
-                                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                      <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                                      <h5 class="card-title">Recipe 1
+                                        <button type="button" class="btn btn-link text-danger"><i class="fa fa-heart" style="font-size: 24px"></i></button>
+                                      </h5>
+                                      <p class="card-text">You have all the ingredients</p>
                                     </div>
                                   </div>
                                   <div class="col-md-4">
-                                    <img src="../static/images/pancake.jpg" class="img-fluid rounded-start" alt="...">
+                                    <img src="../images/pancake.jpg" class="img-fluid rounded-start" alt="...">
                                   </div>
                                 </div>
                               </div>
                           </div>
-                
+
                           <div class="col-12 col-lg-6">
                             <div class="card mb-3" style="max-width: 540px;">
+                                <a href="#" class="card-link stretched-link"></a>
                                 <div class="row g-0">
                                   <div class="col-md-8">
                                     <div class="card-body">
-                                      <h5 class="card-title">Recipe 2</h5>
-                                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                      <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                                      <h5 class="card-title">Recipe 2
+                                        <button type="button" class="btn btn-link text-danger"><i class="fa fa-heart" style="font-size: 24px"></i></button>
+                                      </h5>
+                                      <p class="card-text">You have all the ingredients</p>
                                     </div>
                                   </div>
                                   <div class="col-md-4">
-                                    <img src="../static/images/pancake.jpg" class="img-fluid rounded-start" alt="...">
+                                    <img src="../images/pancake.jpg" class="img-fluid rounded-start" alt="...">
                                   </div>
                                 </div>
                               </div>
@@ -166,16 +163,18 @@
                         <div class="row">
                           <div class="col-12 col-lg-6">
                             <div class="card mb-3" style="max-width: 540px;">
+                                <a href="#" class="card-link stretched-link"></a>
                                 <div class="row g-0">
                                   <div class="col-md-8">
                                     <div class="card-body">
-                                      <h5 class="card-title">Recipe 3</h5>
-                                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                      <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                                      <h5 class="card-title">Recipe 3
+                                        <button type="button" class="btn btn-link text-danger"><i class="fa fa-heart" style="font-size: 24px"></i></button>
+                                      </h5>
+                                      <p class="card-text">You have all the ingredients</p>
                                     </div>
                                   </div>
                                   <div class="col-md-4">
-                                    <img src="../static/images/pancake.jpg" class="img-fluid rounded-start" alt="...">
+                                    <img src="../images/pancake.jpg" class="img-fluid rounded-start" alt="...">
                                   </div>
                                 </div>
                               </div>
@@ -183,16 +182,18 @@
                 
                           <div class="col-12 col-lg-6">
                             <div class="card mb-3" style="max-width: 540px;">
+                                <a href="#" class="card-link stretched-link"></a>
                                 <div class="row g-0">
                                   <div class="col-md-8">
                                     <div class="card-body">
-                                      <h5 class="card-title">Recipe 4</h5>
-                                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                      <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                                      <h5 class="card-title">Recipe 4
+                                        <button type="button" class="btn btn-link text-danger"><i class="fa fa-heart" style="font-size: 24px"></i></button>
+                                      </h5>
+                                      <p class="card-text">You have all the ingredients</p>
                                     </div>
                                   </div>
                                   <div class="col-md-4">
-                                    <img src="../static/images/pancake.jpg" class="img-fluid rounded-start" alt="...">
+                                    <img src="../images/pancake.jpg" class="img-fluid rounded-start" alt="...">
                                   </div>
                                 </div>
                               </div>
@@ -201,75 +202,83 @@
 
                         <div class="row">
                             <div class="col-12 col-lg-6">
-                              <div class="card mb-3" style="max-width: 540px;">
-                                  <div class="row g-0">
-                                    <div class="col-md-8">
-                                      <div class="card-body">
-                                        <h5 class="card-title">Recipe 5</h5>
-                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <img src="../static/images/pancake.jpg" class="img-fluid rounded-start" alt="...">
+                            <div class="card mb-3" style="max-width: 540px;">
+                                <a href="#" class="card-link stretched-link"></a>
+                                <div class="row g-0">
+                                  <div class="col-md-8">
+                                    <div class="card-body">
+                                      <h5 class="card-title">Recipe 5
+                                        <button type="button" class="btn btn-link text-danger"><i class="fa fa-heart" style="font-size: 24px"></i></button>
+                                      </h5>
+                                      <p class="card-text">You have all the ingredients</p>
                                     </div>
                                   </div>
+                                  <div class="col-md-4">
+                                    <img src="../images/pancake.jpg" class="img-fluid rounded-start" alt="...">
+                                  </div>
                                 </div>
-                            </div>
+                              </div>
+                          </div>
                   
                             <div class="col-12 col-lg-6">
-                              <div class="card mb-3" style="max-width: 540px;">
-                                  <div class="row g-0">
-                                    <div class="col-md-8">
-                                      <div class="card-body">
-                                        <h5 class="card-title">Recipe 6</h5>
-                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                                      </div>
+                            <div class="card mb-3" style="max-width: 540px;">
+                                <a href="#" class="card-link stretched-link"></a>
+                                <div class="row g-0">
+                                  <div class="col-md-8">
+                                    <div class="card-body">
+                                      <h5 class="card-title">Recipe 6
+                                        <button type="button" class="btn btn-link text-danger"><i class="fa fa-heart" style="font-size: 24px"></i></button>
+                                      </h5>
+                                      <p class="card-text">You have all the ingredients</p>
                                     </div>
-                                    <div class="col-md-4">
-                                        <img src="../static/images/pancake.jpg" class="img-fluid rounded-start" alt="...">
-                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <img src="../images/pancake.jpg" class="img-fluid rounded-start" alt="...">
                                   </div>
                                 </div>
-                            </div>
+                              </div>
+                          </div>
                           </div>
 
 
                           <div class="row">
                             <div class="col-12 col-lg-6">
-                              <div class="card mb-3" style="max-width: 540px;">
-                                  <div class="row g-0">
-                                    <div class="col-md-8">
-                                      <div class="card-body">
-                                        <h5 class="card-title">Reipce 7</h5>
-                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                                      </div>
+                            <div class="card mb-3" style="max-width: 540px;">
+                                <a href="#" class="card-link stretched-link"></a>
+                                <div class="row g-0">
+                                  <div class="col-md-8">
+                                    <div class="card-body">
+                                      <h5 class="card-title">Recipe 7
+                                        <button type="button" class="btn btn-link text-danger"><i class="fa fa-heart" style="font-size: 24px"></i></button>
+                                      </h5>
+                                      <p class="card-text">You have all the ingredients</p>
                                     </div>
-                                    <div class="col-md-4">
-                                        <img src="../static/images/pancake.jpg" class="img-fluid rounded-start" alt="...">
-                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <img src="../images/pancake.jpg" class="img-fluid rounded-start" alt="...">
                                   </div>
                                 </div>
-                            </div>
+                              </div>
+                          </div>
                   
                             <div class="col-12 col-lg-6">
-                              <div class="card mb-3" style="max-width: 540px;">
-                                  <div class="row g-0">
-                                    <div class="col-md-8">
-                                      <div class="card-body">
-                                        <h5 class="card-title">Recipe 8</h5>
-                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                                      </div>
+                            <div class="card mb-3" style="max-width: 540px;">
+                                <a href="#" class="card-link stretched-link"></a>
+                                <div class="row g-0">
+                                  <div class="col-md-8">
+                                    <div class="card-body">
+                                      <h5 class="card-title">Recipe 8
+                                        <button type="button" class="btn btn-link text-danger"><i class="fa fa-heart" style="font-size: 24px"></i></button>
+                                      </h5>
+                                      <p class="card-text">You have all the ingredients</p>
                                     </div>
-                                    <div class="col-md-4">
-                                        <img src="../static/images/pancake.jpg" class="img-fluid rounded-start" alt="...">
-                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <img src="../images/pancake.jpg" class="img-fluid rounded-start" alt="...">
                                   </div>
                                 </div>
-                            </div>
+                              </div>
+                          </div>
                           </div>
         
                       </div>
