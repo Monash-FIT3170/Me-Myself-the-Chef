@@ -34,9 +34,11 @@ db.mongoose
   .then(() => {
     console.log("Successfully connect to MongoDB.");
     initial();
-    signInUser();
-    // testappuser();
+    // signupNewUser();
+    // signInUser();
+    testUser("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Mzg1MDFmZTRiMjQ2YjYxMmZjZjhkOCIsImlhdCI6MTcxNDk2NjU4MiwiZXhwIjoxNzE1MDUyOTgyfQ.iU7iCGYZMUmdVX0T6S_g-XH_tFy0faO5OyvxhSg-OcQ");
     // testadduser();
+
   })
   .catch(err => {
     console.error("Connection error", err);
@@ -76,16 +78,15 @@ async function initial() {
   } catch (err) {
     console.error("Error adding roles:", err);
   }
-  testUser('hello');
 }
 
 // demonstrates use of the API
 
 async function signupNewUser() {
   const userData = {
-    username: "app_user12",
-    email: "appuser0@example.com12",
-    password: "appuser_pass10",
+    username: "testuser",
+    email: "testuser@email.com",
+    password: "testuser",
     roles: ["user"] // or ["admin"] or any other roles you support
   };
 
@@ -116,8 +117,8 @@ async function signupNewUser() {
 
 async function signInUser() {
   const userData = {
-    username: "app_user12",
-    password: "appuser_pass1",
+    username: "testuser",
+    password: "testuser",
   };
 
 
@@ -140,29 +141,34 @@ async function signInUser() {
   console.log('SignIn successful:', data);
 })
 .catch(error => {
-  console.error('Error during signup:', error);
+  console.error('Error during signin:', error);
 });
 }
+
+
 
 // unverified function to test user
 async function testUser(tokenValue) {
   fetch('http://localhost:8080/api/test/user', {
-    method: 'POST',
+    method: 'GET',
     headers: {
       'x-access-token': tokenValue
     }
   }).then(response => {
     if (!response.ok) {
-      console.log("Error response", response);
-      throw new Error('Network response was not ok');
+      return response.text().then(data => {
+        console.error('Error response from server:', data);
+        throw new Error(data || 'Network response was not ok');
+      });
     }
-    return response.json();
+    return response.text();
   }).then(data => {
-    console.log('Test successful:', data);
+    console.log('Test successful: ', data);
   }).catch(error => {
-    console.error('Error during signup:', error);
+    console.error('Error during testuser:', error);
   });
 }
+
 
 // These functions add users directly without using the API
 
