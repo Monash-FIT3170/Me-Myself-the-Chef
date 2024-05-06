@@ -75,6 +75,7 @@ async function initial() {
   } catch (err) {
     console.error("Error adding roles:", err);
   }
+  testUser('hello');
 }
 
 // demonstrates use of the API
@@ -139,6 +140,26 @@ async function signInUser() {
 .catch(error => {
   console.error('Error during signup:', error);
 });
+}
+
+// unverified function to test user
+async function testUser(tokenValue) {
+  fetch('http://localhost:8080/api/test/user', {
+    method: 'POST',
+    headers: {
+      'x-access-token': tokenValue
+    }
+  }).then(response => {
+    if (!response.ok) {
+      console.log("Error response", response);
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  }).then(data => {
+    console.log('Test successful:', data);
+  }).catch(error => {
+    console.error('Error during signup:', error);
+  });
 }
 
 // These functions add users directly without using the API
