@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import React from "react";
 import { IngredientList } from "./IngredientList"
 import { NewForm } from "./NewForm"
 import axios from "axios"
@@ -13,7 +14,10 @@ export default function App() {
 		return JSON.parse(localValue)
 	})
 
-	const [displayRecipe, setDisplayRecipe] = useState(false);
+	const [displayRecipe, setDisplayRecipe] = useState();
+
+	// forcing page refresh
+	const [refreshPage, setRefreshPage] = useState();
 
 	// const [recipeList, setRecipeList] = useState([]);
 
@@ -49,24 +53,47 @@ export default function App() {
 		})
 	}
 
-	function generateRecipe() {
+	function generateRecipes() {
+		//debugger;
 		setDisplayRecipe(true);
+
+		// if (displayRecipe) {
+		// 	setRefreshPage([]);
+		// } else {
+		// 	setDisplayRecipe(true);
+		// }
 	}
 
-	if (displayRecipe) {
-		return (
-			<>
-				<NewForm onSubmit={addIngredient}/>
-				<IngredientList ingredientList={ingredientList} deleteIngredient={deleteIngredient}/>
-				<button onClick={() => generateRecipe()} className="btn">Generate Recipes</button>
-			</>
-		)
-	} return (
+	function resetRecipes() {
+		setDisplayRecipe(false);
+	}
+
+	return (
 		<>
-		<NewForm onSubmit={addIngredient}/>
-		<IngredientList ingredientList={ingredientList} deleteIngredient={deleteIngredient}/>
-		<button className="btn">Generate Recipes</button>
-		<RecipeList ingredientList={ingredientList}/>
+			<NewForm onSubmit={addIngredient}/>
+			<IngredientList ingredientList={ingredientList} deleteIngredient={deleteIngredient}/>
+			<button onClick={() => generateRecipes()} className="btn">Generate Recipes</button>
+			<button onClick={() => resetRecipes()} className="btn">Reset Recipes</button>
+			{displayRecipe == true &&
+				<RecipeList ingredientList={ingredientList}/>
+			}
 		</>
 	)
+
+	// if (displayRecipe) {
+	// 	return (
+	// 		<>
+	// 			<NewForm onSubmit={addIngredient}/>
+	// 			<IngredientList ingredientList={ingredientList} deleteIngredient={deleteIngredient}/>
+	// 			<button onClick={() => generateRecipe()} className="btn">Generate Recipes</button>
+	// 		</>
+	// 	)
+	// } return (
+	// 	<>
+	// 	<NewForm onSubmit={addIngredient}/>
+	// 	<IngredientList ingredientList={ingredientList} deleteIngredient={deleteIngredient}/>
+	// 	<button onClick={() => generateRecipe()} className="btn">Generate Recipes</button>
+	// 	<RecipeList ingredientList={ingredientList}/>
+	// 	</>
+	// )
 }
