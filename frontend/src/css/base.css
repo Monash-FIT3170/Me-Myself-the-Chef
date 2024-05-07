@@ -18,6 +18,10 @@ h1, h2, h3, h4, h5, h6, p {
     color: white;
 }
 
+.react_link {
+    text-decoration: none;
+}
+
 .ingredients_pane {
     background-color:#458D59;
 }
