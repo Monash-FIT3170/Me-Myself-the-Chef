@@ -4,9 +4,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/NavBar'
 import Page1 from './views/first_page';
 import Page2 from './views/second_page';
-import Login from './components/Login';
-import SignUp from './components/SignUp';
-import RecipeRecommendation from "./components/RecipeRecommendation";
+import Login from './views/Login';
+import SignUp from './views/SignUp';
+import RecipeRecommendation from "./views/RecipeRecommendation";
+import Ingredients from './views/Ingredients';
 
 function App() {
 
@@ -42,6 +43,11 @@ function App() {
             <Route
               path="/recipe_recommendation"
               element={<RecipeRecommendation />}
+            />
+
+            <Route
+              path="/ingredients"
+              element={<Ingredients />}
             />
 
           </Routes>

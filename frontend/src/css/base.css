@@ -18,6 +18,10 @@ h1, h2, h3, h4, h5, h6, p {
     color: white;
 }
 
+.ingredients_pane {
+    background-color:#458D59;
+}
+
 .horiz_line {
     height: 2px; 
     width: 65%; 
