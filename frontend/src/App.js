@@ -12,11 +12,11 @@ import Ingredients from './views/Ingredients';
 function App() {
 
   return (
-    <div className="App">
+    <div className="App d-flex h-100 flex-column">
       <BrowserRouter>
         <Navbar />
 
-        <div className="pages">
+        <div className="pages d-flex h-100 flex-column">
 
           <Routes>
 

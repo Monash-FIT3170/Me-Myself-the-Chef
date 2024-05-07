@@ -3,7 +3,7 @@ import React from 'react';
 
 function IngredientSearch() {
     return (
-        <div class="col-md-9 text-center" style="background-color:#7DE081;">
+        <div class="col-md-9 text-center ingredients_search">
                     
                     <div class="container">
                         

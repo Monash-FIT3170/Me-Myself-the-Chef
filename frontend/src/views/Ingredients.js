@@ -1,6 +1,7 @@
 import React from 'react';
 import '../css/base.css'
 import IngredientsPane from '../components/IngredientsPane';
+import IngredientSearch from '../components/IngredientSearch';
 
 
 function Ingredients() {
@@ -23,10 +24,16 @@ function Ingredients() {
 
 
     return (
-        
-        <>
-            <IngredientsPane ingredientList={tempIngredients} deleteIngredient={deleteIngredient}/>
-        </>
+
+        <div class="row flex-fill">
+                
+                {/* <!-- Ingredients Pane--> */}
+                <IngredientsPane ingredientList={tempIngredients} deleteIngredient={deleteIngredient}/>
+                
+                {/* <!-- Ingredient search section of page--> */}
+                <IngredientSearch />
+
+        </div>
 
     );
 }
