@@ -24,27 +24,21 @@ const Recipe = () => {
     };
 
     return (
-        <div>
-            <div className="container-fluid d-flex h-100 flex-column">
-                <div className="row flex-fill">
-                    <div className="col-md-3 white-text">
-                        <IngredientsPane ingredients={recipeData.ingredients} />
-                        <NutritionPane nutrition={recipeData.nutrition} />
-                    </div>
+        <div className="row flex-fill">
+            <div className="col-md-3 d-flex flex-column white-text">
+                <IngredientsPane ingredients={recipeData.ingredients} />
+                <NutritionPane nutrition={recipeData.nutrition} />
+            </div>
 
-                    <div className="col-md-9">
-                        <div className="container">
-                            <RecipeDetails
-                                title={recipeData.title}
-                                image={recipeData.image}
-                                servings={recipeData.servings}
-                                prepTime={recipeData.prepTime}
-                                cookTime={recipeData.cookTime}
-                            />
-                            <RecipeInstructions instructions={recipeData.instructions} />
-                        </div>
-                    </div>
-                </div>
+            <div className="col-md-9 d-flex flex-column">
+                <RecipeDetails
+                    title={recipeData.title}
+                    image={recipeData.image}
+                    servings={recipeData.servings}
+                    prepTime={recipeData.prepTime}
+                    cookTime={recipeData.cookTime}
+                />
+                <RecipeInstructions instructions={recipeData.instructions} />
             </div>
         </div>
     );
@@ -52,7 +46,7 @@ const Recipe = () => {
 
 const IngredientsPane = ({ ingredients }) => {
     return (
-        <div className="row half-pane pb-5" style={{ backgroundColor: '#5F926E' }}>
+        <div className="row pb-5 flex-fill" style={{ backgroundColor: '#5F926E' }}>
             <div className="col-md-12">
                 <div className="container-fluid">
                     <div className="row pt-5 text-center">
@@ -80,7 +74,7 @@ const IngredientsPane = ({ ingredients }) => {
 
 const NutritionPane = ({ nutrition }) => {
     return (
-        <div className="row half-pane pb-5" style={{ backgroundColor: '#3E6C4B' }}>
+        <div className="row pb-5 flex-fill" style={{ backgroundColor: '#3E6C4B' }}>
             <div className="col-md-12">
                 <div className="container-fluid">
                     <div className="row pt-5 text-center">
@@ -102,7 +96,7 @@ const NutritionPane = ({ nutrition }) => {
 
 const RecipeDetails = ({ title, image, servings, prepTime, cookTime }) => {
     return (
-        <div className="pt-5 pb-5 white-text text-center" style={{ backgroundColor: '#3E6C4B' }}>
+        <div className="row pt-5 pb-5 white-text text-center" style={{ backgroundColor: '#3E6C4B' }}>
             {/* Top section for recipe details */}
             <div className="container">
                 <div className="row">
