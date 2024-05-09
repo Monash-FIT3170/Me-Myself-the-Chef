@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react"
-import axios from "axios"
-const API_KEY = "09861c68c07140d8a96e353c8d4f86cc"
+import { useEffect, useState } from "react";
+import axios from "axios";
+const API_KEY = "09861c68c07140d8a96e353c8d4f86cc";
 
-export function RecipeList({ingredientList}) {
+export function RecipeList({ingredientList, setHomePage, setExpandedRecipeId}) {
    const [recipeList, setRecipeList] = useState([]);
 
 	useEffect(() => {
 		const fetchData = async () => {
-         debugger;
+         //debugger;
          let ingredientString = "";
          for (let i = 0; i < ingredientList.length; i++) {
             ingredientString += ingredientList[i].title;
@@ -43,7 +43,10 @@ export function RecipeList({ingredientList}) {
                   <li key={recipe.id}>
                      <p>
                         <b>{recipe.title}</b>
-                        <button className="btn">See More</button>
+                        <button onClick={() => {
+                           setHomePage(false);
+                           setExpandedRecipeId(recipe.id);
+                        }} className="btn">See More</button>
                      </p>
                      <img src={recipe.image}/>
                   </li>

@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import React from "react";
-import { IngredientList } from "./IngredientList"
-import { NewForm } from "./NewForm"
-import axios from "axios"
-import { RecipeList } from "./RecipeList"
-const API_KEY = "09861c68c07140d8a96e353c8d4f86cc"
+import { IngredientList } from "./IngredientList";
+import { NewForm } from "./NewForm";
+import { RecipeList } from "./RecipeList";
+import { ExpandedRecipe } from "./ExpandedRecipe";
 
 export default function App() {
 	const [ingredientList, setIngredientList] = useState(() => {
@@ -14,10 +13,14 @@ export default function App() {
 		return JSON.parse(localValue)
 	})
 
+	// setting when to display home page
+	const [displayHomePage, setHomePage] = useState(true);	// default value true
+ 
+	// setting when to display recipe list
 	const [displayRecipe, setDisplayRecipe] = useState();
 
-	// forcing page refresh
-	const [refreshPage, setRefreshPage] = useState();
+	// setting recipe id to use in expanded view
+	const [expandedRecipeId, setExpandedRecipeId] = useState();
 
 	// const [recipeList, setRecipeList] = useState([]);
 
@@ -68,17 +71,32 @@ export default function App() {
 		setDisplayRecipe(false);
 	}
 
-	return (
-		<>
+	function returnToHome() {
+		setHomePage(true);
+	}
+
+	if (displayHomePage) {
+		// display home page
+		return (
+			<>
+			{displayHomePage == true} 
 			<NewForm onSubmit={addIngredient}/>
 			<IngredientList ingredientList={ingredientList} deleteIngredient={deleteIngredient}/>
 			<button onClick={() => generateRecipes()} className="btn">Generate Recipes</button>
 			<button onClick={() => resetRecipes()} className="btn">Reset Recipes</button>
 			{displayRecipe == true &&
-				<RecipeList ingredientList={ingredientList}/>
+				<RecipeList ingredientList={ingredientList} setHomePage={setHomePage} setExpandedRecipeId={setExpandedRecipeId}/>
 			}
 		</>
-	)
+		)
+	} else {
+		// display expanded recipe page
+		console.log("displaying expanded recipe page");
+		console.log(expandedRecipeId);
+		return (
+			<ExpandedRecipe expandedRecipeId={expandedRecipeId} returnToHome={returnToHome}/>
+		)
+	}
 
 	// if (displayRecipe) {
 	// 	return (
