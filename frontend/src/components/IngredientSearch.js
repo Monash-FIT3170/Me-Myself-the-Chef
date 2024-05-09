@@ -2,10 +2,12 @@ import React from 'react';
 import AutoSearchBar from '../components/AutoSearchBar';
 
 
-function IngredientSearch() {
+function IngredientSearch({addIngredient}) {
 
-    function onSearchPlaceholder(item) {
-        console.log(item)
+    // function to handle the user searching an ingredient
+    function onIngredientSearch(ingredient) {
+        console.log(ingredient);
+        addIngredient(ingredient);
     }
 
     return (
@@ -27,7 +29,7 @@ function IngredientSearch() {
 
                     <div class="search-bar-container">
 
-                        <AutoSearchBar onSearchSelected={onSearchPlaceholder}/>
+                        <AutoSearchBar onIngredientSearch={onIngredientSearch}/>
 
                         {/* <!--
                             See:
