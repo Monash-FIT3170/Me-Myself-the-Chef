@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 // pages & components
 import Navbar from './components/NavBar'
 import Page1 from './views/first_page';
-import Page2 from './views/second_page';
 import Login from './views/Login';
 import SignUp from './views/SignUp';
 import RecipeRecommendation from "./views/RecipeRecommendation";
@@ -21,40 +20,21 @@ function App() {
 
           <Routes>
 
-            <Route 
-              path="/page1" 
-              element={<Page1 />} 
-            />
+            {/* Page 1 is a test page for making API calls to the backend: can delete if desired */}
+            <Route path="/page1" element={<Page1 />} />
+          
+            <Route path="/login" element={<Login />} /> 
 
-            <Route 
-              path="/page2" 
-              element={<Page2 />} 
-            />
+            <Route path="/sign_up" element={<SignUp />} />
 
-            <Route 
-              path="/login" 
-              element={<Login />} 
-            /> 
+            {/* Recipe recommendations list page */}
+            <Route path="/recipe_recommendation" element={<RecipeRecommendation />} />
 
-            <Route 
-              path="/sign_up" 
-              element={<SignUp />} 
-            />
+            {/* Ingredients search page */}
+            <Route path="/ingredients" element={<Ingredients />} />
 
-            <Route
-              path="/recipe_recommendation"
-              element={<RecipeRecommendation />}
-            />
-
-            <Route
-              path="/ingredients"
-              element={<Ingredients />}
-            />
-
-            <Route
-              path="/recipe"
-              element={<Recipe />}
-            />
+            {/* Single detailed recipe view page */}
+            <Route path="/recipe" element={<Recipe />} />
 
           </Routes>
 
