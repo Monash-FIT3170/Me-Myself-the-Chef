@@ -8,18 +8,6 @@ function SearchBar({ onIngredientSearch }) {
     // tutorial used here: https://www.dhiwise.com/post/how-to-build-react-search-bar-with-suggestions
     // much of it is very similar
     const [items, setItems] = useState([
-      { id: 1, name: "Water"},
-      { id: 2, name: "Ice"},
-      { id: 3, name: "Flour"},
-      { id: 4, name: "Sugar"},
-      { id: 5, name: "Cane Sugar"},
-      { id: 6, name: "Olive Oil"},
-      { id: 7, name: "Cooking Fat"},
-      { id: 8, name: "Cooking Oil"},
-      { id: 9, name: "Vegetable Oil"},
-      { id: 10, name: "Black Pepper"},
-      { id: 11, name: "Sea Salt"},
-      { id: 12, name: "Salt"},
       { id: 13, name: '5 Spice Powder' } ,
       { id: 14, name: 'Acorn Squash' } ,
       { id: 15, name: 'Adobo Sauce' } ,

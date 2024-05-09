@@ -64,3 +64,18 @@ h1, h2, h3, h4, h5, h6, p {
     --bs-btn-hover-border-color: #e3e3e3;
     --bs-btn-active-bg: #e3e3e3;
 }
+
+#change-button {
+    position:absolute;
+    bottom:0;
+    left:0;
+    margin-bottom: 5%;
+    margin-left: 3%;
+    width: 18%;
+    height: 8%;
+    font-family: "Inter";
+    font-weight: 600;
+    --bs-btn-hover-bg: #f8f9fa;
+    --bs-btn-hover-border-color: #e3e3e3;
+    --bs-btn-active-bg: #e3e3e3;
+}

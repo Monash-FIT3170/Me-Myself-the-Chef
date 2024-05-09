@@ -1,5 +1,6 @@
 import React from 'react';
 import AutoSearchBar from '../components/AutoSearchBar';
+import { Link } from "react-router-dom";
 
 
 function IngredientSearch({addIngredient}) {
@@ -11,23 +12,23 @@ function IngredientSearch({addIngredient}) {
     }
 
     return (
-        <div class="col-md-9 text-center ingredients_search">
+        <div className="col-md-9 text-center ingredients_search">
                     
-            <div class="container">
+            <div className="container">
                 
-                <div class="row search_section">
-                    <h1 class="heading">Make your ingredients</h1>
+                <div className="row search_section">
+                    <h1 className="heading">Make your ingredients</h1>
                 </div>
 
-                <div class="row mt-4">
+                <div className="row mt-4">
                     <p>Type what ingredients you have here</p>
                     <p>When you’re done, generate your recipes!</p>
                 </div>
 
                 {/* <!-- Search bar--> */}
-                <div class="row mt-3">
+                <div className="row mt-3">
 
-                    <div class="search-bar-container">
+                    <div className="search-bar-container">
 
                         <AutoSearchBar onIngredientSearch={onIngredientSearch}/>
 
@@ -43,7 +44,10 @@ function IngredientSearch({addIngredient}) {
             </div>
 
             {/* <!-- Generate recipe button --> */}
-            <button type="button" class="btn btn-light btn-lg" id="gen-button">Generate recipes</button>
+            <Link className="react_link" to="/recipe_recommendation">
+                <button type="button" className="btn btn-light btn-lg" id="gen-button">Generate Recipes</button>
+            </Link>
+
             
             
         </div>

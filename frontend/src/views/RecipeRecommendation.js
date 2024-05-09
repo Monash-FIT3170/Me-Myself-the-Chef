@@ -1,68 +1,69 @@
 import React from 'react';
 import '../css/base.css'
-
-function RecipeCard({ recipeNumber }) {
-    return (
-        <div className="col-12 col-lg-6">
-            <div className="card mb-3" style={{ maxWidth: '540px' }}>
-                <a href="#" className="card-link stretched-link"></a>
-                <div className="row g-0">
-                    <div className="col-md-8">
-                        <div className="card-body">
-                            <h5 className="card-title">Recipe {recipeNumber}
-                                <button type="button" className="btn btn-link text-danger"><i className="fa fa-heart" style={{ fontSize: '24px' }}></i></button>
-                            </h5>
-                            <p className="card-text">You have all the ingredients</p>
-                        </div>
-                    </div>
-                    <div className="col-md-4">
-                        <img src="/static/images/pancake.jpg" className="img-fluid rounded-start" alt="..." />
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-}
+import IngredientsRecipePane from '../components/IngredientsRecipePane';
+import RecipePane from '../components/RecipePane';
+import { useState, useEffect } from "react";
+import axios from "axios";
+const API_KEY = "09861c68c07140d8a96e353c8d4f86cc";
 
 function RecipeRecommendation() {
+
+    const [ingredientList, setIngredientList] = useState(() => {
+        const localValue = localStorage.getItem("INGREDIENTS")
+        if (localValue == null) return []
+
+        return JSON.parse(localValue)
+    });
+
+    const [recipeList, setRecipeList] = useState();
+
+    // is called everytime the page reloads/renders
+    useEffect(() => {
+        localStorage.setItem("INGREDIENTS", JSON.stringify(ingredientList))
+    }, [ingredientList]);
+
+    useEffect(() => {
+		const fetchData = async () => {
+         //debugger;
+         let ingredientString = "";
+         for (let i = 0; i < ingredientList.length; i++) {
+            ingredientString += ingredientList[i].title;
+
+            // check to add ",+"
+            if (i != (ingredientList.length - 1)) {
+               ingredientString += ",+"
+            }
+         }
+			try {
+				const response = await axios.get("https://api.spoonacular.com/recipes/findByIngredients", {
+               params: {
+                  apiKey: API_KEY,
+                  ingredients: ingredientString,
+                  number: 2
+               }
+            })
+				setRecipeList(response.data);
+                console.log(response.data);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		
+        // check if data has been collected already
+        if (recipeList == null) {
+            fetchData();
+        }
+	}, []);
+
+
     return (
         <div className="row flex-fill">
             {/* Ingredients Pane */}
-            <div className="col-md-3 white-text" style={{backgroundColor: '#458D59'}}>
-                <div className="container">
-                    <div className="row pt-5 text-center">
-                        <h2>Ingredients</h2>
-                        <div className="horiz_line"></div>
-                    </div>
-                    {/* Ingredients */}
-                    <div className="row">
-                        <div className="row">
-                            <div className="col text-center">
-                                <p>Beef</p>
-                            </div>
-                            <div className="col-md-4">
-                                <input type="image" id="delBeef" src="/static/images/bin.png" height="24px"/>
-                            </div>
-                        </div>
-                        {/* Other ingredients... */}
-                    </div>
-                </div>
-            </div>
+            <IngredientsRecipePane ingredientList={ingredientList}/>
 
             {/* Display Recipe Pane */}
-            <div className="col-md-9" style={{backgroundColor: '#ECECEC'}}>
-                <div className="row pt-5 text-center">
-                    <h2>Recipe Recommendations</h2>
-                    <h5> You have 8 recommendations</h5>
-                    <div className="horiz_line" style={{backgroundColor: '#000000'}}></div>
-                </div>
-                {/* Display recipe generation result */}
-                <div className="container">
-                    <div className="row">
-                        {[...Array(8).keys()].map(i => <RecipeCard key={i + 1} recipeNumber={i + 1}/>)}
-                    </div>
-                </div>
-            </div>
+            <RecipePane recipeList={recipeList}/>
+
         </div>
 
     );

@@ -14,22 +14,6 @@ function Ingredients() {
         return JSON.parse(localValue)
     });
 
-    const tempIngredients = [
-        {
-            id: 1,
-            name: "Beef",
-        },
-        {
-            id: 2,
-            name: "Tomatoes",
-        }
-
-    ]
-
-    function deleteIngredient(id) {
-
-    }
-
     // is called everytime the page reloads/renders
     useEffect(() => {
         localStorage.setItem("INGREDIENTS", JSON.stringify(ingredientList))
