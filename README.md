@@ -4,7 +4,7 @@
 
 This web app is run using 2 servers, a front end react server and a back end Express server.
 
-The front end server was initialised using the `create-react-app` library. This provided quick and thorough setup of dependencies, but means that certain configuration settings are hidden in its associated node_modules files, such as the entry point JS file. As the node_modules folder is listed in the .gitginore file, edits to these config files will not be tracked by Git. **Please do not eject create-react-app config files without discussing with the team.** For further information on this, see https://stackoverflow.com/questions/44403923/how-does-react-create-app-react-scripts-find-the-entry-point . 
+The front end server was initialised using the `create-react-app` library. This provided quick and thorough setup of dependencies, but means that certain configuration settings are hidden in its associated node_modules files, such as the entry point JS file. As the node_modules folder is listed in the .gitignore file, edits to these config files will not be tracked by Git. **Please do not eject create-react-app config files without discussing with the team.** For further information on this, see https://stackoverflow.com/questions/44403923/how-does-react-create-app-react-scripts-find-the-entry-point . 
 
 ## Running the App
 
