@@ -7,6 +7,7 @@
     padding: 40px 40px;
     width: 50%;
     flex: 300px;
+    text-align: center;
 }
 
 .login_image {
@@ -20,15 +21,7 @@
 }
 
 .login_button{
-    padding: 2px 40px;
-    border-radius: 20px;
+
     background-color: #5f926e;
     color: white;
-}
-
-.input{
-    padding: 6px 6px;
-    border-radius: 5px;
-    background-color: #f3f3f3;
-    width: 100%;
 }
