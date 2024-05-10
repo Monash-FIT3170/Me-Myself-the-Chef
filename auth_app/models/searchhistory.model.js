@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const SearchHistory = mongoose.model(
   "SearchHistory",
   new mongoose.Schema({
-    date: Date,
+    date: String,
     entry: String,
   })
 );

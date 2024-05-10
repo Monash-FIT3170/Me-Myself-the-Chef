@@ -33,12 +33,19 @@ db.mongoose
   })
   .then(() => {
     console.log("Successfully connect to MongoDB.");
-    initial();
-    // signupNewUser();
-    // signInUser();
-    testUser("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Mzg1MDFmZTRiMjQ2YjYxMmZjZjhkOCIsImlhdCI6MTcxNDk2NjU4MiwiZXhwIjoxNzE1MDUyOTgyfQ.iU7iCGYZMUmdVX0T6S_g-XH_tFy0faO5OyvxhSg-OcQ");
-    // testadduser();
-
+    (async () => {
+      try {
+        initial();
+        // signupNewUser();
+        const data = await signInUser();
+        testUser(data.accessToken);
+        // updateSearchHistory(data.accessToken);
+        // console.log(data);
+        // testadduser();  
+      } catch (error) {
+          console.error("Sign In error:", error);
+      }
+    })();
   })
   .catch(err => {
     console.error("Connection error", err);
@@ -80,30 +87,32 @@ async function initial() {
   }
 }
 
+
 // demonstrates use of the API
+
 
 async function signupNewUser() {
   const userData = {
-    username: "testuser",
-    email: "testuser@email.com",
-    password: "testuser",
+    username: "testuser3",
+    email: "testuser3@email.com",
+    password: "testuser3",
     roles: ["user"] // or ["admin"] or any other roles you support
   };
 
 
-  fetch('http://localhost:8080/api/auth/signup', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(userData)
-})
-.then(response => {
-  if (!response.ok) {
-    return response.json().then(data => {
-      throw new Error(data.message || 'Network response was not ok');
-    });
-  }
+  return fetch('http://localhost:8080/api/auth/signup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(userData)
+  })
+  .then(response => {
+    if (!response.ok) {
+      return response.json().then(data => {
+        throw new Error(data.message || 'Network response was not ok');
+      });
+    }
   return response.json();
 })
 .then(data => {
@@ -121,28 +130,29 @@ async function signInUser() {
     password: "testuser",
   };
 
-
-  fetch('http://localhost:8080/api/auth/signin', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(userData)
-})
-.then(response => {
-  if (!response.ok) {
-    return response.json().then(data => {
-      throw new Error(data.message || 'Network response was not ok');
-    });
-  }
-  return response.json();
-})
-.then(data => {
-  console.log('SignIn successful:', data);
-})
-.catch(error => {
-  console.error('Error during signin:', error);
-});
+  // returns the promise?
+  return fetch('http://localhost:8080/api/auth/signin', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(userData)
+  })
+  .then(response => {
+    if (!response.ok) {
+      return response.json().then(data => {
+        throw new Error(data.message || 'Network response was not ok');
+      });
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('SignIn successful:', data);
+    return data;
+  })
+  .catch(error => {
+    console.error('Error during signin:', error);
+  });
 }
 
 
@@ -152,6 +162,7 @@ async function testUser(tokenValue) {
   fetch('http://localhost:8080/api/test/user', {
     method: 'GET',
     headers: {
+      'Content-Type': 'application/json',
       'x-access-token': tokenValue
     }
   }).then(response => {
@@ -166,6 +177,36 @@ async function testUser(tokenValue) {
     console.log('Test successful: ', data);
   }).catch(error => {
     console.error('Error during testuser:', error);
+  });
+}
+
+async function updateSearchHistory(tokenValue){
+
+  const history = {
+    date: "01/01/2000",
+    entry: "Cream of Muhroom Soup"
+  };
+
+  fetch('http://localhost:8080/api/auth/updateSearchHistory', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': tokenValue
+    },
+    body: JSON.stringify(history)
+  })
+  .then( response => {
+    if (!response.ok) {
+      return response.text().then(data => {
+        console.error('Error response from server:', data);
+        throw new Error(data || 'Network response was not ok');
+      });
+    }
+    return response.text();
+  }).then(data => {
+    console.log('Search History Update successful: ', data);
+  }).catch(error => {
+    console.error('Error during Update Search History:', error);
   });
 }
 

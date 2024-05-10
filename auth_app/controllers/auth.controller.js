@@ -6,9 +6,11 @@ const User = db.appuser;
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 const AppUser = require("../models/appuser.model");
+const SearchHistory = require("../models/searchhistory.model");
 
 exports.signup = async (req, res) => {
   try {
+    console.log(req.body);
     // create appUser object from request information
     const user = new AppUser({
       username: req.body.username,
@@ -108,13 +110,7 @@ try{
     user.preferences.push(preferences);
 
     // Save the user object
-    user.save((err, updatedUser) => {
-      if (err) {
-        console.error("Error saving user:", err);
-        return;
-      }
-      console.log("Search history added successfully for user:", updatedUser);
-      });
+    const savedUser = await user.save();
   }
   
 
@@ -133,22 +129,21 @@ exports.updateSearchHistory = async (req, res) => {
       return res.status(404).send({ message: "User Not found." });
     }
     // create search history object
-    const SearchHistory = require("../models/preferences.model");
     const search = new SearchHistory({
-      date: req.body.date,
-      entry: req.body.entry
-    })
+      date: req.date,
+      entry: req.entry
+    });
+    console.log(req.body);
+    console.log(req.body.date + " " + req.body.entry);
+    console.log(search);
     // push to user object
     user.search_history.push(search)
 
-    // Save the user object
-    user.save((err, updatedUser) => {
-    if (err) {
-      console.error("Error saving user:", err);
-      return;
-    }
-    console.log("Search history added successfully for user:", updatedUser);
-    });
+    // Save the objects in the database
+    const savedsearch = search.save();
+    console.log("first object saved");
+    const savedUser = user.save();
+    console.log("second obejct saved");
 
   } catch (error) {
     res.status(500).send({message: error.message})
