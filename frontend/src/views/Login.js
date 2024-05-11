@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../css/login-signup.css';
 
 const Login = () => {
@@ -46,7 +47,7 @@ const Login = () => {
                 <div className="form">
                     <center>
                         <h1>Login</h1>
-                        <p>New here? <a href="#" className='link'>Sign up</a></p>
+                        <p>New here? <Link to="/sign_up" className='link'>Sign up</Link></p>
                     </center>
                     {loginSuccess && (
                         <div className="alert alert-success" role="alert">

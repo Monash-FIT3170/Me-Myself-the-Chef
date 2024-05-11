@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../css/login-signup.css';
 
 const SignUp = () => {
@@ -48,7 +49,7 @@ const SignUp = () => {
                 <div className="form">
                     <center>
                         <h1>Sign up</h1>
-                        <p>Already have an account? <a href="#" className='link'>Login</a></p>
+                        <p>Already have an account? <Link to="/login" className='link'>Login</Link></p>
                     </center>
                     {signupSuccess && (
                         <div className="alert alert-success" role="alert">
@@ -75,7 +76,7 @@ const SignUp = () => {
                         </center>
                     </form>
                 </div>
-                <img className="login_image" src="placeholder_image.jpg" alt="Placeholder" />
+                <img className="login_image" src="/static/images/logo_small.png" alt="Placeholder" />
             </section>
         </>
     );
