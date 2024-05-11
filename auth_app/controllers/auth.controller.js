@@ -1,7 +1,6 @@
 const config = require("../config/auth.config");
 const db = require("../models");
 const User = db.appuser;
-// const Role = db.role;
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
@@ -19,18 +18,6 @@ exports.signup = async (req, res) => {
     });
     // and saves the user to the database
     const savedUser = await user.save();
-
-    // User no longer Requires roles - thus this block is redundant
-    // let roles = [];
-    // if (req.body.roles) {
-    //   roles = await Role.find({ name: { $in: req.body.roles } });
-    // } else {
-    //   const defaultRole = await Role.findOne({ name: "user" });
-    //   roles.push(defaultRole);
-    // }
-
-    // user.roles = roles.map(role => role._id);
-    // await user.save();
 
     res.send({ message: "User was registered successfully!" });
   } catch (error) {

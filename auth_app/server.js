@@ -35,7 +35,6 @@ db.mongoose
     console.log("Successfully connect to MongoDB.");
     (async () => {
       try {
-        initial();
         // signupNewUser();
         const data = await signInUser();
         testUser(data.accessToken);
@@ -68,28 +67,8 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
-// Creates the roles if they don't already exist
-async function initial() {
-  try {
-    const count = await Role.estimatedDocumentCount();
-    if (count === 0) {
-      await Promise.all([
-        new Role({ name: "user" }).save(),
-        new Role({ name: "moderator" }).save(),
-        new Role({ name: "admin" }).save()
-      ]);
-      console.log("Roles added successfully.");
-    } else {
-      console.log("Roles already exist.");
-    }
-  } catch (err) {
-    console.error("Error adding roles:", err);
-  }
-}
-
 
 // demonstrates use of the API
-
 
 async function signupNewUser() {
   const userData = {

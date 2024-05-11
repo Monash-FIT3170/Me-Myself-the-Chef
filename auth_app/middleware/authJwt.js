@@ -51,8 +51,8 @@ const isModerator = async (req, res, next) => {
 
 const authJwt = {
   verifyToken,
-  isAdmin,
-  isModerator
+  // isAdmin,
+  // isModerator
 };
 
 module.exports = authJwt;
