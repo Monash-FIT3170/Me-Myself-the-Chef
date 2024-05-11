@@ -9,11 +9,11 @@ checkDuplicateUsernameOrEmail = async (req, res, next) => {
       return res.status(400).send({ message: "Failed! Username is already in use!" });
     }
 
-    // Email
-    const emailExists = await AppUser.findOne({ email: req.body.email }).exec();
-    if (emailExists) {
-      return res.status(400).send({ message: "Failed! Email is already in use!" });
-    }
+    // // Email
+    // const emailExists = await AppUser.findOne({ email: req.body.email }).exec();
+    // if (emailExists) {
+    //   return res.status(400).send({ message: "Failed! Email is already in use!" });
+    // }
 
     next();
   } catch (error) {

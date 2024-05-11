@@ -4,6 +4,8 @@ import '../css/login-signup.css';
 const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [signupSuccess, setSignupSuccess] = useState(false);
+    const [signupError, setSignupError] = useState('');
 
     const handleSignUp = async (e) => {
         e.preventDefault();
@@ -21,7 +23,6 @@ const SignUp = () => {
                 },
                 body: JSON.stringify(userData)
             });
-            
 
             if (!response.ok) {
                 // response.json().then(data => {
@@ -30,13 +31,14 @@ const SignUp = () => {
                 throw new Error('Sign up failed');
             }
 
-            // Sign up successful, perform further actions like redirecting to another page
-            alert("Sign Up successful!")
-
+            // Sign up successful, set signupSuccess state to true
+            setSignupSuccess(true);
+            setSignupError('');
         } catch (error) {
             console.error('Sign up error:', error);
-            // Handle sign up error, display error message to the user
-            alert('Sign up failed!');
+            // Sign up failed, set signupError state
+            setSignupError('Sign up failed. Please try again.');
+            setSignupSuccess(false);
         }
     };
 
@@ -48,6 +50,16 @@ const SignUp = () => {
                         <h1>Sign up</h1>
                         <p>Already have an account? <a href="#" className='link'>Login</a></p>
                     </center>
+                    {signupSuccess && (
+                        <div className="alert alert-success" role="alert">
+                            Sign up successful!
+                        </div>
+                    )}
+                    {signupError && (
+                        <div className="alert alert-danger" role="alert">
+                            {signupError}
+                        </div>
+                    )}
                     <form onSubmit={handleSignUp}>
                         <center>
                             <input name="email" placeholder="Email" className='input' value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -62,9 +74,8 @@ const SignUp = () => {
                             <button type="submit" className='login_button'>Sign up</button>
                         </center>
                     </form>
-
                 </div>
-                    <img className="login_image" src="placeholder_image.jpg" alt="Placeholder" />
+                <img className="login_image" src="placeholder_image.jpg" alt="Placeholder" />
             </section>
         </>
     );

@@ -4,6 +4,8 @@ import '../css/login-signup.css';
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loginSuccess, setLoginSuccess] = useState(false);
+    const [loginError, setLoginError] = useState('');
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -26,13 +28,15 @@ const Login = () => {
                 throw new Error('Login failed');
             }
 
-            // Login successful, perform further actions like redirecting to another page
-
-            alert("Login successful!")
+            // Login successful, set loginSuccess state to true
+            setLoginSuccess(true);
+            setLoginError('');
+            // Optionally, you can redirect the user or perform other actions here
         } catch (error) {
             console.error('Login error:', error);
-            // Handle login error, display error message to the user
-            alert("Login failed!")
+            // Login failed, set loginError state
+            setLoginError('Login failed. Please check your credentials and try again.');
+            setLoginSuccess(false);
         }
     };
 
@@ -44,6 +48,16 @@ const Login = () => {
                         <h1>Login</h1>
                         <p>New here? <a href="#" className='link'>Sign up</a></p>
                     </center>
+                    {loginSuccess && (
+                        <div className="alert alert-success" role="alert">
+                            Login successful!
+                        </div>
+                    )}
+                    {loginError && (
+                        <div className="alert alert-danger" role="alert">
+                            {loginError}
+                        </div>
+                    )}
                     <form onSubmit={handleLogin}>
                         <center>
                             <input name="email" placeholder="Email" className='input' value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -52,7 +66,6 @@ const Login = () => {
                             <input name="password" placeholder="Password" className='input' type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                             <br />
                         </center>
-                        <a href="#" className='link'>Forgot password?</a>
                         <br />
                         <br />
                         <center>
@@ -60,7 +73,7 @@ const Login = () => {
                         </center>
                     </form>
                 </div>
-                <img className="login_image" src="/static/images/logo_small.png"></img>
+                <img className="login_image" src="/static/images/logo_small.png" alt="Logo" />
             </section>
         </>
     );
