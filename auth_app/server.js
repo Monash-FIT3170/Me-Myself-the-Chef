@@ -19,10 +19,10 @@ app.use(express.urlencoded({ extended: true }));
 // MongoDB stuff
 const db = require("./models");
 const dbConfig = require("./config/db.config");
+const SearchHistory = db.searchhistory
 const Role = db.role;
 const AppUser = db.appuser;
 const User = db.user;
-
 const uri = "mongodb+srv://cheetah5i89:OwnLj9rEoEO0V0qo@testdatabase.486pb2d.mongodb.net/?retryWrites=true&w=majority&appName=TestDatabase";
 
 db.mongoose
@@ -35,12 +35,15 @@ db.mongoose
     console.log("Successfully connect to MongoDB.");
     (async () => {
       try {
-        // signupNewUser();
+
+        // await signupNewUser();
         const data = await signInUser();
-        testUser(data.accessToken);
+        // testUser(data.accessToken);
         // updateSearchHistory(data.accessToken);
         // console.log(data);
-        // testadduser();  
+        // testadduser(); 
+        // testaddsearchHistory();
+
       } catch (error) {
           console.error("Sign In error:", error);
       }
@@ -68,16 +71,15 @@ app.listen(PORT, () => {
 });
 
 
-// demonstrates use of the API
+// functions to demonstrate use of the API
 
 async function signupNewUser() {
+  // signs in a new user with the credential's outline in userData object
   const userData = {
     username: "testuser3",
     email: "testuser3@email.com",
     password: "testuser3",
-    roles: ["user"] // or ["admin"] or any other roles you support
   };
-
 
   return fetch('http://localhost:8080/api/auth/signup', {
     method: 'POST',
@@ -104,9 +106,10 @@ async function signupNewUser() {
 
 
 async function signInUser() {
+  // signs in a user, using the credentials from the userData object
   const userData = {
-    username: "testuser",
-    password: "testuser",
+    username: "testuser3",
+    password: "testuser3",
   };
 
   // returns the promise?
@@ -136,7 +139,7 @@ async function signInUser() {
 
 
 
-// unverified function to test user
+// test if a user exists?
 async function testUser(tokenValue) {
   fetch('http://localhost:8080/api/test/user', {
     method: 'GET',
@@ -162,8 +165,8 @@ async function testUser(tokenValue) {
 async function updateSearchHistory(tokenValue){
 
   const history = {
-    date: "01/01/2000",
-    entry: "Cream of Muhroom Soup"
+    date: "11/05/2000",
+    entry: "Poison Pie"
   };
 
   fetch('http://localhost:8080/api/auth/updateSearchHistory', {
@@ -217,5 +220,17 @@ async function testadduser() {
       console.log("User added successfully.");
   } catch (err) {
     console.error("Error adding User:", err);
+  }
+}
+
+async function testaddsearchHistory(){
+  const SH = db.searchhistory
+  try {
+    await Promise.all([
+      new SH({ date: "it", entry: "worked again"}).save(),
+    ]);
+      console.log("SearchHistory added successfully.");
+  } catch (err) {
+    console.error("Error adding SearchHistory:", err);
   }
 }
