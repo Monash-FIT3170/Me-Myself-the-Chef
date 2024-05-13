@@ -76,33 +76,30 @@ exports.signin = async (req, res) => {
 
 
 // update preferences and search history data
-exports.update = async (req, res) => {
-try{
-  const user = await AppUser.findOne({
-    _id: req.userId,
-    preferences: []
-  });
-
-  // if fail there's a problem with the token verification
-  if (!user) {
-    return res.status(404).send({ message: "User Not found." });
-  }
-  const Preferences = require("../models/preferences.model");
-
-  // convert user preferences
-  for(let i = 0; i <= req.body.preferences.length; i++){
-    const preferences = new Preferences({
-      ingredient: req.body.preferences[i].ingredient
+exports.updatePreferences = async (req, res) => {
+  try{
+    const user = await AppUser.findOne({
+      _id: req.userId,
     });
-    user.preferences.push(preferences);
 
+    // if fail there's a problem with the token verification
+    if (!user) {
+      return res.status(404).send({ message: "User Not found." });
+    }
+    const Preferences = db.preferences;
+    // convert user preferences
+    for(let i = 0; i < req.body.length; i++){
+      console.log(req.body[i]);
+      const preference = new Preferences({ingredient: req.body[i].ingredient});
+      preference.save();
+      user.preferences.push(preference);
+    }
     // Save the user object
     await user.save();
+    res.send({ message: "User preferences was updated successfully!" });
+  } catch (error) {
+    res.status(500).send({ message: error.message})
   }
-  res.send({ message: "User preferences was updated successfully!" });
-} catch (error) {
-  res.status(500).send({ message: error.message})
-}
 }
 
 exports.updateSearchHistory = async (req, res) => {

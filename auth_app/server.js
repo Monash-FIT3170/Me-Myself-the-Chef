@@ -40,6 +40,7 @@ db.mongoose
         const data = await signInUser();
         // testUser(data.accessToken);
         // updateSearchHistory(data.accessToken);
+        updatePreferences(data.accessToken);
         // console.log(data);
         // testadduser(); 
         // testaddsearchHistory();
@@ -189,6 +190,40 @@ async function updateSearchHistory(tokenValue){
     console.log('Search History Update successful: ', data);
   }).catch(error => {
     console.error('Error during Update Search History:', error);
+  });
+}
+
+async function updatePreferences(tokenValue){
+
+  const preference1 = {
+    ingredient: "seafood"
+  };
+  const preference2 = {
+    ingredient: "almonds"
+  };
+  const preferenceList = [preference1, preference2];
+  console.log(JSON.stringify(preferenceList));
+
+  fetch('http://localhost:8080/api/auth/updatePreferences', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': tokenValue
+    },
+    body: JSON.stringify(preferenceList)
+  })
+  .then( response => {
+    if (!response.ok) {
+      return response.text().then(data => {
+        console.error('Error response from server:', data);
+        throw new Error(data || 'Network response was not ok');
+      });
+    }
+    return response.text();
+  }).then(data => {
+    console.log('Preferences Update successful: ', data);
+  }).catch(error => {
+    console.error('Error during Updating Preferences:', error);
   });
 }
 
