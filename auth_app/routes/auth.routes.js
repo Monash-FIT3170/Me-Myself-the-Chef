@@ -35,7 +35,7 @@ module.exports = function(app) {
   app.post(
     "/api/auth/updatePreferences",
     [authJwt.verifyToken],
-    controller.update
+    controller.updatePreferences
   );
 
   // Update a specific user's browser history info
