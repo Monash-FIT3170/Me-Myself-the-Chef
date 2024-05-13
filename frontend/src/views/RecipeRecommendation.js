@@ -64,6 +64,7 @@ function RecipeRecommendation() {
             {/* Display Recipe Pane */}
             <RecipePane recipeList={recipeList}/>
 
+
         </div>
 
     );
