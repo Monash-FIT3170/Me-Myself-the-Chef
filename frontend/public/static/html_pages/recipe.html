@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Me Myself the Chef</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono&family=Inter:wght@100..900&display=swap"
+        rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Nav bar -->
+    <!-- NOTE: navbar-expand-md class is responsible for collapsing below medium breakpoint, edit to change -->
+    <nav class="navbar navbar-expand-md bg-body-tertiary">
+        <div class="container-fluid">
+
+            <a class="navbar-brand px-2" href="#">
+                <!--TODO: make an actual logo for this text-->
+                Me Myself the Chef
+                <!-- TODO: set link to be "%PUBLIC_URL%/page_templates/static/images/logo_small.png" -->
+                <img src="../images/logo_small.png" height="50" alt="Logo" class="d-inline-block ms-2">
+            </a>
+
+            <!-- This button appears when the window is too small: hamburger button for showing the navbar items-->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+
+                <!-- The header links -->
+                <ul class="navbar-nav ms-auto">
+
+                    <li class="nav-item px-2">
+                        <a class="nav-link" href="#">Recipe Search</a>
+                    </li>
+
+                    <li class="nav-item px-2">
+                        <a class="nav-link" href="#">Saved Recipes</a>
+                    </li>
+
+                    <li class="nav-item px-2">
+                        <a class="nav-link" href="#">Preferences</a>
+                    </li>
+
+                    <!-- TODO: possibly some dynamic imagery to show whether they're signed in or not-->
+                    <!-- Also the login favicon currently is black, doesn't look amazing-->
+                    <a class="navbar-brand px-4" href="#">
+                        <!-- TODO: set as "%PUBLIC_URL%/page_templates/static/images/person-circle.svg" -->
+                        <img src="../images/person-circle.svg" alt="Login" width="30" height="30">
+                    </a>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+
+
+    <!-- This is the root div which React will surround with your content -->
+    <div id="root" class="container-fluid d-flex h-100 flex-column">
+
+        <div class="row flex-fill">
+
+            <!-- Ingredients Pane-->
+            <div class="col-md-3 white-text">
+
+                <!-- Top Half: Ingredients -->
+                <div class="row half-pane pb-5" style="background-color:#5F926E;">
+                    <div class="col-md-12">
+                        <div class="container-fluid">
+                            <div class="row pt-5 text-center">
+                                <h2>Ingredients</h2>
+                                <div class="horiz_line"></div>
+                            </div>
+
+                            <div class="row text-left">
+                                <div class="col-md-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+                                        <label class="form-check-label" for="flexCheckDefault1">
+                                            4 long bread rolls
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+                                        <label class="form-check-label" for="flexCheckDefault2">
+                                            6 tbsp pork
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+                                        <label class="form-check-label" for="flexCheckDefault3">
+                                            6 tbsp mayonnaise
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault4">
+                                        <label class="form-check-label" for="flexCheckDefault4">
+                                            4 - 8 slices Thi Nguoi
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault5">
+                                        <label class="form-check-label" for="flexCheckDefault5">
+                                            4 - 8 slices Cha Lua Vietnamese pork loaf
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault6">
+                                        <label class="form-check-label" for="flexCheckDefault6">
+                                            4 - 8 slices grilled pork
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault7">
+                                        <label class="form-check-label" for="flexCheckDefault7">
+                                            1.5 cups fresh coriander
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault8">
+                                        <label class="form-check-label" for="flexCheckDefault8">
+                                            2 cucumbers
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9">
+                                        <label class="form-check-label" for="flexCheckDefault9">
+                                            4 green onion stems
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value=""
+                                            id="flexCheckDefault10">
+                                        <label class="form-check-label" for="flexCheckDefault10">
+                                            2 red chillies
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value=""
+                                            id="flexCheckDefault11">
+                                        <label class="form-check-label" for="flexCheckDefault11">
+                                            2 tsp Maggi Seasoning
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Half: Nutrition -->
+                <div class="row half-pane pb-5" style="background-color: #3E6C4B;">
+                    <div class="col-md-12">
+                        <div class="container-fluid">
+                            <div class="row pt-5 text-center">
+                                <h2>Nutrition</h2>
+                                <div class="horiz_line"></div>
+                            </div>
+
+                            <div class="row text-center">
+                                <div class="col-md-12">
+                                    <p>Calories: 554cal (28%)</p>
+                                    <p>Carbohydrates: 47g (16%)</p>
+                                    <p>Protein: 19g (38%)</p>
+                                    <p>Fat: 30g (46%)</p>
+                                    <p>Saturated Fat: 7g (44%)</p>
+                                    <p>Monounsaturated Fat: 1g</p>
+                                    <p>Cholesterol: 67mg (22%)</p>
+                                    <p>Fiber: 5g (21%)</p>
+                                    <p>Sugar: 10g (11%)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+
+                <div class="container">
+
+                    <div class="pt-5 pb-5 white-text text-center" style="background-color: #3E6C4B;">
+                        <!-- Top section for recipe details -->
+                        <div class="container">
+                            <div class="row">
+                                <!-- Left column for recipe details -->
+                                <div class="col-md-6">
+                                    <div class="d-flex justify-content-between align-items-center ps-3"> <!-- Wrapper for recipe title and button -->
+                                        <!-- Recipe Title -->
+                                        <h1>Crispy Pork Belly Banh Mi</h1>
+                    
+                                        <!-- Save button -->
+                                        <button type="button" class="btn btn-danger btn-sm">
+                                            <i class="bi bi-bookmark-heart"></i> Save
+                                        </button>
+                                    </div>
+
+                                    <!-- Recipe Details -->
+                                    <p>Prep Time: 15 mins</p>
+                                    <p>Cook Time: 3 hrs</p>
+                                    <div class="col-md-6 mx-auto">
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text">Number of Servings:</span>
+                                            <button class="input-group-text" id="btnGroupAddon" type="button">-</button>
+                                            <input type="text" class="form-control text-center" value="5">
+                                            <button class="input-group-text" id="btnGroupAddon" type="button">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Right column for recipe image -->
+                                <div class="col-md-6 text-end">
+                                    <!-- Recipe Image -->
+                                    <img src="../images/banh_mi.jpeg" alt="Recipe Image" class="img-fluid pe-5">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom section for recipe instructions -->
+                    <div class="row mt-4 text-left">
+                        <div class="col-md-12">
+                            <!-- Recipe Instructions -->
+                            <div class="text-center">
+                                <h2>Instructions</h2>
+                            </div>
+
+                            <ol style="padding-left: 100px; padding-right: 100px; padding-top: 20px;">
+                                <li>Dry skin overnight: Place pork belly on a plate. Pat skin dry with paper towels.
+                                    Leave uncovered in fridge overnight to dry out the skin. (If you don't have time,
+                                    pat the skin dry as best you can).</li>
+                                <li>Preheat oven to 140°C/285°F (both fan and standard ovens).</li>
+                                <li>Season flesh: Drizzle flesh side with 1 tsp oil. Sprinkle over 1/2 tsp salt, and all
+                                    the pepper and Chinese five spice. Rub all over the flesh, including on the sides.
+                                </li>
+                                <li>Foil boat: Place 2 pieces of foil on a work surface. Put the belly in middle of
+                                    foil, skin side up. Fold the sides in to enclose the belly, forming an open box,
+                                    pinching corners to seal tightly and make it as snug as possible. Place meat on a
+                                    tray.</li>
+                                <li>Season skin: Pat skin dry with paper towels. Rub with 1/2 tsp oil then sprinkle
+                                    remaining 1/2 tsp salt evenly all over the skin surface, from edge to edge.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+.main_box {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form {
+    padding: 40px 40px;
+    width: 50%;
+    flex: 300px;
+    text-align: center;
+}
+
+.login_image {
+    width: 50%;
+    flex: 300px;
+    height: auto;
+}
+
+.link {
+    color: #5f926e;
+}
+
+.login_button{
+
+    background-color: #5f926e;
+    color: white;
+}
