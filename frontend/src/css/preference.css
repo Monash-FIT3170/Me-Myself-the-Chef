@@ -17,6 +17,12 @@
     padding-bottom: 0px;
 }
 
+.navbar-text {
+    color: inherit;
+    text-decoration: none;
+    text-align: center;
+}
+
 .checkbox-size {
     transform: scale(1.15);
 }
