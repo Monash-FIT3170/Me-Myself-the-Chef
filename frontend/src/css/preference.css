@@ -28,6 +28,8 @@
     margin-top: 25px;
     margin-right: 15px;
     margin-left: 15px;
+    padding-bottom: 5px;
+    z-index: 1;
 }
 
 .save-pref-button {

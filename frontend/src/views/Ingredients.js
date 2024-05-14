@@ -46,6 +46,8 @@ function Ingredients() {
                 {/* <!-- Ingredient search section of page--> */}
                 <IngredientSearch addIngredient={addIngredient}/>
 
+                {/*  CONSIDER ADDING GENERATE RECIPE BUTTON HERE, so we only call api once */}
+
         </div>
 
     );
