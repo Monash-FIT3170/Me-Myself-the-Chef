@@ -1,16 +1,25 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useContext, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import '../css/login-signup.css';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [loginSuccess, setLoginSuccess] = useState(false);
     const [loginError, setLoginError] = useState('');
+    const { isLoggedIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    // Check if user is logged in
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate('/logged_in');
+        }
+    }, [isLoggedIn, navigate]);
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        
+
         const userData = {
             username: email,
             password: password
@@ -29,15 +38,18 @@ const Login = () => {
                 throw new Error('Login failed');
             }
 
-            // Login successful, set loginSuccess state to true
-            setLoginSuccess(true);
-            setLoginError('');
-            // Optionally, you can redirect the user or perform other actions here
+            const data = await response.json();
+
+            // Store the token in localStorage
+            localStorage.setItem('token', data.accessToken);
+
+            // Redirect to logged in page upon successful login
+            navigate('/logged_in');
+
         } catch (error) {
             console.error('Login error:', error);
             // Login failed, set loginError state
             setLoginError('Login failed. Please check your credentials and try again.');
-            setLoginSuccess(false);
         }
     };
 
@@ -49,11 +61,6 @@ const Login = () => {
                         <h1>Login</h1>
                         <p>New here? <Link to="/sign_up" className='link'>Sign up</Link></p>
                     </center>
-                    {loginSuccess && (
-                        <div className="alert alert-success" role="alert">
-                            Login successful!
-                        </div>
-                    )}
                     {loginError && (
                         <div className="alert alert-danger" role="alert">
                             {loginError}
@@ -74,7 +81,7 @@ const Login = () => {
                         </center>
                     </form>
                 </div>
-                <img className="login_image" src="/static/images/logo_small.png" alt="Logo" />
+                <img className="login_image" src="/static/images/login_image.jpg" alt="Logo" />
             </section>
         </>
     );

@@ -9,6 +9,7 @@ import RecipeRecommendation from "./views/RecipeRecommendation";
 import Ingredients from './views/Ingredients';
 import Recipe from './views/Recipe';
 import Preference from './views/Preference'
+import LoggedInPage from './views/LoggedInPage';
 
 function App() {
 
@@ -39,6 +40,9 @@ function App() {
 
             {/* Preference page */}
             <Route path="/preferences" element={<Preference />} />
+
+             {/* Preference page */}
+             <Route path="/logged_in" element={<LoggedInPage />} />
 
           </Routes>
 

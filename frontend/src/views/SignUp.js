@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useContext, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import '../css/login-signup.css';
 
 const SignUp = () => {
@@ -7,10 +8,19 @@ const SignUp = () => {
     const [password, setPassword] = useState('');
     const [signupSuccess, setSignupSuccess] = useState(false);
     const [signupError, setSignupError] = useState('');
+    const { isLoggedIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+   
+    // Check if user is logged in
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate('/logged_in');
+        }
+    }, [isLoggedIn, navigate]);
 
     const handleSignUp = async (e) => {
         e.preventDefault();
-        
+
         const userData = {
             username: email,
             password: password
@@ -35,6 +45,7 @@ const SignUp = () => {
             // Sign up successful, set signupSuccess state to true
             setSignupSuccess(true);
             setSignupError('');
+            
         } catch (error) {
             console.error('Sign up error:', error);
             // Sign up failed, set signupError state
@@ -76,7 +87,7 @@ const SignUp = () => {
                         </center>
                     </form>
                 </div>
-                <img className="login_image" src="/static/images/logo_small.png" alt="Placeholder" />
+                <img className="login_image" src="/static/images/login_image.jpg" alt="Placeholder" />
             </section>
         </>
     );
