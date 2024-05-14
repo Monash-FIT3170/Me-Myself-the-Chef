@@ -1,0 +1,44 @@
+.title-card {
+    background-color: #458D59;
+}
+
+.title-padding {
+    padding-top: 35px;
+    padding-left: 75px;
+}
+
+.info-padding {
+    padding-top: 20px;
+    padding-left: 80px;
+}
+
+.navbar-padding {
+    padding-top: 30px;
+    padding-bottom: 0px;
+}
+
+.checkbox-size {
+    transform: scale(1.15);
+}
+
+.badge-styling {
+    background-color: #458D59;
+    color: #FFFFFF;
+    transform: scale(1.15);
+    margin-top: 25px;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+.save-pref-button {
+    position: fixed;
+    bottom: 50px;
+    right: 35px;
+    transform: scale(1.15);
+    border-color: transparent;
+    border-radius: 10px;
+    background-color: #72C175;
+    color: white;
+    padding: 5px 10px 5px 10px;
+    
+}

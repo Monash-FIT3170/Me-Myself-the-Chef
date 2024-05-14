@@ -8,6 +8,7 @@ import SignUp from './views/SignUp';
 import RecipeRecommendation from "./views/RecipeRecommendation";
 import Ingredients from './views/Ingredients';
 import Recipe from './views/Recipe';
+import Preference from './views/Preference'
 
 function App() {
 
@@ -35,6 +36,9 @@ function App() {
 
             {/* Single detailed recipe view page */}
             <Route path="/recipe" element={<Recipe />} />
+
+            {/* Preference page */}
+            <Route path="/preferences" element={<Preference />} />
 
           </Routes>
 
