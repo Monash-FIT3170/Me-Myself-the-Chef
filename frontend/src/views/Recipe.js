@@ -1,6 +1,81 @@
 import React from 'react';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useLocation } from 'react-router-dom';
+import RecipeInstructions from '../components/RecipeInstructions';
+import RecipeDetails from '../components/RecipeDetails';
+import NutritionPane from '../components/NutritionPane';
+import IngredientExpandedPane from '../components/IngredientExpandedPane';
+const API_KEY = "09861c68c07140d8a96e353c8d4f86cc";
 
-const Recipe = () => {
+function Recipe() {
+    const [recipeId, setRecipeId] = useState(useLocation().state);
+    const [recipeInfo, setRecipeInfo] = useState();
+    const [instructions, setInstructions] = useState([]);
+    const [ingredients, setIngredients] = useState([]);
+    const [nutrition, setNutrition] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/information`, {
+                    params: {
+                        apiKey: API_KEY,
+                        includeNutrition: true,
+                    }
+                })
+                console.log(response.data);
+                setRecipeInfo(response.data);
+                setInstructions(formatInstructions(response.data.analyzedInstructions[0].steps));
+                setIngredients(formatIngredients(response.data.extendedIngredients));
+                setNutrition(formatNutrition(response.data.nutrition));
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        if (recipeInfo == null) {
+            fetchData();
+        } else {
+            console.log(recipeInfo);
+        }
+        fetchData();
+    }, []);
+
+    function formatInstructions(instructions) {
+        let formattedInstructions = [];
+        for (let i = 0; i < instructions.length; i++) {
+            formattedInstructions.push(`${instructions[i].step}`);
+        }
+        return formattedInstructions;
+    }
+
+    function formatIngredients(ingredients) {
+        let formattedIngredients = [];
+        for (let i = 0; i < ingredients.length; i++) {
+            formattedIngredients.push(`${ingredients[i].measures.metric.amount} ${ingredients[i].measures.metric.unitShort} ${ingredients[i].name}`);
+        }
+        return formattedIngredients;
+    }
+    
+    function formatNutrition(nutritionInfo) {
+        let formattedNutrition = [];
+
+        // calorie info
+        formattedNutrition.push(`${nutritionInfo[0].name} ${nutritionInfo[0].amount} ${nutritionInfo[0].unit}`);
+    
+        // fat info
+        formattedNutrition.push(`${nutritionInfo[1].name} ${nutritionInfo[1].amount} ${nutritionInfo[1].unit}`);
+
+        // carb info
+        formattedNutrition.push(`${nutritionInfo[3].name} ${nutritionInfo[3].amount} ${nutritionInfo[3].unit}`);
+
+        // sugar info
+        formattedNutrition.push(`${nutritionInfo[5].name} ${nutritionInfo[5].amount} ${nutritionInfo[5].unit}`);
+
+        return formattedNutrition;
+    }
+
     // Placeholder recipe data
     const recipeData = {
         title: "Crispy Pork Belly Banh Mi",
@@ -22,135 +97,31 @@ const Recipe = () => {
             // Add more instructions here
         ]
     };
+    if (recipeInfo == null) {
+        return (
+            <></>
+        )
+    }
 
     return (
         <div className="row flex-fill">
             <div className="col-md-3 d-flex flex-column white-text">
-                <IngredientsPane ingredients={recipeData.ingredients} />
-                <NutritionPane nutrition={recipeData.nutrition} />
+                <IngredientExpandedPane ingredients={ingredients} />
+                <NutritionPane nutrition={nutrition} />
             </div>
 
             <div className="col-md-9 d-flex flex-column">
                 <RecipeDetails
-                    title={recipeData.title}
-                    image={recipeData.image}
-                    servings={recipeData.servings}
-                    prepTime={recipeData.prepTime}
-                    cookTime={recipeData.cookTime}
+                    title={recipeInfo.title}
+                    image={recipeInfo.image}
+                    servings={recipeInfo.servings}
+                    prepTime={recipeInfo.preparationMinutes}
+                    cookTime={recipeInfo.readyInMinutes}
                 />
-                <RecipeInstructions instructions={recipeData.instructions} />
+                <RecipeInstructions instructions={instructions} />
             </div>
         </div>
     );
 };
-
-const IngredientsPane = ({ ingredients }) => {
-    return (
-        <div className="row pb-5 flex-fill" style={{ backgroundColor: '#5F926E' }}>
-            <div className="col-md-12">
-                <div className="container-fluid">
-                    <div className="row pt-5 text-center">
-                        <h2>Ingredients</h2>
-                        <div className="horiz_line"></div>
-                    </div>
-
-                    <div className="row text-left">
-                        <div className="col-md-12">
-                            {ingredients.map((ingredient, index) => (
-                                <div key={index} className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id={`ingredient-${index}`} />
-                                    <label className="form-check-label" htmlFor={`ingredient-${index}`}>
-                                        {ingredient}
-                                    </label>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-const NutritionPane = ({ nutrition }) => {
-    return (
-        <div className="row pb-5 flex-fill" style={{ backgroundColor: '#3E6C4B' }}>
-            <div className="col-md-12">
-                <div className="container-fluid">
-                    <div className="row pt-5 text-center">
-                        <h2>Nutrition</h2>
-                        <div className="horiz_line"></div>
-                    </div>
-
-                    <div className="row text-center">
-                        <div className="col-md-12">
-                            <p>Calories: {nutrition.calories} ({nutrition.percentDailyValue})</p>
-                            {/* Include other nutrition information here */}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-const RecipeDetails = ({ title, image, servings, prepTime, cookTime }) => {
-    return (
-        <div className="row pt-5 pb-5 white-text text-center" style={{ backgroundColor: '#3E6C4B' }}>
-            {/* Top section for recipe details */}
-            <div className="container">
-                <div className="row">
-                    {/* Left column for recipe details */}
-                    <div className="col-md-6">
-                        <div className="d-flex justify-content-between align-items-center ps-3">
-                            {/* Wrapper for recipe title and button */}
-                            {/* Recipe Title */}
-                            <h1>{title}</h1>
-                            {/* Save button */}
-                            <button type="button" className="btn btn-danger btn-sm">
-                                <i className="bi bi-bookmark-heart"></i> Save
-                            </button>
-                        </div>
-                        {/* Recipe Details */}
-                        <p>Prep Time: {prepTime}</p>
-                        <p>Cook Time: {cookTime}</p>
-                        <div className="col-md-6 mx-auto">
-                            <div className="input-group input-group-sm">
-                                <span className="input-group-text">Number of Servings:</span>
-                                <button className="input-group-text" id="btnGroupAddon" type="button">-</button>
-                                <input type="text" className="form-control text-center" value={servings} />
-                                <button className="input-group-text" id="btnGroupAddon" type="button">+</button>
-                            </div>
-                        </div>
-                    </div>
-                    {/* Right column for recipe image */}
-                    <div className="col-md-6 text-end">
-                        {/* Recipe Image */}
-                        <img src={image} alt="Recipe Image" className="img-fluid pe-5" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-const RecipeInstructions = ({ instructions }) => {
-    return (
-        <div className="row mt-4 text-left">
-            <div className="col-md-12">
-                {/* Recipe Instructions */}
-                <div className="text-center">
-                    <h2>Instructions</h2>
-                </div>
-                <ol style={{ paddingLeft: '100px', paddingRight: '100px', paddingTop: '20px' }}>
-                    {instructions.map((instruction, index) => (
-                        <li key={index}>{instruction}</li>
-                    ))}
-                </ol>
-            </div>
-        </div>
-    );
-};
-
 
 export default Recipe;

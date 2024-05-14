@@ -23,35 +23,36 @@ function RecipeRecommendation() {
     }, [ingredientList]);
 
     useEffect(() => {
-		const fetchData = async () => {
-         //debugger;
-         let ingredientString = "";
-         for (let i = 0; i < ingredientList.length; i++) {
-            ingredientString += ingredientList[i].title;
+        const fetchData = async () => {
+            let ingredientString = "";
+            for (let i = 0; i < ingredientList.length; i++) {
+                ingredientString += ingredientList[i].title;
 
-            // check to add ",+"
-            if (i != (ingredientList.length - 1)) {
-               ingredientString += ",+"
+                // check to add ",+"
+                if (i !== (ingredientList.length - 1)) {
+                    ingredientString += ",+"
+                }
             }
-         }
-			try {
-				const response = await axios.get("https://api.spoonacular.com/recipes/findByIngredients", {
-               params: {
-                  apiKey: API_KEY,
-                  ingredients: ingredientString,
-                  number: 2
-               }
-            })
-				setRecipeList(response.data);
+            try {
+                const response = await axios.get("https://api.spoonacular.com/recipes/findByIngredients", {
+                    params: {
+                        apiKey: API_KEY,
+                        ingredients: ingredientString,
+                        number: 3
+                    }
+                })
+                setRecipeList(response.data);
                 console.log(response.data);
-			} catch (error) {
-				console.log(error);
-			}
-		};
+            } catch (error) {
+                console.log(error);
+            }
+        };
 		
         // check if data has been collected already
         if (recipeList == null) {
             fetchData();
+        } else {
+            console.log(recipeList);
         }
 	}, []);
 
