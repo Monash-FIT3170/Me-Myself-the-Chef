@@ -39,7 +39,7 @@ function RecipeRecommendation() {
                params: {
                   apiKey: API_KEY,
                   ingredients: ingredientString,
-                  number: 2
+                  number: 10
                }
             })
 				setRecipeList(response.data);

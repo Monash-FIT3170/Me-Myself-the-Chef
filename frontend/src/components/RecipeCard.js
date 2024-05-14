@@ -20,7 +20,7 @@ function RecipeCard({ recipe, key }) {
                        </div>
                    </div>
                    <div className="col-md-4">
-                       <img src="/static/images/pancake.jpg" className="img-fluid rounded-start" alt="..." />
+                       <img src={recipe.image} className="img-fluid rounded-start" alt="..." />
                    </div>
                </div>
            </div>
