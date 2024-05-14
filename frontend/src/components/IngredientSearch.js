@@ -1,6 +1,7 @@
 import React from 'react';
 import AutoSearchBar from '../components/AutoSearchBar';
 import { Link } from "react-router-dom";
+import RecipeRecommendation from '../views/RecipeRecommendation';
 
 
 function IngredientSearch({addIngredient}) {
@@ -45,7 +46,7 @@ function IngredientSearch({addIngredient}) {
 
             {/* <!-- Generate recipe button --> */}
             <Link className="react_link" to="/recipe_recommendation">
-                <button type="button" className="btn btn-light btn-lg" id="gen-button">Generate Recipes</button>
+                <button type="button" className="btn btn-light btn-lg" id="gen-button" onClick = {RecipeRecommendation()}>Generate Recipes</button>
             </Link>
 
             
