@@ -2,20 +2,23 @@ import React from 'react'
 import '../css/preference.css'
 
 function PrefNavBar(){
+    const preferenceList = [
+        "Dietary Requirements", 
+        "Nutritional Requirements", 
+        "Preparation Time", 
+        "Recipe Complexity/Cooking Experience"
+    ];
+
+    const colSpan = 12/preferenceList.length
+
     return (
         <div class="row flex-fill navbar-padding">
-            <div class="col-md-3 text-center" style={{color: "#458D59" }}>
-                <strong>Dietary Requirements</strong>
-            </div>
-            <div class="col-md-3 text-center" style={{opacity: "33%"}}>
-                <p>Nutritional Requirements</p>
-            </div>
-            <div class="col-md-3 text-center" style={{opacity: "33%"}}>
-                <p>Preparation Time</p>
-            </div>
-            <div class="col-md-3 text-center" style={{opacity: "33%"}}>
-                <p>Recipe Complexity/Cooking Experience</p>
-            </div>
+            {preferenceList.map((pref) => (
+                <div class={"col-md-" + colSpan + " text-center"} style={{opacity: "33%"}}>
+                    <p>{pref}</p>
+                </div>
+            ))}
+
             <hr class="mx-auto" style={{marginTop: "15px", width: "75%"}}></hr>
         </div>
     )
