@@ -66,7 +66,7 @@ exports.signin = async (req, res) => {
       username: user.username,
       email: user.email,
       accessToken: token,
-      searchhistory: user.search_history,
+      searchHistory: user.search_history,
       preferences: user.preferences
     });
   } catch (error) {

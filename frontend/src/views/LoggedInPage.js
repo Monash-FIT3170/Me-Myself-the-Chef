@@ -15,7 +15,7 @@ const LoggedInPage = () => {
         <div className="main_box">
             <div className="form">
                 <center>
-                    <h1>You are already logged in!</h1>
+                    <h1>You are logged in!</h1>
                     <button className="logout_button" onClick={handleLogout}>Logout</button>
                 </center>
             </div>

@@ -7,7 +7,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginError, setLoginError] = useState('');
-    const { isLoggedIn } = useContext(AuthContext);
+    const { isLoggedIn, login } = useContext(AuthContext);
     const navigate = useNavigate();
 
     // Check if user is logged in
@@ -40,8 +40,8 @@ const Login = () => {
 
             const data = await response.json();
 
-            // Store the token in localStorage
-            localStorage.setItem('token', data.accessToken);
+            // Store the token and other data in localStorage
+            login(data);
 
             // Redirect to logged in page upon successful login
             navigate('/logged_in');

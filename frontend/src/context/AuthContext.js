@@ -12,13 +12,17 @@ const AuthProvider = ({ children }) => {
         setIsLoggedIn(!!token);
     }, []);
 
-    const login = (token) => {
-        localStorage.setItem('token', token);
+    const login = (data) => {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('searchHistory', JSON.stringify(data.searchHistory));
+        localStorage.setItem('preferences', JSON.stringify(data.preferences));
         setIsLoggedIn(true);
     };
 
     const logout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('searchHistory');
+        localStorage.removeItem('preferences');
         setIsLoggedIn(false);
     };
 
