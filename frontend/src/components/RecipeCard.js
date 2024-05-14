@@ -1,11 +1,12 @@
 import React from 'react';
 import '../css/base.css'
+import { Link } from 'react-router-dom';
 
 function RecipeCard({ recipe, key }) {
    return (
        <div className="col-12 col-lg-6">
            <div className="card mb-3" style={{ maxWidth: '540px' }}>
-               <a href="#" className="card-link stretched-link"></a>
+           <Link to="/recipe" className="card-link stretched-link"></Link>
                <div className="row g-0">
                    <div className="col-md-8">
                        <div className="card-body">
