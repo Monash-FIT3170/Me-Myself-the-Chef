@@ -14,7 +14,8 @@ function RecipePane({ recipeList }) {
          {/* Display recipe generation result */}
          <div className="container">
             <div className="row">
-               {[...Array(8).keys()].map(i => <RecipeCard key={i + 1} recipeNumber={i + 1} />)}
+               {/* pass recipe to recipe card */}
+               {recipeList?.map(recipe => <RecipeCard recipe={recipe} key={recipe.id}/>)}
             </div>
          </div>
       </div>

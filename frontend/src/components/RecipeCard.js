@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/base.css'
 
-function RecipeCard({ recipeNumber }) {
+function RecipeCard({ recipe, key }) {
    return (
        <div className="col-12 col-lg-6">
            <div className="card mb-3" style={{ maxWidth: '540px' }}>
@@ -9,9 +9,12 @@ function RecipeCard({ recipeNumber }) {
                <div className="row g-0">
                    <div className="col-md-8">
                        <div className="card-body">
-                           <h5 className="card-title">Recipe {recipeNumber}
+
+                            {/* recipe title */}
+                           <h5 className="card-title">{recipe.title}
                                <button type="button" className="btn btn-link text-danger"><i className="fa fa-heart" style={{ fontSize: '24px' }}></i></button>
                            </h5>
+                           
                            <p className="card-text">You have all the ingredients</p>
                        </div>
                    </div>
