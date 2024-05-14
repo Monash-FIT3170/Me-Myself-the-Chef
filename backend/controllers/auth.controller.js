@@ -126,3 +126,19 @@ exports.updateSearchHistory = async (req, res) => {
     res.status(500).send({message: error.message})
   }
 }
+
+exports.getPreferences = async (req, res) => {
+  try{
+    // get user token
+    const user = await AppUser.findOne({
+      _id: req.userId
+    });
+    // confirm user
+    if (!user) {
+      return res.status(404).send({ message: "User Not found." });
+    }
+    res.status(200).send({ preferences: user.preferences});
+  } catch (error) {
+    res.status(500).send({ message: error.message})
+  }
+}
