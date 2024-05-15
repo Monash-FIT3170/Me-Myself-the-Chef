@@ -4,7 +4,7 @@ import IngredientsRecipePane from '../components/IngredientsRecipePane';
 import RecipePane from '../components/RecipePane';
 import { useState, useEffect } from "react";
 import axios from "axios";
-const API_KEY = "09861c68c07140d8a96e353c8d4f86cc";
+
 
 function RecipeRecommendation() {
 
@@ -36,7 +36,7 @@ function RecipeRecommendation() {
             try {
                 const response = await axios.get("https://api.spoonacular.com/recipes/findByIngredients", {
                     params: {
-                        apiKey: API_KEY,
+                        apiKey: process.env.REACT_APP_API_KEY,
                         ingredients: ingredientString,
                         number: 3
                     }

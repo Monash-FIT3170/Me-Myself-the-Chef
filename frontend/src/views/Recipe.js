@@ -6,7 +6,6 @@ import RecipeInstructions from '../components/RecipeInstructions';
 import RecipeDetails from '../components/RecipeDetails';
 import NutritionPane from '../components/NutritionPane';
 import IngredientExpandedPane from '../components/IngredientExpandedPane';
-const API_KEY = "09861c68c07140d8a96e353c8d4f86cc";
 
 function Recipe() {
     const [recipeId, setRecipeId] = useState(useLocation().state);
@@ -20,7 +19,7 @@ function Recipe() {
             try {
                 const response = await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/information`, {
                     params: {
-                        apiKey: API_KEY,
+                        apiKey: process.env.REACT_APP_API_KEY,
                         includeNutrition: true,
                     }
                 })
