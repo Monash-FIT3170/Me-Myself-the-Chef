@@ -44,7 +44,7 @@ const Login = () => {
             login(data);
 
             // Redirect to logged in page upon successful login
-            navigate('/logged_in');
+            navigate('/ingredients');
 
         } catch (error) {
             console.error('Login error:', error);

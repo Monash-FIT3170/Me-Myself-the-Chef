@@ -11,7 +11,6 @@ const SignUp = () => {
     const { isLoggedIn } = useContext(AuthContext);
     const navigate = useNavigate();
    
-    // Check if user is logged in
     useEffect(() => {
         if (isLoggedIn) {
             navigate('/logged_in');
@@ -36,19 +35,14 @@ const SignUp = () => {
             });
 
             if (!response.ok) {
-                // response.json().then(data => {
-                //     throw new Error(data.message || 'Network response was not ok');
-                //   })
                 throw new Error('Sign up failed');
             }
 
-            // Sign up successful, set signupSuccess state to true
             setSignupSuccess(true);
             setSignupError('');
             
         } catch (error) {
             console.error('Sign up error:', error);
-            // Sign up failed, set signupError state
             setSignupError('Sign up failed. Please try again.');
             setSignupSuccess(false);
         }
@@ -64,7 +58,7 @@ const SignUp = () => {
                     </center>
                     {signupSuccess && (
                         <div className="alert alert-success" role="alert">
-                            Sign up successful!
+                            Sign up successful! <Link to="/login">Click here to login</Link>.
                         </div>
                     )}
                     {signupError && (
