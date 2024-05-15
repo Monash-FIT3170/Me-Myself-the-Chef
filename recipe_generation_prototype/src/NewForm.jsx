@@ -23,8 +23,9 @@ export function NewForm({onSubmit}) {
                   type="text" 
                   id="ingredient" 
                />
+               {'       '}
+               <button className="btn">Add</button>
          </div>
-         <button className="btn">Add</button>
       </form>
    )
 }

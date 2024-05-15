@@ -56,6 +56,10 @@ export default function App() {
 		})
 	}
 
+	function resetIngredientList(){
+		setIngredientList([])
+	}
+
 	function generateRecipes() {
 		//debugger;
 		setDisplayRecipe(true);
@@ -82,7 +86,16 @@ export default function App() {
 			{displayHomePage == true} 
 			<NewForm onSubmit={addIngredient}/>
 			<IngredientList ingredientList={ingredientList} deleteIngredient={deleteIngredient}/>
+			<div>
+			<button onClick={() => resetIngredientList()} className="btn">Reset Ingredients List</button>
+			{'\n'}
+			{'\n'}
+			</div>
+			<div>
+				{'		_____	'}
+			</div>
 			<button onClick={() => generateRecipes()} className="btn">Generate Recipes</button>
+			{'                      '}
 			<button onClick={() => resetRecipes()} className="btn">Reset Recipes</button>
 			{displayRecipe == true &&
 				<RecipeList ingredientList={ingredientList} setHomePage={setHomePage} setExpandedRecipeId={setExpandedRecipeId}/>
