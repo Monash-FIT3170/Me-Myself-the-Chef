@@ -20,15 +20,14 @@ function RecipeCard({ recipe }) {
 
     return (
         <div className="col-12 col-lg-6">
+            <Link className="react_link" to="/recipe" state={recipe.id}>
             <div className="card mb-3" style={{ maxWidth: '540px' }}>
                     <div className="row g-0">
                         <div className="col-md-8">
                             <div className="card-body">
                                 <h5 className="card-title">{recipe.title}</h5>
                                 <p className="card-text">{text}</p>
-                                <Link className="react_link" to="/recipe" state={recipe.id}>
-                                    <button type="button" className="btn btn-light btn-lg" id="expand-button">See More</button>
-                                </Link>
+                                
                             </div>
                         </div>
                         <div className="col-md-4">
@@ -36,6 +35,7 @@ function RecipeCard({ recipe }) {
                         </div>
                     </div>
             </div>
+            </Link>
         </div>
     );
 }
