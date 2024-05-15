@@ -41,7 +41,7 @@ function Navbar() {
                         </li>
 
                         <li className="nav-item px-2">
-                            <Link className='react_link' to="/ingredients">
+                            <Link className='react_link' to="/preferences">
                                 <a className="nav-link" href="#">Preferences</a>
                             </Link>
                         </li>
