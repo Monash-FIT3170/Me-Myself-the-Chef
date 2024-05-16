@@ -26,6 +26,11 @@ function DietaryPreference(){
         return diet
     })
 
+    // Listen for changes in the diet context and update dietaryList
+    useEffect(() => {
+        setDietaryList(diet || baseDietaryList);
+    }, [diet]);
+
     // converts object into JSON and sets it into localStorage
     useEffect(() => {
         setDiet(dietaryList)

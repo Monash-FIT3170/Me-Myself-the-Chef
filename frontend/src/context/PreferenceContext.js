@@ -6,7 +6,7 @@ import { AuthContext } from './AuthContext';
 export const PreferenceContext = createContext();
 
 const PreferenceProvider = ({ children }) => {
-    const [preferences, setPreferences] = useState([]);
+    const [preferences, setPreferences] = useState({});
     const [searchHistory, setSearchHistory] = useState([]);
     const [allergies, setAllergies] = useState([]); 
     const [diet, setDiet] = useState(null); 
@@ -14,17 +14,28 @@ const PreferenceProvider = ({ children }) => {
 
     useEffect(() => {
         // Load preferences and search history from local storage if user is not logged in
-        if (!isLoggedIn) {
-            const storedPreferences = JSON.parse(localStorage.getItem('preferences')) || {};
-            const storedSearchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
-            const storedDiets = JSON.parse(localStorage.getItem('preferences')).diet || null;
-            const storedAllergies = JSON.parse(localStorage.getItem('preferences')).allergies || [];
-            setPreferences(storedPreferences);
-            setSearchHistory(storedSearchHistory);
+        const storedPreferences = JSON.parse(localStorage.getItem('preferences')) || {};
+        const storedSearchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+        //var storedDiets = null; 
+        //var storedAllergies = [];
+
+        //console.log(storedPreferences.dietaryRequirements);
+        if (Object.keys(storedPreferences).length > 0) {
+            const storedDiets = storedPreferences.dietaryRequirements; 
+            const storedAllergies = storedPreferences.allergies;
+            
             setDiet(storedDiets);
             setAllergies(storedAllergies);
         }
-    }, [isLoggedIn]);
+        
+        setPreferences(storedPreferences);
+        setSearchHistory(storedSearchHistory);
+    }, []);
+
+    useEffect(() => {
+        console.log(diet);
+    }, [diet]);
+    
 
     const updatePreferences = async () => {
         // Combine allergies and diet into an object
