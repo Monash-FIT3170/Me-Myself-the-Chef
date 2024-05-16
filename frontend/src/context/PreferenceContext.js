@@ -7,22 +7,29 @@ export const PreferenceContext = createContext();
 
 const PreferenceProvider = ({ children }) => {
     const [preferences, setPreferences] = useState([]);
-    const [tempPreferences, setTempPreferences] = useState([]);
     const [searchHistory, setSearchHistory] = useState([]);
-    const [tempSearchHistory, setTempSearchHistory] = useState([]);
+    const [allergies, setAllergies] = useState([]); 
+    const [diet, setDiet] = useState([]); 
     const { isLoggedIn } = useContext(AuthContext);
 
     useEffect(() => {
         // Load preferences and search history from local storage if user is not logged in
         if (!isLoggedIn) {
-            const storedPreferences = JSON.parse(localStorage.getItem('preferences')) || [];
+            const storedPreferences = JSON.parse(localStorage.getItem('preferences')) || {};
             const storedSearchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
             setPreferences(storedPreferences);
             setSearchHistory(storedSearchHistory);
         }
     }, [isLoggedIn]);
 
-    const updatePreferences = async (newPreferences) => {
+    const updatePreferences = async () => {
+        // Combine allergies and diet into an object
+        const newPreferences = {
+            dietaryRequirements: diet.dietaryRequirements,
+            dietaryCombination: diet.dietaryCombination,
+            allergies: allergies,
+        };
+
         setPreferences(newPreferences);
         localStorage.setItem('preferences', JSON.stringify(newPreferences));
         if (isLoggedIn) {
@@ -51,7 +58,7 @@ const PreferenceProvider = ({ children }) => {
     };
 
     return (
-        <PreferenceContext.Provider value={{ preferences, searchHistory, updatePreferences, updateSearchHistory }}>
+        <PreferenceContext.Provider value={{ preferences, searchHistory, allergies, setAllergies, diet, setDiet, updatePreferences, updateSearchHistory }}>
             {children}
         </PreferenceContext.Provider>
     );
