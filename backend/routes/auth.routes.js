@@ -45,7 +45,7 @@ module.exports = function(app) {
     controller.updateSearchHistory
   );
 
-  app.post(
+  app.get(
     "/api/auth/getPreferences",
     [authJwt.verifyToken],
     controller.getPreferences

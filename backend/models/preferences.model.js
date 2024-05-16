@@ -7,7 +7,7 @@ const DietaryRequirementsSchema = new mongoose.Schema({
 })
 
 const AllergySchema = new mongoose.Schema({
-  id: Number,
+  id: String,
   title: String
 })
 

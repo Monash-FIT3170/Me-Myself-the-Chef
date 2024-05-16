@@ -78,7 +78,7 @@ exports.updatePreferences = async (req, res) => {
     // convert submitted user preference data into a mongoDB
     // preference object, ensuring that lists still contain
     // appropriatte objects as well
-    const preference = db.preferences.Preferences({
+    const preference = new db.preferences.Preferences({
       dietaryRequirements: [],
       dietaryCombination: req.body.dietaryCombination,
       allergies: [],
@@ -101,7 +101,9 @@ exports.updatePreferences = async (req, res) => {
       });
       preference.allergies.push(allergy);
     }
-    await user.save();
+    preference.save(); // save the completed object to mongoDB
+    user.preferences = preference; // add the object to the user
+    user.save(); // save user data
     res.send({ message: "User preferences was updated successfully!" });
   } catch (error) {
     res.status(500).send({ message: error.message})
@@ -134,7 +136,7 @@ exports.updateSearchHistory = async (req, res) => {
 
 exports.getPreferences = async (req, res) => {
   try{
-    // get user token
+    // get user from database
     const user = await db.appuser.findOne({
       _id: req.userId
     });
@@ -142,7 +144,16 @@ exports.getPreferences = async (req, res) => {
     if (!user) {
       return res.status(404).send({ message: "User Not found." });
     }
-    res.status(200).send({ preferences: user.preferences});
+    // get user Preference from seperate database collection
+    const preference = await db.preferences.Preferences.findOne({
+      _id: user.preferences
+    });
+    // confirm existence
+    if (!preference) {
+      return res.status(404).send({ message: "Preference Object Not found." });
+    }
+    // send succesful response
+    res.status(200).send({ preferences: preference});
   } catch (error) {
     res.status(500).send({ message: error.message})
   }
