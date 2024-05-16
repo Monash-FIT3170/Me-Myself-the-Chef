@@ -16,10 +16,7 @@ const PreferenceProvider = ({ children }) => {
         // Load preferences and search history from local storage if user is not logged in
         const storedPreferences = JSON.parse(localStorage.getItem('preferences')) || {};
         const storedSearchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
-        //var storedDiets = null; 
-        //var storedAllergies = [];
 
-        //console.log(storedPreferences.dietaryRequirements);
         if (Object.keys(storedPreferences).length > 0) {
             const storedDiets = storedPreferences.dietaryRequirements; 
             const storedAllergies = storedPreferences.allergies;
@@ -27,15 +24,14 @@ const PreferenceProvider = ({ children }) => {
             setDiet(storedDiets);
             setAllergies(storedAllergies);
         }
+        else {
+            setDiet(null);
+            setAllergies([]);
+        }
         
         setPreferences(storedPreferences);
         setSearchHistory(storedSearchHistory);
-    }, []);
-
-    useEffect(() => {
-        console.log(diet);
-    }, [diet]);
-    
+    }, [isLoggedIn]);
 
     const updatePreferences = async () => {
         // Combine allergies and diet into an object

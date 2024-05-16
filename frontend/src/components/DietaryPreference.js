@@ -34,7 +34,7 @@ function DietaryPreference(){
     // converts object into JSON and sets it into localStorage
     useEffect(() => {
         setDiet(dietaryList)
-    }, [dietaryList])
+    }, [dietaryList, setDiet])
 
 
     // updates the dietary list based on the checkbox checked status

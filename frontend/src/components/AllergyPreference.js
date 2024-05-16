@@ -11,7 +11,6 @@ function AllergyPreference() {
 
     // obtain allergy list from local storage else return an empty list
     const [allergyList, setAllergyList] = useState(() => {
-        if (allergies) return [];
         return allergies;
     })
 
@@ -19,7 +18,7 @@ function AllergyPreference() {
     useEffect(() => {
         // Only update allergyList if allergies has changed
         if (JSON.stringify(allergies) !== JSON.stringify(allergyList)) {
-            setAllergyList(allergies || []);
+            setAllergyList(allergies);
         }
     }, [allergies]);
 
