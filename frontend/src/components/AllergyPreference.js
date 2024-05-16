@@ -2,23 +2,22 @@ import React from 'react'
 import { useEffect, useState, useContext } from 'react';
 import '../css/base.css'
 import AllergyPane from './AllergyPane';
-import PreferenceProvider from '../context/PreferenceContext';
+import { PreferenceContext } from '../context/PreferenceContext';
 
 function AllergyPreference(){
 
     // access to temp list for preferences
-    const { allergies, setAllergies } = useContext(PreferenceProvider);
+    const { allergies, setAllergies } = useContext(PreferenceContext);
     
     // obtain allergy list from local storage else return an empty list
     const [allergyList, setAllergyList] = useState(() => {
-        if (!allergies) return []
-        return JSON.parse(allergies)
+        return allergies
     })
 
     // function is only called everytime allergyList updates
     // function updates local storage of updated allergyList
     useEffect(() => {
-        setAllergies(JSON.stringify(allergyList))
+        setAllergies(allergyList)
     }, [allergyList])
 
     // function to add allergy to allergyList

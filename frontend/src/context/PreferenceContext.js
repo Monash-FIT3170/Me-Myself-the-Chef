@@ -9,7 +9,7 @@ const PreferenceProvider = ({ children }) => {
     const [preferences, setPreferences] = useState([]);
     const [searchHistory, setSearchHistory] = useState([]);
     const [allergies, setAllergies] = useState([]); 
-    const [diet, setDiet] = useState([]); 
+    const [diet, setDiet] = useState(null); 
     const { isLoggedIn } = useContext(AuthContext);
 
     useEffect(() => {
@@ -17,16 +17,19 @@ const PreferenceProvider = ({ children }) => {
         if (!isLoggedIn) {
             const storedPreferences = JSON.parse(localStorage.getItem('preferences')) || {};
             const storedSearchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            const storedDiets = JSON.parse(localStorage.getItem('preferences')).diet || null;
+            const storedAllergies = JSON.parse(localStorage.getItem('preferences')).allergies || [];
             setPreferences(storedPreferences);
             setSearchHistory(storedSearchHistory);
+            setDiet(storedDiets);
+            setAllergies(storedAllergies);
         }
     }, [isLoggedIn]);
 
     const updatePreferences = async () => {
         // Combine allergies and diet into an object
         const newPreferences = {
-            dietaryRequirements: diet.dietaryRequirements,
-            dietaryCombination: diet.dietaryCombination,
+            dietaryRequirements: diet,
             allergies: allergies
         };
 
