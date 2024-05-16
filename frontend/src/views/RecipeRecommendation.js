@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/base.css'
 import IngredientsRecipePane from '../components/IngredientsRecipePane';
-import RecipePane from '../components/RecipePane';
+import ComplexRecipePane from '../components/ComplexRecipePane';
 import { useState, useEffect } from "react";
 import axios from "axios";
 const API_KEY = "4cb545ba636c422990fb2f1cfc567c69";     // Alana's API key 
@@ -62,7 +62,6 @@ function RecipeRecommendation() {
             let cannot_eat = preferenceList.allergies
 
             /// TEST DATA 
-            dietaryString = "" 
             maxPrepTime = 80
             cannot_eat=""
 
@@ -79,15 +78,16 @@ function RecipeRecommendation() {
                        apiKey: API_KEY,
                         //query: "pasta",
                         includeIngredients: ingredientString,
+                        //addRecipeInformation: true,
                         //number: 2,
                         //ingredients: ingredientString, //--> FOR INGREDIENT SEARCH ONLY 
-                        number: 3   // number of recipes to return 
+                        number: 3,   // number of recipes to return 
 
                         // IF USING COMPLEX SEARCH --- TEST DATA 
 
-                        //diet: dietaryString,
-                        //maxReadyTime: maxPrepTime,
-                        //intolerances: cannot_eat
+                        diet: dietaryString,
+                        maxReadyTime: maxPrepTime,
+                        intolerances: cannot_eat
                         ///// can potentially add --> addRecipeInformation: True to reduce the number of API calls required 
                         // ignorePantry parameter can be used to ignore flour, salt, etc. 
                     }
@@ -118,8 +118,8 @@ function RecipeRecommendation() {
             <IngredientsRecipePane ingredientList={ingredientList}/>
 
             {/* Display Recipe Pane */}
-            {/* THIS IS THE PART THAT ISN't WORKING */}
-            <RecipePane recipeList={recipeList}/>
+            {/* THIS IS THE PART THAT ISN't WORKING --> problem was that new output is object not list */} 
+            <ComplexRecipePane recipeList={recipeList.results}/>
 
         </div>
 
