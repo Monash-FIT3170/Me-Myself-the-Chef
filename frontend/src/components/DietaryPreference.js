@@ -1,9 +1,13 @@
 import React from 'react'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import '../css/base.css'
 import DietaryPane from './DietaryPane';
+import PreferenceProvider from '../context/PreferenceContext';
 
 function DietaryPreference(){
+
+    // access to temp list for preferences
+    const { diet, setDiet } = useContext(PreferenceProvider);
 
     // base dietary list
     // if you make changes to this after running, you must clear localStorage to see changes
@@ -18,15 +22,13 @@ function DietaryPreference(){
     // obtains the dietary list from localStorage or uses the base one
     // sets the list as an object to handle in js
     const [dietaryList, setDietaryList] = useState(() => {
-        const localValue = localStorage.getItem("DIETS")
-        if (localValue == null) return baseDietaryList
-
-        return JSON.parse(localValue)
+        if (!diet) return baseDietaryList
+        return JSON.parse(diet)
     })
 
     // converts object into JSON and sets it into localStorage
     useEffect(() => {
-        localStorage.setItem("DIETS", JSON.stringify(dietaryList))
+        setDiet(JSON.stringify(dietaryList))
     }, [dietaryList])
 
 

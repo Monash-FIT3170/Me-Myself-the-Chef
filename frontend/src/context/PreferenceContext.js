@@ -27,7 +27,7 @@ const PreferenceProvider = ({ children }) => {
         const newPreferences = {
             dietaryRequirements: diet.dietaryRequirements,
             dietaryCombination: diet.dietaryCombination,
-            allergies: allergies,
+            allergies: allergies
         };
 
         setPreferences(newPreferences);
