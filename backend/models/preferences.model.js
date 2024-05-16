@@ -22,4 +22,4 @@ const DietaryRequirements = mongoose.model("DietaryRequirements", DietaryRequire
 const Allergies = mongoose.model("Allergies", AllergySchema);
 const Preferences = mongoose.model("Preferences", PreferenceSchema);
 
-module.exports = Preferences;
+module.exports = {Preferences, Allergies, DietaryRequirements};
