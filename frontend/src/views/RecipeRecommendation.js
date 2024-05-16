@@ -58,11 +58,11 @@ function RecipeRecommendation() {
                     ingredientString += ",+"
                 }
             }
-            let maxPrepTime = preferenceList.maxPrepTime
+            let maxPrepTime = preferenceList.maxPrepTime            
             let cannot_eat = preferenceList.allergies
 
-
-            //dietaryString = ""
+            /// TEST DATA 
+            dietaryString = "" 
             maxPrepTime = 80
             cannot_eat=""
 
@@ -83,7 +83,7 @@ function RecipeRecommendation() {
                         //ingredients: ingredientString, //--> FOR INGREDIENT SEARCH ONLY 
                         number: 3   // number of recipes to return 
 
-                        // IF USING COMPLEX SEARCH 
+                        // IF USING COMPLEX SEARCH --- TEST DATA 
 
                         //diet: dietaryString,
                         //maxReadyTime: maxPrepTime,
@@ -100,7 +100,7 @@ function RecipeRecommendation() {
             }
         };
 		
-        // check if data has been collected already /// Why is this needed? It is inside the use effect anyway so we can't get here withut fetching the data 
+        // check if data has been collected already /// 
         //if (recipeList !== null){
         //    console.log(recipeList);
         //}
