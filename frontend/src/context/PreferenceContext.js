@@ -7,7 +7,9 @@ export const PreferenceContext = createContext();
 
 const PreferenceProvider = ({ children }) => {
     const [preferences, setPreferences] = useState([]);
+    const [tempPreferences, setTempPreferences] = useState([]);
     const [searchHistory, setSearchHistory] = useState([]);
+    const [tempSearchHistory, setTempSearchHistory] = useState([]);
     const { isLoggedIn } = useContext(AuthContext);
 
     useEffect(() => {
