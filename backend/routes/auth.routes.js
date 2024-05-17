@@ -44,4 +44,10 @@ module.exports = function(app) {
     [authJwt.verifyToken],
     controller.updateSearchHistory
   );
+
+  app.get(
+    "/api/auth/getPreferences",
+    [authJwt.verifyToken],
+    controller.getPreferences
+  );
 };

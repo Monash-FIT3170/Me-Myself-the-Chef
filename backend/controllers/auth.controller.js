@@ -1,38 +1,30 @@
 const config = require("../config/auth.config");
-const db = require("../models");
-const User = db.appuser;
-
+const db = require("../models"); // access mongoDB models from here
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
-const AppUser = require("../models/appuser.model");
-const SearchHistory = db.searchhistory
 
 exports.signup = async (req, res) => {
   try {
-    console.log(req.body);
     // create appUser object from request information
-    const user = new AppUser({
+    const user = new db.appuser({
       username: req.body.username,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 8)
     });
-    // and saves the user to the database
-    const savedUser = await user.save();
-
+    // Saves the user to the database and sends response
+    await user.save();
     res.send({ message: "User was registered successfully!" });
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
 };
 
-
 exports.signin = async (req, res) => {
   try {
     // searches for the username and returns a 404 error if not found
-    const user = await AppUser.findOne({
+    const user = await db.appuser.findOne({
       username: req.body.username
     });
-
     if (!user) {
       return res.status(404).send({ message: "User Not found." });
     }
@@ -42,15 +34,13 @@ exports.signin = async (req, res) => {
       req.body.password,
       user.password
     );
-
     if (!passwordIsValid) {
       return res.status(401).send({
         accessToken: null,
         message: "Invalid Password!"
       });
     }
-    // Im honestly not too certain on the function of this token
-    // might be important for authentication purposes so it's staying in
+    // Configure a token for the user that last for a time limit
     const token = jwt.sign(
       { id: user.id },
       config.secret,
@@ -66,7 +56,7 @@ exports.signin = async (req, res) => {
       username: user.username,
       email: user.email,
       accessToken: token,
-      searchhistory: user.search_history,
+      searchHistory: user.search_history,
       preferences: user.preferences
     });
   } catch (error) {
@@ -75,27 +65,45 @@ exports.signin = async (req, res) => {
 };
 
 
-// update preferences and search history data
+// update preferences data
 exports.updatePreferences = async (req, res) => {
   try{
-    const user = await AppUser.findOne({
+    // searches for the username and returns a 404 error if not found
+    const user = await db.appuser.findOne({
       _id: req.userId,
     });
-
-    // if fail there's a problem with the token verification
     if (!user) {
       return res.status(404).send({ message: "User Not found." });
     }
-    const Preferences = db.preferences;
-    // convert user preferences
-    for(let i = 0; i < req.body.length; i++){
-      console.log(req.body[i]);
-      const preference = new Preferences({ingredient: req.body[i].ingredient});
-      preference.save();
-      user.preferences.push(preference);
+    // convert submitted user preference data into a mongoDB
+    // preference object, ensuring that lists still contain
+    // appropriatte objects as well
+    const preference = new db.preferences.Preferences({
+      dietaryRequirements: [],
+      dietaryCombination: req.body.dietaryCombination,
+      allergies: [],
+      maxPrepTime: req.body.maxPrepTime
+    });
+    // dietaryRequirements list
+    for(let i = 0; i<req.body.dietaryRequirements.length; i++){
+      const dietaryRequirement = new db.preferences.DietaryRequirements({
+        id: req.body.dietaryRequirements[i].id,
+        name: req.body.dietaryRequirements[i].name,
+        state: req.body.dietaryRequirements[i].state
+      });
+      preference.dietaryRequirements.push(dietaryRequirement);
     }
-    // Save the user object
-    await user.save();
+    // allergies list
+    for(let i = 0; i<req.body.allergies.length; i++){
+      const allergy = new db.preferences.Allergies({
+        id: req.body.allergies[i].id,
+        title: req.body.allergies[i].title
+      });
+      preference.allergies.push(allergy);
+    }
+    preference.save(); // save the completed object to mongoDB
+    user.preferences = preference; // add the object to the user
+    user.save(); // save user data
     res.send({ message: "User preferences was updated successfully!" });
   } catch (error) {
     res.status(500).send({ message: error.message})
@@ -104,7 +112,7 @@ exports.updatePreferences = async (req, res) => {
 
 exports.updateSearchHistory = async (req, res) => {
   try{
-    const user = await AppUser.findOne({
+    const user = await db.appuser.findOne({
       _id: req.userId
     });
     // confirm user
@@ -112,8 +120,7 @@ exports.updateSearchHistory = async (req, res) => {
       return res.status(404).send({ message: "User Not found." });
     }
     // create search history object
-    const SH = db.searchhistory
-    const data = new SH({ date: req.body.date, entry: req.body.entry});
+    const data = new db.searchhistory({ date: req.body.date, entry: req.body.entry});
     await Promise.all([
       data.save()
     ]);
@@ -124,5 +131,30 @@ exports.updateSearchHistory = async (req, res) => {
     res.send({ message: "Search History updated successfully!" });
   } catch (error) {
     res.status(500).send({message: error.message})
+  }
+}
+
+exports.getPreferences = async (req, res) => {
+  try{
+    // get user from database
+    const user = await db.appuser.findOne({
+      _id: req.userId
+    });
+    // confirm user
+    if (!user) {
+      return res.status(404).send({ message: "User Not found." });
+    }
+    // get user Preference from seperate database collection
+    const preference = await db.preferences.Preferences.findOne({
+      _id: user.preferences
+    });
+    // confirm existence
+    if (!preference) {
+      return res.status(404).send({ message: "Preference Object Not found." });
+    }
+    // send succesful response
+    res.status(200).send({ preferences: preference});
+  } catch (error) {
+    res.status(500).send({ message: error.message})
   }
 }
