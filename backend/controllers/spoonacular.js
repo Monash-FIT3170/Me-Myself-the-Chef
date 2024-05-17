@@ -1,11 +1,8 @@
 const axios = require('axios')
 const mongoose = require('mongoose')
 
-const BASE_URL = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/'
-const HEADERS = {
-    'X-RapidAPI-Key': process.env.RAPID_API_KEY,
-    'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
-}
+const BASE_URL = 'https://api.spoonacular.com/'
+const API_KEY = process.env.SPOONACULAR_API_KEY
 const RECIPES = mongoose.connection.collection('recipes')
 
 
@@ -17,14 +14,13 @@ const getRecipes = async (req, res) => {
         method: 'GET',
         url: BASE_URL + 'recipes/complexSearch',
         params: {
+            apiKey: API_KEY,
             query: query
-        },
-        headers: HEADERS
+        }
     }
 
     try {
         const response = await axios.request(options)
-        console.log(response.data)
         return res.status(200).json(response.data)
     } catch (error) {
         console.error(error)
@@ -35,16 +31,16 @@ const getRecipes = async (req, res) => {
 
 const getRecipesByIngredients = async (req, res) => {
     // Returns recipes with the specified ingredients
-    // http://localhost:4000/api/recipes/ingredients/chicken,garlic
+    // http://localhost:8080/api/recipes/ingredients/chicken,garlic
     let {ingredients} = req.params
 
     const options = {
         method: 'GET',
         url: BASE_URL + 'recipes/findByIngredients',
         params: {
+            apiKey: API_KEY,
             ingredients: ingredients
         },
-        headers: HEADERS
     }
     try {
         const response = await axios.request(options)
@@ -77,11 +73,11 @@ const getRecipeInfo = async (req, res) => {
             method: 'GET',
             url: BASE_URL + 'recipes/' + id + '/information',
             params: {
+                apiKey: API_KEY,
                 includeNutrition: true,
                 addWinePairing: false,
                 addTasteData: false
             },
-            headers: HEADERS
         }
         try {
             // Make request
