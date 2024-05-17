@@ -41,7 +41,7 @@ const complexSearch = async (req, res) => {
     }
 
     // Process max prep time
-    const maxPrepTime = preferences ? preferences.maxPrepTime : 20
+    const maxPrepTime = 20  // preferences ? preferences.maxPrepTime : 20
 
     const options = {
         method: 'GET',
