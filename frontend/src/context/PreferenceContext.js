@@ -11,15 +11,13 @@ const PreferenceProvider = ({ children }) => {
     const [allergies, setAllergies] = useState([]); 
     const [diet, setDiet] = useState(null); 
     const { isLoggedIn } = useContext(AuthContext);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertType, setAlertType] = useState('');
 
     useEffect(() => {
         // Load preferences and search history from local storage if user is not logged in
         const storedPreferences = JSON.parse(localStorage.getItem('preferences')) || {};
         const storedSearchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
-
-        console.log(isLoggedIn);
-        console.log(storedPreferences);
-        console.log(localStorage.getItem('preferences'));
 
         if (Object.keys(storedPreferences).length > 0) {
             const storedDiets = storedPreferences.dietaryRequirements; 
@@ -27,8 +25,7 @@ const PreferenceProvider = ({ children }) => {
             
             setDiet(storedDiets);
             setAllergies(storedAllergies);
-        }
-        else {
+        } else {
             setDiet(null);
             setAllergies([]);
         }
@@ -48,6 +45,9 @@ const PreferenceProvider = ({ children }) => {
 
         setPreferences(newPreferences);
         localStorage.setItem('preferences', JSON.stringify(newPreferences));
+        setAlertMessage('Preferences saved to <strong>local storage</strong>. Please login to save to database.');
+        setAlertType('success');
+
         if (isLoggedIn) {
             try {
                 const response = await fetch('http://localhost:8080/api/auth/updatePreferences', {
@@ -58,13 +58,18 @@ const PreferenceProvider = ({ children }) => {
                     },
                     body: JSON.stringify(newPreferences)
                 });
-    
+
                 if (!response.ok) {
                     throw new Error('Failed to update user preferences');
                 }
-    
+
+                setAlertMessage('Preferences saved to the <strong>database</strong> successfully.');
+                setAlertType('success');
+
             } catch (error) {
-                console.error('Token Error:', error);
+                console.error('Network Error:', error);
+                setAlertMessage('Failed to update preferences.');
+                setAlertType('danger');
             }
         }
     };
@@ -84,7 +89,7 @@ const PreferenceProvider = ({ children }) => {
     };
 
     return (
-        <PreferenceContext.Provider value={{ preferences, searchHistory, allergies, setAllergies, diet, setDiet, updatePreferences, updateSearchHistory }}>
+        <PreferenceContext.Provider value={{ preferences, searchHistory, allergies, setAllergies, diet, setDiet, updatePreferences, updateSearchHistory, alertMessage, alertType, setAlertMessage }}>
             {children}
         </PreferenceContext.Provider>
     );

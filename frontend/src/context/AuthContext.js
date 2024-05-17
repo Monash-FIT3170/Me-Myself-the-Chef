@@ -48,7 +48,7 @@ const AuthProvider = ({ children }) => {
             localStorage.setItem('preferences', JSON.stringify(preferences));
 
         } catch (error) {
-            console.error('Token Error:', error);
+            console.error('Network Error:', error);
         }
     };
 
