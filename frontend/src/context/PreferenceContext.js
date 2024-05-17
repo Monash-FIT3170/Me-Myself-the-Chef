@@ -17,6 +17,10 @@ const PreferenceProvider = ({ children }) => {
         const storedPreferences = JSON.parse(localStorage.getItem('preferences')) || {};
         const storedSearchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
 
+        console.log(isLoggedIn);
+        console.log(storedPreferences);
+        console.log(localStorage.getItem('preferences'));
+
         if (Object.keys(storedPreferences).length > 0) {
             const storedDiets = storedPreferences.dietaryRequirements; 
             const storedAllergies = storedPreferences.allergies;
@@ -37,18 +41,30 @@ const PreferenceProvider = ({ children }) => {
         // Combine allergies and diet into an object
         const newPreferences = {
             dietaryRequirements: diet,
-            allergies: allergies
+            dietaryCombination: "test",
+            allergies: allergies,
+            maxPrepTime: 0
         };
 
         setPreferences(newPreferences);
         localStorage.setItem('preferences', JSON.stringify(newPreferences));
         if (isLoggedIn) {
             try {
-                await axios.post('/api/auth/updatePreferences', newPreferences, {
-                    headers: { 'x-access-token': localStorage.getItem('token') }
+                const response = await fetch('http://localhost:8080/api/auth/updatePreferences', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-access-token': localStorage.getItem('token')
+                    },
+                    body: JSON.stringify(newPreferences)
                 });
+    
+                if (!response.ok) {
+                    throw new Error('Failed to update user preferences');
+                }
+    
             } catch (error) {
-                console.error('Error updating preferences', error);
+                console.error('Token Error:', error);
             }
         }
     };
