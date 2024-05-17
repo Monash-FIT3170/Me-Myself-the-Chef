@@ -24,7 +24,9 @@ const complexSearch = async (req, res) => {
     const diets = preferences ? preferences.dietaryRequirements : []
     let dietString = ""
     for (let i = 0; i < diets.length; i++) {
-        dietString += diets[i].name
+        if (diets[i].state) {
+            dietString += diets[i].name
+        }
         if (i !== (ingredients.length - 1)) {
             dietString += ","
         }
