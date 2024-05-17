@@ -67,21 +67,9 @@ function Recipe() {
         return formattedIngredients;
     }
     
-    function formatNutrition(nutritionInfo) {
-        let formattedNutrition = [];
-
-        // calorie info
-        formattedNutrition.push(`${nutritionInfo[0].name} ${nutritionInfo[0].amount} ${nutritionInfo[0].unit}`);
-    
-        // fat info
-        formattedNutrition.push(`${nutritionInfo[1].name} ${nutritionInfo[1].amount} ${nutritionInfo[1].unit}`);
-
-        // carb info
-        formattedNutrition.push(`${nutritionInfo[3].name} ${nutritionInfo[3].amount} ${nutritionInfo[3].unit}`);
-
-        // sugar info
-        formattedNutrition.push(`${nutritionInfo[5].name} ${nutritionInfo[5].amount} ${nutritionInfo[5].unit}`);
-
+    function formatNutrition(nutrients) {
+        // formats the nutrition facts which takes it from the array 
+        const formattedNutrition = nutrients.map(nutrient => `${nutrient.name}: ${nutrient.amount} ${nutrient.unit}`);
         return formattedNutrition;
     }
    
