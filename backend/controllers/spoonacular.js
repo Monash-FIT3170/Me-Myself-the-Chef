@@ -69,7 +69,7 @@ const getRecipeInfo = async (req, res) => {
         recipe = await RECIPES.findOne({_id: parseInt(id)})
         if (recipe) {
             console.log('Recipe found in MongoDB')
-            return res.json(recipe)
+            return res.json(recipe.recipe)
         }
 
         // Otherwise make an API call to Spoonacular
@@ -77,7 +77,7 @@ const getRecipeInfo = async (req, res) => {
             method: 'GET',
             url: BASE_URL + 'recipes/' + id + '/information',
             params: {
-                includeNutrition: false,
+                includeNutrition: true,
                 addWinePairing: false,
                 addTasteData: false
             },
