@@ -5,6 +5,8 @@
 /frontend/node_modules
 /recipe_generation_prototype/node_modules
 
+/backend/.env
+
 /.pnp
 .pnp.js
 
