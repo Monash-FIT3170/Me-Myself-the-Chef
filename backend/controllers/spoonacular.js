@@ -6,6 +6,67 @@ const API_KEY = process.env.SPOONACULAR_API_KEY
 const RECIPES = mongoose.connection.collection('recipes')
 
 
+const complexSearch = async (req, res) => {
+    // To use this one send a POST request with query, ingredients and preferences
+    let {query, ingredients, preferences} = req.body
+    console.log(req.body)
+    // Process list of ingredients.
+    let ingredientsString = ""
+    for (let i = 0; i < ingredients.length; i++) {
+        ingredientsString += ingredients[i].title
+        // check to add ",+"
+        if (i !== (ingredients.length - 1)) {
+            ingredientsString += ",+"
+        }
+    }
+
+    // Process list of diets.
+    const diets = preferences ? preferences.dietaryRequirements : []
+    let dietString = ""
+    for (let i = 0; i < diets.length; i++) {
+        dietString += diets[i].name
+        if (i !== (ingredients.length - 1)) {
+            dietString += ","
+        }
+    }
+
+    // Process list of allergies
+    const allergies = preferences ? preferences.allergies : []
+    let allergiesString = ""
+    for (let i = 0; i < allergies.length; i++) {
+        allergiesString += allergies[i].title
+        if (i !== (ingredients.length - 1)) {
+            allergiesString += ","
+        }
+    }
+
+    // Process max prep time
+    const maxPrepTime = preferences ? preferences.maxPrepTime : 20
+
+    const options = {
+        method: 'GET',
+        url: BASE_URL + 'recipes/complexSearch',
+        params: {
+            apiKey: API_KEY,
+            query: query,
+            diet: dietString,
+            intolerances: allergiesString,
+            includeIngredients: ingredientsString,
+            maxReadyTime: maxPrepTime
+        }
+    }
+
+    try {
+        const response = await axios.request(options)
+        console.log(response.data)
+        return res.status(200).json(response.data.results)
+    } catch (error) {
+        console.error(error)
+        return res.status(400).json(error)
+    }
+}
+
+
 const getRecipes = async (req, res) => {
     // Returns the first 10 recipes matching a query
     const {query} = req.params
@@ -101,6 +162,7 @@ const getRecipeInfo = async (req, res) => {
 }
 
 module.exports = {
+    complexSearch,
     getRecipes,
     getRecipesByIngredients,
     getRecipeInfo
