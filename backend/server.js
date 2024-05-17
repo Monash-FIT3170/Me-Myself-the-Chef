@@ -1,3 +1,5 @@
+require('dotenv').config()  // Attaches env variables to process object
+
 const express = require("express");
 const path = require("path");
 const cors = require('cors');
@@ -9,7 +11,11 @@ const PORT = process.env.PORT || 8080;
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
+app.use((req, res, next) => {
+    console.log(req.method, req.path) // Log path to console
+    next()
+})
 
 // Database setup
 const db = require("../backend/models");
@@ -20,17 +26,21 @@ db.mongoose.connect(dbConfig.uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(() => {
-    console.log("Successfully connect to MongoDB.");
-})
-.catch(err => {
-    console.error("Connection error", err);
-    process.exit();
-});
+    .then(() => {
+        console.log("Successfully connect to MongoDB.");
+    })
+    .catch(err => {
+        console.error("Connection error", err);
+        process.exit();
+    });
 
 // Routes
 require('../backend/routes/auth.routes')(app);
 require('../backend/routes/user.routes')(app);
+
+// Recipe Routes
+const recipeRoutes = require('./routes/recipes')
+app.use('/api/recipes', recipeRoutes)
 
 // Start the server
 app.listen(PORT, () => {

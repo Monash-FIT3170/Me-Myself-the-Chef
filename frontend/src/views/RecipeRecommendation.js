@@ -2,9 +2,8 @@ import React from 'react';
 import '../css/base.css'
 import IngredientsRecipePane from '../components/IngredientsRecipePane';
 import RecipePane from '../components/RecipePane';
-import { useState, useEffect } from "react";
-import axios from "axios";
-const API_KEY = "09861c68c07140d8a96e353c8d4f86cc";
+import {useState, useEffect} from "react";
+
 
 function RecipeRecommendation() {
 
@@ -15,7 +14,7 @@ function RecipeRecommendation() {
         return JSON.parse(localValue)
     });
 
-    const [recipeList, setRecipeList] = useState();
+    const [recipeList, setRecipeList] = useState(null);
 
     // is called everytime the page reloads/renders
     useEffect(() => {
@@ -34,28 +33,21 @@ function RecipeRecommendation() {
                 }
             }
             try {
-                const response = await axios.get("https://api.spoonacular.com/recipes/findByIngredients", {
-                    params: {
-                        apiKey: API_KEY,
-                        ingredients: ingredientString,
-                        number: 3
-                    }
-                })
-                setRecipeList(response.data);
-                console.log(response.data);
+                const response = await fetch("/api/recipes/ingredients/" + ingredientString)
+                const json = await response.json()
+                setRecipeList(json);
             } catch (error) {
                 console.log(error);
             }
         };
-		
+
         // check if data has been collected already
         if (recipeList == null) {
             fetchData();
         } else {
             console.log(recipeList);
         }
-	}, []);
-
+    }, []);
 
     return (
         <div className="row flex-fill">
@@ -64,9 +56,7 @@ function RecipeRecommendation() {
 
             {/* Display Recipe Pane */}
             <RecipePane recipeList={recipeList}/>
-
         </div>
-
     );
 }
 

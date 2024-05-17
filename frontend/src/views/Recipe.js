@@ -1,12 +1,11 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useLocation } from 'react-router-dom';
 import RecipeInstructions from '../components/RecipeInstructions';
 import RecipeDetails from '../components/RecipeDetails';
 import NutritionPane from '../components/NutritionPane';
 import IngredientExpandedPane from '../components/IngredientExpandedPane';
-const API_KEY = "09861c68c07140d8a96e353c8d4f86cc";
+
 
 function Recipe() {
     const [recipeId, setRecipeId] = useState(useLocation().state);
@@ -18,17 +17,13 @@ function Recipe() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/information`, {
-                    params: {
-                        apiKey: API_KEY,
-                        includeNutrition: true,
-                    }
-                })
-                console.log(response.data);
-                setRecipeInfo(response.data);
-                setInstructions(formatInstructions(response.data.analyzedInstructions[0].steps));
-                setIngredients(formatIngredients(response.data.extendedIngredients));
-                setNutrition(formatNutrition(response.data.nutrition));
+                const response = await fetch('api/recipes/id/' + recipeId)
+                const json = await response.json()
+                console.log(json);
+                setRecipeInfo(json);
+                setInstructions(formatInstructions(json.analyzedInstructions[0].steps));
+                setIngredients(formatIngredients(json.extendedIngredients));
+                setNutrition(formatNutrition(json.nutrition));
             } catch (error) {
                 console.log(error);
             }
