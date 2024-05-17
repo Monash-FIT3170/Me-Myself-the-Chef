@@ -24,10 +24,20 @@ function Recipe() {
                     }
                 })
                 console.log(response.data);
+                console.log("API Response - Nutrition:", response.data.nutrition);
                 setRecipeInfo(response.data);
                 setInstructions(formatInstructions(response.data.analyzedInstructions[0].steps));
                 setIngredients(formatIngredients(response.data.extendedIngredients));
-                setNutrition(formatNutrition(response.data.nutrition));
+               
+                // Extract nutritional data from the nutrients array
+                const nutrients = response.data.nutrition.nutrients;
+
+                // Format the nutritional data if necessary
+                const formattedNutrition = formatNutrition(nutrients);
+
+                // Set the nutrition state with the formatted data
+                setNutrition(formattedNutrition);
+
             } catch (error) {
                 console.log(error);
             }
@@ -74,6 +84,7 @@ function Recipe() {
 
         return formattedNutrition;
     }
+   
 
     // Placeholder recipe data
     const recipeData = {
