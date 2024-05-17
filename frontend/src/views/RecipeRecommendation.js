@@ -5,7 +5,6 @@ import RecipePane from '../components/RecipePane';
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-
 function RecipeRecommendation() {
 
     const [ingredientList, setIngredientList] = useState(() => {
