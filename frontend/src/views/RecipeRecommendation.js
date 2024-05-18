@@ -4,7 +4,7 @@ import IngredientsRecipePane from '../components/IngredientsRecipePane';
 import ComplexRecipePane from '../components/ComplexRecipePane';
 import { useState, useEffect } from "react";
 import axios from "axios";
-const API_KEY = "4cb545ba636c422990fb2f1cfc567c69";     // Alana's API key 
+const API_KEY = "4ce9907336ec48e28a9d5f8303e1e443";     // Alana's API key 
 
 // function to call Spoonacular API and generate recipes based off of ingredients and preferences
 function RecipeRecommendation() {
@@ -103,21 +103,27 @@ function RecipeRecommendation() {
         //if (recipeList !== null){
         //    console.log(recipeList);
         //}
-        if (recipeList == null) {
+        if (recipeList == null || recipeList === undefined) {
             fetchData();
         } else {
             console.log(recipeList);
         }
     }, []); /// changing to {} captures the object 
 
+    console.log("Thomas")
+    console.log("type of object:" + typeof(recipeList))
+    // for (let k=0; k < recipeList.length; k++) {
+    //     console.log(recipeList[k])
+    // }
+
     return (
         <div className="row flex-fill">
             {/* Ingredients Pane */}
-            {/*<IngredientsRecipePane ingredientList={ingredientList}/>*/}
+            <IngredientsRecipePane ingredientList={ingredientList}/>
 
             {/* Display Recipe Pane */}
             {/* THIS IS THE PART THAT ISN't WORKING --> problem was that new output is object not list */} 
-            {<ComplexRecipePane recipeList={recipeList}/>}
+            <ComplexRecipePane recipeList={recipeList}/>
      
             {/*recipeList*/}
             {/*recipeList.map(item => (

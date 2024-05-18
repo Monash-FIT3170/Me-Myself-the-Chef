@@ -27,14 +27,14 @@ function ComplexRecipePane({ recipeList }) {
          {/* Display recipe generation result */}
          <div className="container">
             <div className="row">
-                {recipeList.map(item => (
+                {/* {recipeList.map(item => (
                     <div key={item.id}>{item.title}</div>
-                ))}
-               {/*recipeList.map(recipe => {
-                  return (
-                     <ComplexRecipeCard recipe={recipe} key={recipe.id}/>
-                  )
-               })*/}
+                ))} */}
+
+               {recipeList.map(function (recipe) {
+                  return <ComplexRecipeCard recipe={recipe} key={recipe.id}/>
+               })}
+
             </div>
          </div>
       </div>
