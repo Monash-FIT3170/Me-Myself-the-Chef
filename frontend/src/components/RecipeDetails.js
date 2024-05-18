@@ -18,7 +18,7 @@ function RecipeDetails({ title, image, servings, prepTime, cookTime }) {
                      </button>
                   </div>
                   {/* Recipe Details */}
-                  <p>Prep Time: {prepTime}</p>
+                  <p>Prep Time: {prepTime < 0 ? "N/A" : prepTime}</p>
                   <p>Cook Time: {cookTime}</p>
                   <div className="col-md-6 mx-auto">
                      <div className="input-group input-group-sm">
