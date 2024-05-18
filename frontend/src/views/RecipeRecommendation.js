@@ -7,34 +7,36 @@ import {useState, useEffect} from "react";
 
 function RecipeRecommendation() {
 
-    const [ingredientList, setIngredientList] = useState(() => {
+    const [ingredients, setIngredients] = useState(() => {
         const localValue = localStorage.getItem("INGREDIENTS")
         if (localValue == null) return []
 
         return JSON.parse(localValue)
     });
 
+    let preferences = localStorage.getItem("preferences")
+    if (preferences != null) {
+        preferences = JSON.parse(preferences)
+    }
+
     const [recipeList, setRecipeList] = useState(null);
 
     // is called everytime the page reloads/renders
     useEffect(() => {
-        localStorage.setItem("INGREDIENTS", JSON.stringify(ingredientList))
-    }, [ingredientList]);
+        localStorage.setItem("INGREDIENTS", JSON.stringify(ingredients))
+    }, [ingredients]);
 
     useEffect(() => {
         const fetchData = async () => {
-            let ingredientString = "";
-            for (let i = 0; i < ingredientList.length; i++) {
-                ingredientString += ingredientList[i].title;
-
-                // check to add ",+"
-                if (i !== (ingredientList.length - 1)) {
-                    ingredientString += ",+"
-                }
-            }
             try {
-                const response = await fetch("/api/recipes/ingredients/" + ingredientString)
+                // Cannot use a GET request as we are sending objects to the backend for processing
+                const response = await fetch("/api/recipes/complexSearch", {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ingredients, preferences})
+                })
                 const json = await response.json()
+                console.log(json)
                 setRecipeList(json);
             } catch (error) {
                 console.log(error);
@@ -52,7 +54,7 @@ function RecipeRecommendation() {
     return (
         <div className="row flex-fill">
             {/* Ingredients Pane */}
-            <IngredientsRecipePane ingredientList={ingredientList}/>
+            <IngredientsRecipePane ingredientList={ingredients}/>
 
             {/* Display Recipe Pane */}
             <RecipePane recipeList={recipeList}/>

@@ -1,5 +1,6 @@
 const express = require('express')
 const {
+    complexSearch,
     getRecipes,
     getRecipeInfo,
     getRecipesByIngredients
@@ -7,6 +8,7 @@ const {
 
 const router = express.Router()
 
+router.post('/complexSearch/', complexSearch)
 router.get('/query/:query', getRecipes)
 router.get('/id/:id', getRecipeInfo)
 router.get('/ingredients/:ingredients', getRecipesByIngredients)
