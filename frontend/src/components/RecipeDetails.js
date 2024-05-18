@@ -1,44 +1,55 @@
 import React from 'react';
 
-function RecipeDetails({ title, image, servings, prepTime, cookTime }) {
+// Functional component for displaying recipe details
+function RecipeDetails({ title, image, servings, setServings, prepTime, cookTime, adjustIngredients }) {
+
+   // Function to handle increasing servings
+   const handleIncreaseServings = () => {
+      const newServings = servings + 1;
+      setServings(newServings);
+      adjustIngredients(newServings);
+   };
+
+   // Function to handle decreasing servings
+   const handleDecreaseServings = () => {
+      // Ensure servings don't go below 1
+      if (servings > 1) {
+         const newServings = servings - 1;
+         setServings(newServings);
+         adjustIngredients(newServings);
+      }
+   };
+
+   // Render recipe details UI
    return (
       <div className="row pt-5 pb-5 white-text text-center" style={{ backgroundColor: '#3E6C4B' }}>
-         {/* Top section for recipe details */}
          <div className="container">
-            <div className="row">
-               {/* Left column for recipe details */}
-               <div className="col-md-6">
-                  <div className="d-flex justify-content-between align-items-center ps-3">
-                     {/* Wrapper for recipe title and button */}
-                     {/* Recipe Title */}
-                     <h1>{title}</h1>
-                     {/* Save button */}
-                     <button type="button" className="btn btn-danger btn-sm">
-                        <i className="bi bi-bookmark-heart"></i> Save
-                     </button>
-                  </div>
-                  {/* Recipe Details */}
-                  <p>Prep Time: {prepTime}</p>
-                  <p>Cook Time: {cookTime}</p>
-                  <div className="col-md-6 mx-auto">
-                     <div className="input-group input-group-sm">
-                        <span className="input-group-text">Number of Servings:</span>
-                        <button className="input-group-text" id="btnGroupAddon" type="button">-</button>
-                        <input type="text" className="form-control text-center" value={servings} />
-                        <button className="input-group-text" id="btnGroupAddon" type="button">+</button>
+               <div className="row">
+                  <div className="col-md-6">
+                     <div className="d-flex justify-content-between align-items-center ps-3">
+                           <h1>{title}</h1>
+                           <button type="button" className="btn btn-danger btn-sm">
+                              <i className="bi bi-bookmark-heart"></i> Save
+                           </button>
+                     </div>
+                     <p>Prep Time: {prepTime} mins</p>
+                     <p>Cook Time: {cookTime} mins</p>
+                     <div className="col-md-6 mx-auto">
+                           <div className="input-group input-group-sm">
+                              <span className="input-group-text">Number of Servings:</span>
+                              <button className="input-group-text" type="button" onClick={handleDecreaseServings}>-</button>
+                              <input type="text" className="form-control text-center" value={servings} readOnly />
+                              <button className="input-group-text" type="button" onClick={handleIncreaseServings}>+</button>
+                           </div>
                      </div>
                   </div>
+                  <div className="col-md-6 text-end">
+                     <img src={image} alt="Recipe" className="img-fluid pe-5" />
+                  </div>
                </div>
-               {/* Right column for recipe image */}
-               <div className="col-md-6 text-end">
-                  {/* Recipe Image */}
-                  <img src={image} alt="Recipe Image" className="img-fluid pe-5" />
-               </div>
-            </div>
          </div>
       </div>
    );
-
 }
 
 export default RecipeDetails;
