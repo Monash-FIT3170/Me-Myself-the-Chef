@@ -68,8 +68,8 @@ const complexSearch = async (req, res) => {
             query: query,
             diet: dietString,
             intolerances: allergiesString,
-            includeIngredients: ingredientsString,
-            maxReadyTime: maxPrepTime
+            includeIngredients: ingredientsString
+            // maxReadyTime: maxPrepTime
         }
     }
 
