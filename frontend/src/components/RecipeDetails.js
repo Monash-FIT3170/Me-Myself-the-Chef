@@ -32,7 +32,7 @@ function RecipeDetails({ title, image, servings, setServings, prepTime, cookTime
                               <i className="bi bi-bookmark-heart"></i> Save
                            </button>
                      </div>
-                     <p>Prep Time: {prepTime < 0 ? "N/A" : {prepTime} + "mins"}</p>
+                     <p>Prep Time: {prepTime > 0 ? prepTime + " mins" : "N/A"}</p>
                      <p>Cook Time: {cookTime} mins</p>
                      <div className="col-md-6 mx-auto">
                            <div className="input-group input-group-sm">
