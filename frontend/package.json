@@ -1,5 +1,4 @@
 {
-  "proxy": "http://localhost:8080",
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
@@ -8,7 +7,6 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.8",
-    "dotenv": "^16.4.5",
     "next": "^14.2.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

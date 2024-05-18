@@ -21,13 +21,10 @@ function Recipe() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('api/recipes/id/' + recipeId)
+                const response = await fetch('http://localhost:8080/api/recipes/id/' + recipeId)
                 const json = await response.json()
                 console.log(json);
                 setRecipeInfo(json);
-                // setInstructions(formatInstructions(json.analyzedInstructions[0].steps));
-                // setIngredients(formatIngredients(json.extendedIngredients));
-                // setNutrition(formatNutrition(json.nutrition));
 
                 const initialServings = json.servings;
                 // Set initial servings and original servings only once
