@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useContext, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import '../css/login-signup.css';
 
 const SignUp = () => {
@@ -7,10 +8,18 @@ const SignUp = () => {
     const [password, setPassword] = useState('');
     const [signupSuccess, setSignupSuccess] = useState(false);
     const [signupError, setSignupError] = useState('');
+    const { isLoggedIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+   
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate('/logged_in');
+        }
+    }, [isLoggedIn, navigate]);
 
     const handleSignUp = async (e) => {
         e.preventDefault();
-        
+
         const userData = {
             username: email,
             password: password
@@ -26,18 +35,14 @@ const SignUp = () => {
             });
 
             if (!response.ok) {
-                // response.json().then(data => {
-                //     throw new Error(data.message || 'Network response was not ok');
-                //   })
                 throw new Error('Sign up failed');
             }
 
-            // Sign up successful, set signupSuccess state to true
             setSignupSuccess(true);
             setSignupError('');
+            
         } catch (error) {
             console.error('Sign up error:', error);
-            // Sign up failed, set signupError state
             setSignupError('Sign up failed. Please try again.');
             setSignupSuccess(false);
         }
@@ -53,7 +58,7 @@ const SignUp = () => {
                     </center>
                     {signupSuccess && (
                         <div className="alert alert-success" role="alert">
-                            Sign up successful!
+                            Sign up successful! <Link to="/login">Click here to login</Link>.
                         </div>
                     )}
                     {signupError && (
@@ -76,7 +81,7 @@ const SignUp = () => {
                         </center>
                     </form>
                 </div>
-                <img className="login_image" src="/static/images/logo_small.png" alt="Placeholder" />
+                <img className="login_image" src="/static/images/login_image.jpg" alt="Placeholder" />
             </section>
         </>
     );

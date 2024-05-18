@@ -1,6 +1,6 @@
 import React from 'react'
 
-function DietaryPane({ updateDietary }){
+function DietaryPane({ dietaryList, updateDietary }){
 
     return (
         <div class="col-md-4">
@@ -11,10 +11,12 @@ function DietaryPane({ updateDietary }){
             {/* <!-- Dietary requirement list --> */}
             <div class="container d-flex" style={{ paddingLeft: "60px" }}>
                 <div class="list-group">
-                    <label class="list-group-item checkbox-size" style={{ borderColor: "transparent" }}>
-                        <input class="form-check-input me-5" type="checkbox" output />
-                        Vegetarian
-                    </label>
+                    {dietaryList.map((diet) => (
+                        <label class="list-group-item checkbox-size" style={{ borderColor: "transparent" }}>
+                            <input class="form-check-input me-5" type="checkbox" id = {diet.id} checked={diet.state} onChange={updateDietary}/>
+                            {diet.name}
+                        </label>
+                    ))}
                     
                 </div>
             </div>

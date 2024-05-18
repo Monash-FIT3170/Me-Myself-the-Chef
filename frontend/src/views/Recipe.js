@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import axios from "axios";
+import React from 'react';
+import { useEffect, useState } from "react";
 import { useLocation } from 'react-router-dom';
 import RecipeInstructions from '../components/RecipeInstructions';
 import RecipeDetails from '../components/RecipeDetails';
 import NutritionPane from '../components/NutritionPane';
 import IngredientExpandedPane from '../components/IngredientExpandedPane';
+
 
 function Recipe() {
     const location = useLocation();
@@ -20,25 +21,25 @@ function Recipe() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/information`, {
-                    params: {
-                        apiKey: process.env.REACT_APP_API_KEY,
-                        includeNutrition: true,
-                    }
-                });
-                setRecipeInfo(response.data);
-                console.log(response.data);
-                const initialServings = response.data.servings;
+                const response = await fetch('api/recipes/id/' + recipeId)
+                const json = await response.json()
+                console.log(json);
+                setRecipeInfo(json);
+                // setInstructions(formatInstructions(json.analyzedInstructions[0].steps));
+                // setIngredients(formatIngredients(json.extendedIngredients));
+                // setNutrition(formatNutrition(json.nutrition));
+
+                const initialServings = json.servings;
                 // Set initial servings and original servings only once
                 if (originalServings === null) {
                     setOriginalServings(initialServings);
                     setServings(initialServings);
                 }
                 // Format and set instructions, ingredients, and nutrition
-                setInstructions(formatInstructions(response.data.analyzedInstructions[0].steps));
-                setIngredients(formatIngredients(response.data.extendedIngredients, initialServings));
-                setOriginalIngredients(response.data.extendedIngredients);
-                setNutrition(formatNutrition(response.data.nutrition.nutrients));
+                setInstructions(formatInstructions(json.analyzedInstructions[0].steps));
+                setIngredients(formatIngredients(json.extendedIngredients, initialServings));
+                setOriginalIngredients(json.extendedIngredients);
+                setNutrition(formatNutrition(json.nutrition.nutrients));
             } catch (error) {
                 console.log(error);
             }

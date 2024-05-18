@@ -42,6 +42,8 @@ function AllergySearchBar({ onAllergySearch }) {
             onSearch={handleOnSearch}
             onHover={handleOnHover}
             onSelect={handleOnSelect}
+            showNoResults={true}
+            showNoResultsText='Allergy not supported'
             styling={{zIndex: "999"}}
           />
         </div>

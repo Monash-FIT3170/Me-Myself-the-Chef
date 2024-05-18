@@ -1,10 +1,25 @@
 const mongoose = require("mongoose");
 
-const Preferences = mongoose.model(
-  "Preferences",
-  new mongoose.Schema({
-    ingredient: String
-  })
-);
+const DietaryRequirementsSchema = new mongoose.Schema({
+  id: Number,
+  name: String,
+  state: Boolean
+})
 
-module.exports = Preferences;
+const AllergySchema = new mongoose.Schema({
+  id: String,
+  title: String
+})
+
+const PreferenceSchema = new mongoose.Schema({
+  dietaryRequirements: [DietaryRequirementsSchema],
+  dietaryCombination: String,
+  allergies: [AllergySchema],
+  maxPrepTime: Number
+})
+
+const DietaryRequirements = mongoose.model("DietaryRequirements", DietaryRequirementsSchema);
+const Allergies = mongoose.model("Allergies", AllergySchema);
+const Preferences = mongoose.model("Preferences", PreferenceSchema);
+
+module.exports = {Preferences, Allergies, DietaryRequirements};

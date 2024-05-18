@@ -8,7 +8,8 @@ import SignUp from './views/SignUp';
 import RecipeRecommendation from "./views/RecipeRecommendation";
 import Ingredients from './views/Ingredients';
 import Recipe from './views/Recipe';
-import Preference from './views/Preference'
+import { Preference, DietaryRequirements, PreparationTime } from './views/Preference'
+import LoggedInPage from './views/LoggedInPage';
 
 function App() {
 
@@ -37,8 +38,17 @@ function App() {
             {/* Single detailed recipe view page */}
             <Route path="/recipe" element={<Recipe />} />
 
-            {/* Preference page */}
+            {/* Home Preference page */}
             <Route path="/preferences" element={<Preference />} />
+
+            {/* Dietary Requirement Preference page */}
+            <Route path="/preferences/dietary_requirements" element={<DietaryRequirements />} />
+
+            {/* Preparation Time Preference page */}
+            <Route path="/preferences/preparation_time" element={<PreparationTime />} />
+
+            {/* Preference page */}
+            <Route path="/logged_in" element={<LoggedInPage />} />
 
           </Routes>
 
