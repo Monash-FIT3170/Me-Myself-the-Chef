@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import { useLocation } from 'react-router-dom';
 import RecipeInstructions from '../components/RecipeInstructions';
@@ -8,11 +7,15 @@ import NutritionPane from '../components/NutritionPane';
 import IngredientExpandedPane from '../components/IngredientExpandedPane';
 
 function Recipe() {
-    const [recipeId, setRecipeId] = useState(useLocation().state);
-    const [recipeInfo, setRecipeInfo] = useState();
+    const location = useLocation();
+    const [recipeId, setRecipeId] = useState(location.state);
+    const [recipeInfo, setRecipeInfo] = useState(null);
     const [instructions, setInstructions] = useState([]);
     const [ingredients, setIngredients] = useState([]);
+    const [originalIngredients, setOriginalIngredients] = useState([]);
     const [nutrition, setNutrition] = useState([]);
+    const [servings, setServings] = useState(1);
+    const [originalServings, setOriginalServings] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,104 +25,79 @@ function Recipe() {
                         apiKey: process.env.REACT_APP_API_KEY,
                         includeNutrition: true,
                     }
-                })
-                console.log(response.data);
-                console.log("API Response - Nutrition:", response.data.nutrition);
+                });
                 setRecipeInfo(response.data);
+                console.log(response.data);
+                const initialServings = response.data.servings;
+                // Set initial servings and original servings only once
+                if (originalServings === null) {
+                    setOriginalServings(initialServings);
+                    setServings(initialServings);
+                }
+                // Format and set instructions, ingredients, and nutrition
                 setInstructions(formatInstructions(response.data.analyzedInstructions[0].steps));
-                setIngredients(formatIngredients(response.data.extendedIngredients));
-               
-                // Extract nutritional data from the nutrients array
-                const nutrients = response.data.nutrition.nutrients;
-
-                // Format the nutritional data if necessary
-                const formattedNutrition = formatNutrition(nutrients);
-
-                // Set the nutrition state with the formatted data
-                setNutrition(formattedNutrition);
-
+                setIngredients(formatIngredients(response.data.extendedIngredients, initialServings));
+                setOriginalIngredients(response.data.extendedIngredients);
+                setNutrition(formatNutrition(response.data.nutrition.nutrients));
             } catch (error) {
                 console.log(error);
             }
         };
 
-        if (recipeInfo == null) {
-            fetchData();
-        } else {
-            console.log(recipeInfo);
-        }
         fetchData();
-    }, []);
+    }, [recipeId, originalServings]);
 
-    function formatInstructions(instructions) {
-        let formattedInstructions = [];
-        for (let i = 0; i < instructions.length; i++) {
-            formattedInstructions.push(`${instructions[i].step}`);
-        }
-        return formattedInstructions;
+    // Format instructions to extract step text
+    function formatInstructions(steps) {
+        return steps.map(step => step.step);
     }
 
-    function formatIngredients(ingredients) {
-        let formattedIngredients = [];
-        for (let i = 0; i < ingredients.length; i++) {
-            formattedIngredients.push(`${ingredients[i].measures.metric.amount} ${ingredients[i].measures.metric.unitShort} ${ingredients[i].name}`);
-        }
-        return formattedIngredients;
+    // Format ingredients based on servings
+    function formatIngredients(ingredients, servings) {
+        return ingredients.map(ingredient => {
+            let newAmount = (ingredient.measures.metric.amount / originalServings) * servings;
+            // Round to 2 decimal places if not a whole number
+            newAmount = Number.isInteger(newAmount) ? newAmount.toFixed(0) : newAmount.toFixed(2);
+            return `${newAmount} ${ingredient.measures.metric.unitShort} ${ingredient.nameClean}`;
+        });
     }
     
+    // Format nutrition details
     function formatNutrition(nutrients) {
-        // formats the nutrition facts which takes it from the array 
-        const formattedNutrition = nutrients.map(nutrient => `${nutrient.name}: ${nutrient.amount} ${nutrient.unit}`);
-        return formattedNutrition;
-    }
-   
-
-    // Placeholder recipe data
-    const recipeData = {
-        title: "Crispy Pork Belly Banh Mi",
-        image: "static/images/banh_mi.jpeg",
-        servings: 5,
-        prepTime: "15 mins",
-        cookTime: "3 hrs",
-        ingredients: [
-            "4 long bread rolls",
-            // Add more ingredients here
-        ],
-        nutrition: {
-            calories: "554cal",
-            percentDailyValue: "28%"
-            // Add more nutrition information here
-        },
-        instructions: [
-            "Dry skin overnight: Place pork belly on a plate...",
-            // Add more instructions here
-        ]
-    };
-    if (recipeInfo == null) {
-        return (
-            <></>
-        )
+        return nutrients.map(nutrient => `${nutrient.name}: ${nutrient.amount} ${nutrient.unit}`);
     }
 
+    // Adjust ingredients based on servings
+    function adjustIngredients(newServings) {
+        setServings(newServings);
+        setIngredients(formatIngredients(originalIngredients, newServings));
+    }
+
+    if (!recipeInfo) {
+        return <></>;
+    }
+
+    // Render recipe details, ingredients, nutrition, and instructions
     return (
         <div className="row flex-fill">
             <div className="col-md-3 d-flex flex-column white-text">
                 <IngredientExpandedPane ingredients={ingredients} />
                 <NutritionPane nutrition={nutrition} />
             </div>
-
             <div className="col-md-9 d-flex flex-column">
                 <RecipeDetails
                     title={recipeInfo.title}
                     image={recipeInfo.image}
-                    servings={recipeInfo.servings}
+                    servings={servings}
+                    setServings={setServings}
                     prepTime={recipeInfo.preparationMinutes}
                     cookTime={recipeInfo.readyInMinutes}
+                    adjustIngredients={adjustIngredients}
                 />
                 <RecipeInstructions instructions={instructions} />
             </div>
         </div>
     );
-};
+}
 
 export default Recipe;
