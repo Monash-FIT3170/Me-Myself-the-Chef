@@ -71,36 +71,24 @@ function RecipeRecommendation() {
 
             try {
                 // original search "https://api.spoonacular.com/recipes/findByIngredients"
-                //// try complex search https://api.spoonacular.com/recipes/complexSearch
                 /// params: includeIngredients, excludeIngredients
-                const response = await axios.get("https://api.spoonacular.com/recipes/complexSearch?apiKey=4cb545ba636c422990fb2f1cfc567c69&query=pasta&maxFat=25&number=5") 
-                //const response = await axios.get("https://api.spoonacular.com/recipes/complexSearch", {
-                //const response = await axios.get("https://api.spoonacular.com/recipes/findByIngredients", {
-                    /*
+                const response = await axios.get("https://api.spoonacular.com/recipes/complexSearch", {
                     params: {
-                       apiKey: API_KEY,
-                       limitLicense: false,
-                        query: "pasta",
+                        apiKey: API_KEY,
+                        query: "noodles",
                         maxFat: 25, 
-                        number: 5
+                        number: 5,
                         includeIngredients: ingredientString,
-                        //addRecipeInformation: true,
-                        //number: 2,
-                        //ingredients: ingredientString, //--> FOR INGREDIENT SEARCH ONLY 
-                        number: 3//,   // number of recipes to return 
-
-                        // IF USING COMPLEX SEARCH --- TEST DATA 
-
-                        //diet: dietaryString,
-                        //maxReadyTime: maxPrepTime,
-                        //intolerances: cannot_eat
+                        diet: dietaryString,
+                        maxReadyTime: maxPrepTime,
+                        intolerances: cannot_eat
                         ///// can potentially add --> addRecipeInformation: True to reduce the number of API calls required 
                         // ignorePantry parameter can be used to ignore flour, salt, etc. 
                     }
                 }
                 
             )
-            */
+
             
                 setRecipeList(response.data.results);//; use for complex search 
                 setRecipeNum(response.data.totalResults) //test for complex search
@@ -129,12 +117,12 @@ function RecipeRecommendation() {
 
             {/* Display Recipe Pane */}
             {/* THIS IS THE PART THAT ISN't WORKING --> problem was that new output is object not list */} 
-            {/*<ComplexRecipePane recipeList={recipeList}/>*/}
-            {recipeNum}
+            {<ComplexRecipePane recipeList={recipeList}/>}
+     
             {/*recipeList*/}
-            {recipeList.map(item => (
+            {/*recipeList.map(item => (
                 <div key={item.id}>{item.title}</div>
-                ))}
+                ))*/}
 
 
                 
