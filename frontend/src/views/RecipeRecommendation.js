@@ -40,7 +40,7 @@ function RecipeRecommendation() {
 
                 // check to add ",+"
                 if (i !== (ingredientList.length - 1)) {
-                    ingredientString += ",+"
+                    ingredientString += ","
                 }
             }
 
@@ -52,11 +52,11 @@ function RecipeRecommendation() {
                 //// this will depend on how preferences are being stores 
                 
                 if (dietaries[i].state === "True"){
-                    dietaryString += dietaries[i].name;
+                    dietaryString += dietaries[i].name.toLowerCase();
                 }
                 // check to add ",+"
                 if (i !== (dietaries.length - 1)) {
-                    ingredientString += ",+"
+                    ingredientString += ","
                 }
             }
             let maxPrepTime = preferenceList.maxPrepTime            
@@ -69,17 +69,18 @@ function RecipeRecommendation() {
             // get dietary combination 
             // get maxPrepTime 
 
+            console.log(ingredientString)
+
             try {
                 // original search "https://api.spoonacular.com/recipes/findByIngredients"
                 /// params: includeIngredients, excludeIngredients
                 const response = await axios.get("https://api.spoonacular.com/recipes/complexSearch", {
                     params: {
                         apiKey: API_KEY,
-                        query: "noodles",
                         maxFat: 25, 
                         number: 5,
                         includeIngredients: ingredientString,
-                        diet: dietaryString,
+                        // diet: dietaryString,
                         maxReadyTime: maxPrepTime,
                         intolerances: cannot_eat
                         ///// can potentially add --> addRecipeInformation: True to reduce the number of API calls required 
