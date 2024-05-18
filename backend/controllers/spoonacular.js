@@ -17,34 +17,48 @@ const complexSearch = async (req, res) => {
         ingredientsString += ingredients[i].title
         // check to add ",+"
         if (i !== (ingredients.length - 1)) {
-            ingredientsString += ",+"
+            ingredientsString += ","
         }
     }
 
     // Process list of diets.
     const diets = preferences ? preferences.dietaryRequirements : []
     let dietString = ""
-    for (let i = 0; i < diets.length; i++) {
+    for (i = 0; i < diets.length; i++) {
         if (diets[i].state) {
             dietString += diets[i].name
-        }
-        if (i !== (ingredients.length - 1)) {
-            dietString += ","
+
+            if (i < (diets.length - 1)) {
+                dietString += ","
+            }
         }
     }
+
+    let diet_array = diets.filter(diet => diet.state)
+    diets1 = diet_array.map(diet => diet.name)
+    dietString = diets1.join()
 
     // Process list of allergies
     const allergies = preferences ? preferences.allergies : []
     let allergiesString = ""
-    for (let i = 0; i < allergies.length; i++) {
+    for (i = 0; i < allergies.length; i++) {
         allergiesString += allergies[i].title
-        if (i !== (ingredients.length - 1)) {
+        if (i < (allergies.length - 1)) {
             allergiesString += ","
         }
     }
 
     // Process max prep time
     const maxPrepTime = 20  // preferences ? preferences.maxPrepTime : 20
+
+    console.log("diet: " + dietString)
+    if (query) {
+        console.log("query: " + query)
+    }
+
+    console.log("allergies: " + allergiesString)
+    console.log("ingredients: " + ingredientsString)
+    
 
     const options = {
         method: 'GET',
