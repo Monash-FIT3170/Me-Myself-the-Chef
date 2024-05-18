@@ -15,6 +15,9 @@ function RecipeRecommendation() {
     });
 
     let preferences = localStorage.getItem("preferences")
+    if (preferences != null) {
+        preferences = JSON.parse(preferences)
+    }
 
     const [recipeList, setRecipeList] = useState(null);
 

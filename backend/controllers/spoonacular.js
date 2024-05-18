@@ -7,9 +7,10 @@ const RECIPES = mongoose.connection.collection('recipes')
 
 
 const complexSearch = async (req, res) => {
-    // To use this one send a POST request with query, ingredients and preferences
+    // To use this one send a POST request with query, ingredients and preferences (all are optional)
     let {query, ingredients, preferences} = req.body
     console.log(req.body)
+
     // Process list of ingredients.
     let ingredientsString = ""
     for (let i = 0; i < ingredients.length; i++) {
