@@ -21,12 +21,17 @@ function Ingredients() {
 
     // function to add ingredients to list
     function addIngredient(title) {
-        setIngredientList((currentIngredients) => {
-            return [
+        // Checking for duplicate ingredients
+        const exists = ingredientList.some(ingredient => ingredient.title.toLowerCase() === title.toLowerCase());
+    
+        if (!exists) {
+            setIngredientList(currentIngredients => [
                 ...currentIngredients,
-                {id: crypto.randomUUID(), title: title}
-            ]
-        })
+                { id: crypto.randomUUID(), title: title }
+            ]);
+        } else {
+            alert("Ingredient already exists!");
+        }
     }
 
     // function to delete ingredients from list
