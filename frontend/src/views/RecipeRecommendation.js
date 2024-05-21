@@ -3,6 +3,7 @@ import '../css/base.css'
 import IngredientsRecipePane from '../components/IngredientsRecipePane';
 import RecipePane from '../components/RecipePane';
 import {useState, useEffect} from "react";
+import { Link } from 'react-router-dom';
 
 
 function RecipeRecommendation() {
@@ -52,13 +53,17 @@ function RecipeRecommendation() {
     }, []);
 
     return (
-        <div className="row flex-fill">
-            {/* Ingredients Pane */}
-            <IngredientsRecipePane ingredientList={ingredients}/>
-
-            {/* Display Recipe Pane */}
-            <RecipePane recipeList={recipeList}/>
+        <><div>
+            {/* Back Button */}
+            <Link to="/ingredients" className="btn btn-success">Back</Link>
         </div>
+        <div className="row flex-fill">
+                {/* Ingredients Pane */}
+                <IngredientsRecipePane ingredientList={ingredients} />
+
+                {/* Display Recipe Pane */}
+                <RecipePane recipeList={recipeList} />
+            </div></>
     );
 }
 
