@@ -1,6 +1,7 @@
 import { React, useContext } from 'react';
 import AllergyPreference from './AllergyPreference';
 import DietaryPreference from './DietaryPreference';
+import MissingIngredientPreference from './MissingIngredientPreference';
 import '../css/preference.css';
 import { PreferenceContext } from '../context/PreferenceContext';
 
@@ -14,6 +15,10 @@ export function DietaryInformation() {
 
             {/* Allergy Consideration column */}
             <AllergyPreference />
+
+
+            {/* MIssingIngredient Consideration column*/}        
+            <MissingIngredientPreference />
 
             {/* Save Preferences Button Column */}
             <div className="container">
