@@ -17,8 +17,8 @@ export function DietaryInformation() {
             <AllergyPreference />
 
 
-            {/* MIssingIngredient Consideration column*/}        
-            <MissingIngredientPreference />
+            {/* MissingIngredient Consideration column*/}        
+            {/*<MissingIngredientPreference />  commenting out for now ... will continue implementation later */}
 
             {/* Save Preferences Button Column */}
             <div className="container">

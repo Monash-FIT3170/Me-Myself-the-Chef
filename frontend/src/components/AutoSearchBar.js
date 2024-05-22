@@ -1031,6 +1031,7 @@ function SearchBar({ onIngredientSearch }) {
     <div className="search-bar-container">
       <ReactSearchAutocomplete
         items={items}
+        placeholder="Enter ingredient ..."
         onSearch={handleOnSearch}
         onHover={handleOnHover}
         onSelect={handleOnSelect}

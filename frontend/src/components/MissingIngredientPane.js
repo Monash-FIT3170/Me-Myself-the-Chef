@@ -1,5 +1,5 @@
 import React from 'react';
-
+import IngredientSearchBar from './AutoSearchBar';
 import AutoSearchBar from '../components/AutoSearchBar';
 import Allergy from './Allergy'
 
@@ -7,9 +7,9 @@ import Allergy from './Allergy'
 function MissingIngredientPane({allergyList, addAllergy, deleteAllergy}) {
 
     // function to handle the user searching an allergy
-    function onIngredientSearch(ingredient) {
-        console.log(ingredient);
-        addAllergy(ingredient);
+    function onIngredientSearch(allergy) {
+        console.log(allergy);
+        addAllergy(allergy);
     }
 
     return (

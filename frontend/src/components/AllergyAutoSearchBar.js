@@ -7,8 +7,11 @@ function AllergySearchBar({ onAllergySearch }) {
         { name: "Dairy" },
         { name: "Egg" },
         { name: "Gluten" },
+        { name: "Lactose" },
         { name: "Grain" },
         { name: "Peanut" },
+        { name: "Walnut" },
+        { name: "Fructose" },
         { name: "Seafood" },
         { name: "Sesame" },
         { name: "Shellfish" },
@@ -42,6 +45,7 @@ function AllergySearchBar({ onAllergySearch }) {
             onSearch={handleOnSearch}
             onHover={handleOnHover}
             onSelect={handleOnSelect}
+            placeholder="Enter allergy or intolerance ... "
             showNoResults={true}
             showNoResultsText='Allergy not supported'
             styling={{zIndex: "999"}}
