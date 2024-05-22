@@ -17,7 +17,7 @@ function IngredientSearch({addIngredient}) {
             <div className="container">
                 
                 <div className="row search_section">
-                    <h1 className="heading">Make your ingredients</h1>
+                    <h1 className="heading">Select your ingredients</h1>
                 </div>
 
                 <div className="row mt-4">
