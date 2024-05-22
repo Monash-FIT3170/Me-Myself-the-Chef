@@ -4,6 +4,7 @@
 /backend/node_modules
 /frontend/node_modules
 /recipe_generation_prototype/node_modules
+/node_modules
 
 /.pnp
 .pnp.js
@@ -20,7 +21,11 @@
 .env.development.local
 .env.test.local
 .env.production.local
+/backend/.env
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# webstorm
+/.idea

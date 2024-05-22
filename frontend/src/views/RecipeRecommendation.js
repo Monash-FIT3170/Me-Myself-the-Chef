@@ -2,71 +2,63 @@ import React from 'react';
 import '../css/base.css'
 import IngredientsRecipePane from '../components/IngredientsRecipePane';
 import RecipePane from '../components/RecipePane';
-import { useState, useEffect } from "react";
-import axios from "axios";
-const API_KEY = "09861c68c07140d8a96e353c8d4f86cc";
+import {useState, useEffect} from "react";
+
 
 function RecipeRecommendation() {
 
-    const [ingredientList, setIngredientList] = useState(() => {
+    const [ingredients, setIngredients] = useState(() => {
         const localValue = localStorage.getItem("INGREDIENTS")
         if (localValue == null) return []
 
         return JSON.parse(localValue)
     });
 
-    const [recipeList, setRecipeList] = useState();
+    let preferences = localStorage.getItem("preferences")
+    if (preferences != null) {
+        preferences = JSON.parse(preferences)
+    }
+
+    const [recipeList, setRecipeList] = useState(null);
 
     // is called everytime the page reloads/renders
     useEffect(() => {
-        localStorage.setItem("INGREDIENTS", JSON.stringify(ingredientList))
-    }, [ingredientList]);
+        localStorage.setItem("INGREDIENTS", JSON.stringify(ingredients))
+    }, [ingredients]);
 
     useEffect(() => {
         const fetchData = async () => {
-            let ingredientString = "";
-            for (let i = 0; i < ingredientList.length; i++) {
-                ingredientString += ingredientList[i].title;
-
-                // check to add ",+"
-                if (i !== (ingredientList.length - 1)) {
-                    ingredientString += ",+"
-                }
-            }
             try {
-                const response = await axios.get("https://api.spoonacular.com/recipes/findByIngredients", {
-                    params: {
-                        apiKey: API_KEY,
-                        ingredients: ingredientString,
-                        number: 3
-                    }
+                // Cannot use a GET request as we are sending objects to the backend for processing
+                const response = await fetch("http://localhost:8080/api/recipes/complexSearch", {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ingredients, preferences})
                 })
-                setRecipeList(response.data);
-                console.log(response.data);
+                const json = await response.json()
+                console.log(json)
+                setRecipeList(json);
             } catch (error) {
                 console.log(error);
             }
         };
-		
+
         // check if data has been collected already
         if (recipeList == null) {
             fetchData();
         } else {
             console.log(recipeList);
         }
-	}, []);
-
+    }, []);
 
     return (
         <div className="row flex-fill">
             {/* Ingredients Pane */}
-            <IngredientsRecipePane ingredientList={ingredientList}/>
+            <IngredientsRecipePane ingredientList={ingredients}/>
 
             {/* Display Recipe Pane */}
             <RecipePane recipeList={recipeList}/>
-
         </div>
-
     );
 }
 
