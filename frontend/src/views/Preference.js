@@ -1,6 +1,6 @@
 import React from 'react'
 import PrefNavBar from '../components/PreferenceNavBar'
-import { DietaryInformation, PreparationTimeInformation } from '../components/PreferenceInformation'
+import { DietaryInformation, NutritionInformation, PreparationTimeInformation } from '../components/PreferenceInformation'
 import '../css/preference.css'
 
 
@@ -52,6 +52,32 @@ export const DietaryRequirements = () => {
 
                 {/* Specified Preference Information */}
                 <DietaryInformation />
+
+            </div>
+        </div>
+    )
+}
+
+export const NutritionRequirements = () => {
+    return (
+        <div class="row h-25">
+            <div class="container h-100 d-flex flex-column">
+
+                {/* <!-- Title card for the Preference page --> */}
+                <div class="row flex-grow-1 title-card">
+                    <div class="row text-left text-white title-padding">
+                        <h2> Recipe Preferences </h2>
+                    </div>
+                    <div class="row text-left text-white info-padding">
+                        <p> Please enter your preferences below for your generated recipes. If you have no preference for an option, just leave it blank! </p>
+                    </div>
+                </div>
+
+                {/* Preference NavBar */}
+                <PrefNavBar id={1}/>
+
+                {/* Specified Preference Information */}
+                <NutritionInformation/>
 
             </div>
         </div>
