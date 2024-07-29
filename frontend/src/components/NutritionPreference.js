@@ -44,14 +44,14 @@ function NutritionPreference(){
                     </label>
                     <div style={{ display: "flex" }}>
                         <input style={{ width: "70px" }} type="number" min="0" max="100" step="5"  />
-                        <span style={{ paddingLeft: "10px" }}>mg</span>
+                        <span style={{ paddingLeft: "10px" }}>g</span>
                     </div>
                     <label style={{ borderColor: "transparent" }}>
                         Max
                     </label>
                     <div style={{ display: "flex" }}>
                         <input style={{ width: "70px" }} type="number" min="0" max="100" step="5" />
-                        <span style={{ paddingLeft: "10px" }}>mg</span>
+                        <span style={{ paddingLeft: "10px" }}>g</span>
                     </div>
                 </div>
                 
