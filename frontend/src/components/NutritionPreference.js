@@ -7,23 +7,54 @@ import { PreferenceContext } from '../context/PreferenceContext';
 function NutritionPreference(){
 
     return (
-        <div class="col-md-4">
+        <div class="col-md-4" style={{paddingBottom: "60px"}} >
             <div class="row text-left" style={{padding: "50px 0px 20px 50px" }}>
-                <h3> Nutrition Requirements </h3>
+                <h3> Nutritional Requirements </h3>
+                <p style={{ paddingLeft: "11px"}}>All amounts are per 100g</p>
             </div>
-
+            
             {/* <!-- Nutrition requirement list --> */}
-            <div class="container d-flex" style={{ paddingLeft: "60px", paddingBottom: "60px" }}>
+            <div class="container d-flex" style={{ paddingLeft: "60px", paddingBottom: "20px"}}>
                 <div class="list-group">
+                    <h4>Sodium</h4>
+                    <div>(Must be below 2000 mg)</div>
                     <label style={{ borderColor: "transparent" }}>
-                        Minimum sodium per 100 g (0 mg - 2000 mg)
+                        Min 
                     </label>
-                    <input type="number" min="0" max="2000" step="100" />
+                    <div style={{ display: "flex" }}>
+                        <input style={{ width: "70px" }} type="number" min="0" max="2000" step="100"  />
+                        <span style={{ paddingLeft: "10px" }}>mg</span>
+                    </div>
                     <label style={{ borderColor: "transparent" }}>
-                        Maximum sodium per 100 g (0 mg - 2000 mg)
+                        Max
                     </label>
-                    <input type="number" min="0" max="2000" step="100"/>
+                    <div style={{ display: "flex" }}>
+                        <input style={{ width: "70px" }} type="number" min="0" max="2000" step="100" />
+                        <span style={{ paddingLeft: "10px" }}>mg</span>
+                    </div>
                 </div>
+                
+            </div>
+            <div class="container d-flex" style={{ paddingLeft: "60px", paddingBottom: "20px" }}>
+                <div class="list-group">
+                    <h4>Protein</h4>
+                    <div>(Must be below 100 g)</div>
+                    <label style={{ borderColor: "transparent" }}>
+                        Min 
+                    </label>
+                    <div style={{ display: "flex" }}>
+                        <input style={{ width: "70px" }} type="number" min="0" max="100" step="5"  />
+                        <span style={{ paddingLeft: "10px" }}>mg</span>
+                    </div>
+                    <label style={{ borderColor: "transparent" }}>
+                        Max
+                    </label>
+                    <div style={{ display: "flex" }}>
+                        <input style={{ width: "70px" }} type="number" min="0" max="100" step="5" />
+                        <span style={{ paddingLeft: "10px" }}>mg</span>
+                    </div>
+                </div>
+                
             </div>
         </div>
     )
