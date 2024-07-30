@@ -43,6 +43,7 @@ function DietaryPreference(){
         let checked = event.target.checked
 
         const updatedObj = {...dietaryList[id], state: checked}
+        console.log(updatedObj)
 
         setDietaryList(
             dietaryList.map( obj =>

@@ -3,60 +3,72 @@ import { useEffect, useState, useContext } from 'react';
 import '../css/base.css'
 //import DietaryPane from './DietaryPane';
 import { PreferenceContext } from '../context/PreferenceContext';
+import NutritionPane from './NutritionPane';
 
 function NutritionPreference(){
 
+    // access to temp list for preferences
+    const { nutrition, setNutrition } = useContext(PreferenceContext);
+
+    // base dietary list
+    // if you make changes to this after running, you must clear localStorage to see changes
+    const baseNutritionList = [
+        {id: 0, name: "Sodium", min_amount: 0, max_amount: 100},
+        {id: 1, name: "Protein", min_amount: 0, max_amount: 100},
+    ]
+    
+    // obtains the nutrition list from localStorage or uses the base one
+    // sets the list as an object to handle in js
+    const [nutritionList, setNutritionList] = useState(() => {
+        if (nutrition == null){
+            return baseNutritionList;
+        }
+        else {
+            return nutrition
+        }
+    })
+
+    // Listen for changes in the nutrition context and update nutritionList
+    useEffect(() => {
+        setNutritionList(nutrition || baseNutritionList);
+    }, [nutrition]);
+
+    // converts object into JSON and sets it into localStorage
+    useEffect(() => {
+        setNutrition(nutritionList)
+    }, [nutritionList]);
+
+
+    // updates the nutrition list based on the new input value
+    const updateNutrition = (event) => {
+        const id = event.target.id;
+        let input_type = event.target.name;
+        let new_amount = parseInt(event.target.value);
+
+        console.log(`${id}: ${input_type}, ${new_amount}`)
+
+        let updatedObj = {}
+        if (input_type === "min_val") {
+            updatedObj = {...nutritionList[id], min_amount: new_amount};
+        }
+        else {
+            updatedObj = {...nutritionList[id], max_amount: new_amount};
+        }
+        console.log(updatedObj)
+
+        setNutritionList(
+            nutritionList.map( obj =>
+                obj.id === updatedObj.id ? updatedObj : obj
+            )
+        )
+    }
+
+    function OnChangeEvent() {
+        alert("value is changed");
+    }
+
     return (
-        <div class="col-md-4" style={{paddingBottom: "60px"}} >
-            <div class="row text-left" style={{padding: "50px 0px 20px 50px" }}>
-                <h3> Nutritional Requirements </h3>
-                <p style={{ paddingLeft: "11px"}}>All amounts are per 100g</p>
-            </div>
-            
-            {/* <!-- Nutrition requirement list --> */}
-            <div class="container d-flex" style={{ paddingLeft: "60px", paddingBottom: "20px"}}>
-                <div class="list-group">
-                    <h4>Sodium</h4>
-                    <div>(Must be below 2000 mg)</div>
-                    <label style={{ borderColor: "transparent" }}>
-                        Min 
-                    </label>
-                    <div style={{ display: "flex" }}>
-                        <input style={{ width: "70px" }} type="number" min="0" max="2000" step="100"  />
-                        <span style={{ paddingLeft: "10px" }}>mg</span>
-                    </div>
-                    <label style={{ borderColor: "transparent" }}>
-                        Max
-                    </label>
-                    <div style={{ display: "flex" }}>
-                        <input style={{ width: "70px" }} type="number" min="0" max="2000" step="100" />
-                        <span style={{ paddingLeft: "10px" }}>mg</span>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="container d-flex" style={{ paddingLeft: "60px", paddingBottom: "20px" }}>
-                <div class="list-group">
-                    <h4>Protein</h4>
-                    <div>(Must be below 100 g)</div>
-                    <label style={{ borderColor: "transparent" }}>
-                        Min 
-                    </label>
-                    <div style={{ display: "flex" }}>
-                        <input style={{ width: "70px" }} type="number" min="0" max="100" step="5"  />
-                        <span style={{ paddingLeft: "10px" }}>g</span>
-                    </div>
-                    <label style={{ borderColor: "transparent" }}>
-                        Max
-                    </label>
-                    <div style={{ display: "flex" }}>
-                        <input style={{ width: "70px" }} type="number" min="0" max="100" step="5" />
-                        <span style={{ paddingLeft: "10px" }}>g</span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
+        <NutritionPane nutritionList = {nutritionList} updateNutrition={updateNutrition} />
     )
 
 }

@@ -40,9 +40,8 @@ export function NutritionInformation() {
 
     return (
         <div className="row">
-            {/* Dietary Requirements column */}
+            {/* Nutrition column */}
             <NutritionPreference />
-            {/* Save Preferences Button Column */}
             <div className="container">
                 {alertMessage && (
                     <div className={`alert alert-${alertType} alert-dismissible fade show custom-alert`} role="alert">
