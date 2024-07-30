@@ -9,6 +9,7 @@ const PreferenceProvider = ({ children }) => {
     const [preferences, setPreferences] = useState({});
     const [searchHistory, setSearchHistory] = useState([]);
     const [allergies, setAllergies] = useState([]); 
+    const [nutrition, setNutrition] = useState(null); 
     const [diet, setDiet] = useState(null); 
     const { isLoggedIn } = useContext(AuthContext);
     const [alertMessage, setAlertMessage] = useState('');
@@ -22,12 +23,15 @@ const PreferenceProvider = ({ children }) => {
         if (Object.keys(storedPreferences).length > 0) {
             const storedDiets = storedPreferences.dietaryRequirements; 
             const storedAllergies = storedPreferences.allergies;
+            const storedNutrition = storedPreferences.nutrition;
             
             setDiet(storedDiets);
             setAllergies(storedAllergies);
+            setNutrition(storedNutrition);
         } else {
             setDiet(null);
             setAllergies([]);
+            setNutrition(null);
         }
         
         setPreferences(storedPreferences);
@@ -40,7 +44,8 @@ const PreferenceProvider = ({ children }) => {
             dietaryRequirements: diet,
             dietaryCombination: "test",
             allergies: allergies,
-            maxPrepTime: 0
+            maxPrepTime: 0,
+            nutrition: nutrition
         };
 
         setPreferences(newPreferences);
@@ -89,7 +94,7 @@ const PreferenceProvider = ({ children }) => {
     };
 
     return (
-        <PreferenceContext.Provider value={{ preferences, searchHistory, allergies, setAllergies, diet, setDiet, updatePreferences, updateSearchHistory, alertMessage, alertType, setAlertMessage }}>
+        <PreferenceContext.Provider value={{ preferences, searchHistory, allergies, setAllergies, diet, setDiet, nutrition, setNutrition, updatePreferences, updateSearchHistory, alertMessage, alertType, setAlertMessage }}>
             {children}
         </PreferenceContext.Provider>
     );
