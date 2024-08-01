@@ -11,6 +11,9 @@ function NutritionPreference(){
     const { nutrition, setNutrition } = useContext(PreferenceContext);
 
     // base dietary list
+    // ----------------------------
+    // TODO: ADD OTHER NUTRIENTS
+    // ----------------------------
     // if you make changes to this after running, you must clear localStorage to see changes
     const baseNutritionList = [
         {id: 0, name: "Sodium", min_amount: 0, max_amount: 100},
@@ -41,11 +44,11 @@ function NutritionPreference(){
 
     // updates the nutrition list based on the new input value
     const updateNutrition = (event) => {
+
+        // edited nutrition field is identifiable by its id (nutrient id) and name (min_val or max_val)
         const id = event.target.id;
         let input_type = event.target.name;
         let new_amount = parseInt(event.target.value);
-
-        console.log(`${id}: ${input_type}, ${new_amount}`)
 
         let updatedObj = {}
         if (input_type === "min_val") {
@@ -54,17 +57,12 @@ function NutritionPreference(){
         else {
             updatedObj = {...nutritionList[id], max_amount: new_amount};
         }
-        console.log(updatedObj)
 
         setNutritionList(
             nutritionList.map( obj =>
                 obj.id === updatedObj.id ? updatedObj : obj
             )
         )
-    }
-
-    function OnChangeEvent() {
-        alert("value is changed");
     }
 
     return (

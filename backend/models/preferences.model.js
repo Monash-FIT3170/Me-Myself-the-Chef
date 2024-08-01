@@ -17,7 +17,6 @@ const NutritionSchema = new mongoose.Schema({
   min_amount: Number,
   max_amount: Number
 })
-  
 
 const PreferenceSchema = new mongoose.Schema({
   dietaryRequirements: [DietaryRequirementsSchema],

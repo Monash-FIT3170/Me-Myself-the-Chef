@@ -2,6 +2,13 @@ import React from "react";
 
 function NutritionPane({ nutritionList, updateNutrition }) {
 
+    // ----------------------------
+    // TODO: 
+    // - ADD GRID FORMATTING FOR NUTRIENTS
+    // - ADD INPUT VALIDATION
+    // - SPECIFY CORRECT UNITS FOR EACH NUTRIENT
+    // ----------------------------
+
     return (
         <div class="col-md-4" style={{paddingBottom: "60px"}} >
             <div class="row text-left" style={{padding: "50px 0px 20px 50px" }}>
