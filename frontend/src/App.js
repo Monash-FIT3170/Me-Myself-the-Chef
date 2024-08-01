@@ -10,6 +10,7 @@ import Ingredients from './views/Ingredients';
 import Recipe from './views/Recipe';
 import { Preference, DietaryRequirements, PreparationTime } from './views/Preference'
 import LoggedInPage from './views/LoggedInPage';
+import Chatbot from './components/ChatBot';
 
 function App() {
 
@@ -19,7 +20,6 @@ function App() {
         <Navbar />
 
         <div className="pages d-flex h-100 flex-column">
-
           <Routes>
 
             {/* Page 1 is a test page for making API calls to the backend: can delete if desired */}
@@ -53,6 +53,7 @@ function App() {
           </Routes>
 
         </div>
+        <Chatbot />
 
       </BrowserRouter>
     </div>
