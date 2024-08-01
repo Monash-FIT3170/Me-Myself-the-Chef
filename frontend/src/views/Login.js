@@ -56,6 +56,7 @@ const Login = () => {
     return (
         <>
             <section className="main_box">
+
                 <div className="form">
                     <center>
                         <h1>Login</h1>
@@ -81,7 +82,11 @@ const Login = () => {
                         </center>
                     </form>
                 </div>
-                <img className="login_image" src="/static/images/login_image.jpg" alt="Logo" />
+                
+                <div className="login_image_div">
+                    <img className="login_image" src="/static/images/login_graphic.png" alt="Logo" />
+                </div>
+
             </section>
         </>
     );
