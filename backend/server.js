@@ -37,6 +37,7 @@ db.mongoose.connect(dbConfig.uri, {
 // Routes
 require('../backend/routes/auth.routes')(app);
 require('../backend/routes/user.routes')(app);
+require('../backend/routes/chatbot.routes')(app);
 
 // Recipe Routes
 const recipeRoutes = require('./routes/recipes')
