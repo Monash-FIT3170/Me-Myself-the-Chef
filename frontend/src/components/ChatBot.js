@@ -1,6 +1,4 @@
-// src/Chatbot.js
 import React, { useState } from 'react';
-// import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 
 // CHATBOT STUFF
 function Chatbot() {
@@ -26,17 +24,25 @@ function Chatbot() {
       marginBottom: '10px',
     },
     botMessage: {
-      backgroundColor: '#007bff',
+      backgroundColor: '#458D59', // Dark Green ('#007bff' Blue)
       color: 'white',
       padding: '5px 10px',
       borderRadius: '5px',
       marginLeft: 'auto',
     },
     userMessage: {
-      backgroundColor: '#e0e0e0',
+      backgroundColor: '#7DE081', // Light Green ('#e0e0e0' Grey),
       padding: '5px 10px',
       borderRadius: '5px',
       marginRight: 'auto',
+      'text-align': 'right',
+    },
+    errorMessage: {
+      backgroundColor: '#E4080A',
+      color: 'white',
+      padding: '5px 10px',
+      borderRadius: '5px',
+      marginLeft: 'auto',
     },
     input: {
       width: '100%',
@@ -55,89 +61,63 @@ function Chatbot() {
     },
   };
 
-    // SET UP THE CHATBOT
-    // const MODEL_NAME = "gemini-1.0-pro";
-    // const API_KEY = "AIzaSyASRzJzvR4ntfYWazNTHDSKjB9hMpdux4A";
-    // const GENERATION_CONFIG = {
-    //     temperature: 0.9,
-    //     topK: 1,
-    //     topP: 1,
-    //     maxOutputTokens: 2048,
-    // };
-    // const SAFETY_SETTINGS = [
-    //     { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
-    //     { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
-    //     { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
-    //     { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
-    // ];
-
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
+    let userInputStorage = "";
 
     const handleInputChange = (e) => {
         setInput(e.target.value);
     };
-
-    
-    // try {
-    //     const genAI = new GoogleGenerativeAI(API_KEY);
-    //     const model = genAI.getGenerativeModel({ model: MODEL_NAME });
-
-    //     const chat = model.startChat({
-    //         generationConfig: GENERATION_CONFIG,
-    //         safetySettings: SAFETY_SETTINGS,
-    //         history: [],
-    //     });
-    // }  catch (error) {
-    //     console.error('An error occurred:', error.message);
-    //     process.exit(1);
-    // } 
     
 
   const handleSendMessage = async () => {
-
     try {
-        // const genAI = new GoogleGenerativeAI(API_KEY);
-        // const model = genAI.getGenerativeModel({ model: MODEL_NAME });
-
-        // const chat = model.startChat({
-        //     generationConfig: GENERATION_CONFIG,
-        //     safetySettings: SAFETY_SETTINGS,
-        //     history: [],
-        // });
-
-        // If no input, ignore
-        if (input.trim() === '') return;
+      // If no input, ignore
+      if (input.trim() === '') return;
   
-        // Add the user message to the messages array
-        setMessages(prevMessages => [...prevMessages, { role: 'user', text: input }]);
+      // Add the user message to the messages array
+      setMessages(prevMessages => [...prevMessages, { role: 'user', text: input }]);
 
-        // Send the user message to the CHATBOT API
-        const output = await fetch("http://localhost:8080/api/chatbot", {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({"input": input})
-        })
-        if (!output.ok) {
-            throw new Error('chatbotAPI response error');
-        }
-  
+      // Disable the user inputs while it waits
+      document.getElementById('chatbotInput').setAttribute("disabled", "true");
+      document.getElementById('chatbotButton').setAttribute("disabled", "true");
+      userInputStorage = input;
+      setInput('...Thinking...');
+
+      // Send the user message to the CHATBOT API
+      const output = await fetch("http://localhost:8080/api/chatbot", {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({"input": input})
+      })
+
+      if (!output.ok) {
+        console.error("Chatbot Error - output did not ok");
+      }
+
       // Extract the bot response from the API response
       const botResponse = await output.json();
       if (botResponse.error) {
         console.error('AI Error:', botResponse.error.message);
-        return
-        }
-  
-      // Add the bot response to the messages array
-      setMessages(prevMessages => [...prevMessages, { role: 'bot', text: botResponse.message }]);
-  
+        setMessages(prevMessages => [...prevMessages, { role: 'error', text: "ChatBot error: Please Try Again" }]);
+        setInput(userInputStorage);
+      } else {
+        // Add the bot response to the messages array
+        setMessages(prevMessages => [...prevMessages, { role: 'bot', text: botResponse.message }]);
+      }
       // Clear the input field
       setInput('');
     }  catch (error) {
         console.error('An error occurred:', error.message);
-        alert('An error occurred: ' + error.message);
+        setMessages(prevMessages => [...prevMessages, { role: 'error', text: "ChatBot error: Please Try Again" }]);
+        setInput(userInputStorage);
     }
+     // ReEnable the user inputs once it's done
+     setInput(userInputStorage);
+     document.getElementById('chatbotInput').removeAttribute("disabled");
+     document.getElementById('chatbotInput').focus();
+     document.getElementById('chatbotButton').removeAttribute("disabled");
+     document.getElementById('chatbotButton').focus();
   };
 
 
@@ -149,6 +129,8 @@ function Chatbot() {
             <div key={index} className="message" style={chatbotStyles.message}>
               {message.role === 'bot' ? (
                 <div className="bot-message" style={chatbotStyles.botMessage}>{message.text}</div>
+              ) : message.role === 'error' ? (
+                <div className="error-message" style={chatbotStyles.errorMessage}>{message.text}</div>
               ) : (
                 <div className="user-message" style={chatbotStyles.userMessage}>{message.text}</div>
               )}
@@ -156,13 +138,14 @@ function Chatbot() {
           ))}
         </div>
         <input
+          id="chatbotInput"
           type="text"
           value={input}
           onChange={handleInputChange}
           placeholder="Type a message..."
           style={chatbotStyles.input}
         />
-        <button onClick={handleSendMessage} style={chatbotStyles.button}>Send</button>
+        <button onClick={handleSendMessage} style={chatbotStyles.button} id="chatbotButton">Send</button>
       </div>
     </div>
   );
