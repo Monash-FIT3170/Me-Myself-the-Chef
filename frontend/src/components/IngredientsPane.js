@@ -1,5 +1,6 @@
 import React from 'react';
 import Ingredient from './Ingredient';
+import { Link } from "react-router-dom";
 
 
 function IngredientsPane({ ingredientList, deleteIngredient }) {
@@ -29,7 +30,9 @@ function IngredientsPane({ ingredientList, deleteIngredient }) {
                     })}
 
                 </div>
-
+                <Link className="react_link" to="/ingredients">
+                    <button type="button" className="btn btn-light btn-lg" id="change-button">Add Ingredients to Disable</button>
+                </Link>
             </div>
         </div>
     );
