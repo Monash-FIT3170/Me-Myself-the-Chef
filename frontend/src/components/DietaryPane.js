@@ -4,7 +4,7 @@ function DietaryPane({ dietaryList, updateDietary }){
 
     return (
         <div class="col-md-4">
-            <div class="row text-left" style={{padding: "50px 0px 20px 50px" }}>
+            <div class="row text-left" style={{padding: "10px 0px 20px 50px" }}>
                 <h3> Dietary Requirements </h3>
             </div>
 

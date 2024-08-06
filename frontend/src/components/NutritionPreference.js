@@ -16,8 +16,11 @@ function NutritionPreference(){
     // ----------------------------
     // if you make changes to this after running, you must clear localStorage to see changes
     const baseNutritionList = [
-        {id: 0, name: "Sodium", min_amount: 0, max_amount: 100},
+        {id: 0, name: "Sodium", min_amount: 0, max_amount: 200},
         {id: 1, name: "Protein", min_amount: 0, max_amount: 100},
+        {id: 2, name: "Sugar", min_amount: 0, max_amount: 100},
+        {id: 3, name: "Fat", min_amount: 0, max_amount: 100},
+        {id: 4, name: "Energy", min_amount: 0, max_amount: 100},
     ]
     
     // obtains the nutrition list from localStorage or uses the base one
