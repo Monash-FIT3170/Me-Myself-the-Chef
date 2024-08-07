@@ -1,35 +1,28 @@
 import React, { useState } from 'react';
 import ReactStars from 'react-rating-stars-component';
 import RecipeCommentsList from './RecipeCommentsList';
+import axios from 'axios';
 
 function RecipeComment({ recipeId }) {
+    const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
     const [rating, setRating] = useState(0);
 
     const handleCommentChange = (e) => setComment(e.target.value);
     const handleRatingChange = (newRating) => setRating(newRating);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        try {
-            const response = await fetch('http://localhost:8080/api/comments', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ recipeId, comment, rating })
-            });
-
-            if (response.ok) {
-                setComment('');
-                setRating(0);
-                // Trigger the comments refresh event
-                document.dispatchEvent(new CustomEvent('refreshComments'));
-            } else {
-                console.error('Failed to submit comment');
-            }
-        } catch (error) {
-            console.error('Error submitting comment:', error);
-        }
-    };
+        axios.post('http://localhost:5000/comments', { recipeId, rating, comment })
+          .then(response => {
+            setComments([...comments, response.data]);
+            setComment('');
+            setRating(0);
+          })
+          .catch(error => {
+            console.error("There was an error posting the comment!", error);
+          });
+      };
 
     return (
         <div className="row mt-4 text-left">
