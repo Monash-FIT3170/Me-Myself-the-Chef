@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from "react";
 import '../css/base.css'
+import '../css/dropdown.css'
 import IngredientsPane from '../components/IngredientsPane';
 import IngredientSearch from '../components/IngredientSearch';
 

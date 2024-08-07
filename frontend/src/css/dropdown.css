@@ -1,0 +1,38 @@
+  .slide {
+    clear:both;
+    width:100%;
+    height:0px;
+    overflow: hidden;
+    text-align: center;
+    transition: height .4s ease;
+  }
+  
+  .slide li {padding : 30px;}
+
+  .customise-button {
+    text-align: right;
+    padding-top: 10px;
+    padding-right: 10px;
+  }
+
+  .preference-list-text {
+    text-align: left;
+  }
+
+  .preference-options {
+    text-align: right;
+  }
+
+  .serving-size-box {
+    display: inline-block;
+    width: 40px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background-color: white;
+    border: 1px solid #ccc;
+  }
+  
+  #touch {position: absolute; opacity: 0; height: 0px; }    
+  
+  #touch:checked + .slide {height: 300px;} 

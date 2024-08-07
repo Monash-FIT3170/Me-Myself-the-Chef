@@ -1,6 +1,7 @@
 import React from 'react';
 import AutoSearchBar from '../components/AutoSearchBar';
 import { Link } from "react-router-dom";
+import Dropdown from './Dropdown';
 
 
 function IngredientSearch({addIngredient}) {
@@ -38,6 +39,7 @@ function IngredientSearch({addIngredient}) {
                             - Examples: https://www.npmjs.com/package/react-search-autocomplete
 
                         --> */}
+                        <Dropdown />
 
                     </div>
                 </div>
