@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const DietaryRequirementsSchema = new mongoose.Schema({
+const CommentSchema = new mongoose.Schema({
     recipeId: {type: Number, required: true},
     rating: {type: Number, required: true},
     author: { type: String, default: "Anonymous" },
@@ -8,6 +8,6 @@ const DietaryRequirementsSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
 });
 
-const Comment = mongoose.model('Comment', commentSchema);
+const Comment = mongoose.model('Comment', CommentSchema);
 
 module.exports = Comment;

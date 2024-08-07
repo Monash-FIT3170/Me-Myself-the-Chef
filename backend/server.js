@@ -42,7 +42,7 @@ require('../backend/routes/user.routes')(app);
 
 // Comment Routes
 const commentsRouter = require('./routes/comments');
-app.use('/comments', commentsRouter);
+app.use('/api/comments', commentsRouter);
 
 // Recipe Routes
 const recipeRoutes = require('./routes/recipes')
