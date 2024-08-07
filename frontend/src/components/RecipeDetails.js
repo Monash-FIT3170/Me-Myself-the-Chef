@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactStars from 'react-rating-stars-component';
 
 // Functional component for displaying recipe details
 function RecipeDetails({ title, image, servings, setServings, prepTime, cookTime, adjustIngredients }) {
@@ -40,6 +41,15 @@ function RecipeDetails({ title, image, servings, setServings, prepTime, cookTime
                               <button className="input-group-text" type="button" onClick={handleDecreaseServings}>-</button>
                               <input type="text" className="form-control text-center" value={servings} readOnly />
                               <button className="input-group-text" type="button" onClick={handleIncreaseServings}>+</button>
+                           </div>
+                           <div className="mt-3 d-flex justify-content-center">
+                              <ReactStars
+                                 count={5}
+                                 size={24}
+                                 activeColor="#ffd700"
+                                 value={4} // Set the initial rating value
+                                 edit={false} // Set to true if you want it to be interactive
+                              />
                            </div>
                      </div>
                   </div>

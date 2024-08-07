@@ -5,6 +5,7 @@ import RecipeInstructions from '../components/RecipeInstructions';
 import RecipeDetails from '../components/RecipeDetails';
 import NutritionPane from '../components/NutritionPane';
 import IngredientExpandedPane from '../components/IngredientExpandedPane';
+import RecipeComment from '../components/RecipeComment';
 
 
 function Recipe() {
@@ -17,6 +18,7 @@ function Recipe() {
     const [nutrition, setNutrition] = useState([]);
     const [servings, setServings] = useState(1);
     const [originalServings, setOriginalServings] = useState(null);
+    const [comments, setComments] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -37,6 +39,7 @@ function Recipe() {
                 setIngredients(formatIngredients(json.extendedIngredients, initialServings));
                 setOriginalIngredients(json.extendedIngredients);
                 setNutrition(formatNutrition(json.nutrition.nutrients));
+                fetchComments();
             } catch (error) {
                 console.log(error);
             }
@@ -44,6 +47,16 @@ function Recipe() {
 
         fetchData();
     }, [recipeId, originalServings]);
+
+    const fetchComments = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/api/comments/' + recipeId);
+            const json = await response.json();
+            setComments(json);
+        } catch (error) {
+            console.error('Error fetching comments:', error);
+        }
+    };
 
     // Format instructions to extract step text
     function formatInstructions(steps) {
@@ -93,6 +106,15 @@ function Recipe() {
                     adjustIngredients={adjustIngredients}
                 />
                 <RecipeInstructions instructions={instructions} />
+                <RecipeComment recipeId={recipeId} fetchComments={fetchComments} />
+                <div className="mt-4">
+                    {comments.map((comment, index) => (
+                        <div key={index} className="mb-3">
+                            <div><strong>Rating:</strong> {comment.rating} / 5</div>
+                            <div><strong>Comment:</strong> {comment.comment}</div>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );
