@@ -2,7 +2,7 @@ import React from 'react';
 import Ingredient from './Ingredient';
 import { Link } from "react-router-dom";
 
-
+// this is the ingredients pane that appears before recipes have been generated 
 function IngredientsPane({ ingredientList, deleteIngredient }) {
 
     return (
@@ -30,7 +30,7 @@ function IngredientsPane({ ingredientList, deleteIngredient }) {
                     })}
 
                 </div>
-                <Link className="react_link" to="/ingredients">
+                <Link className="react_link" to="/recipe_recommendation">
                     <button type="button" className="btn btn-light btn-lg" id="change-button">Add Ingredients to Disable</button>
                 </Link>
             </div>
