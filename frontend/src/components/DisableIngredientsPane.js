@@ -10,7 +10,7 @@ function DisableIngredientsPane({ d_ingredientList, deleteIngredient }) {
             <div className="container">
 
                 <div className="row pt-5 text-center">
-                    <h2>Ingredients to not Include</h2>
+                    <h2>Ingredients to Not Include</h2>
                     
                     <div className="horiz_line"></div>
                 </div>
@@ -31,7 +31,7 @@ function DisableIngredientsPane({ d_ingredientList, deleteIngredient }) {
 
                 </div>
                 <Link className="react_link" to="/ingredients">
-                    <button type="button" className="btn btn-light btn-lg" id="change-button">Add Ingredients to Inlcude</button>
+                    <button type="button" className="btn btn-light btn-lg" id="change-button">Add Ingredients to Include</button>
                 </Link>
             </div>
         </div>
