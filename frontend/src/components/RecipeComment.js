@@ -7,13 +7,14 @@ function RecipeComment({ recipeId }) {
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
     const [rating, setRating] = useState(0);
+    const [averageRating, setAverageRating] = useState(0);
 
     const handleCommentChange = (e) => setComment(e.target.value);
     const handleRatingChange = (newRating) => setRating(newRating);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:5000/comments', { recipeId, rating, comment })
+        axios.post('http://localhost:8080/api/comments', { recipeId, rating, text: comment })
           .then(response => {
             setComments([...comments, response.data]);
             setComment('');
@@ -22,17 +23,16 @@ function RecipeComment({ recipeId }) {
           .catch(error => {
             console.error("There was an error posting the comment!", error);
           });
-      };
+    };
 
     return (
-        <div className="row mt-4 text-left">
+        <div className="row mt-4 text-left" style={{ padding: '20px' }}>
             <div className="col-md-12">
-                {/* <div className="text-center"> */}
                 <div>
                     <h2>Reviews</h2>
                 </div>
                 <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
+                    <div className="mb-3" style={{ border: ' 1px solid #3E6C4B', borderRadius: '5px', padding: '10px'}}>
                         <label htmlFor="comment" className="form-label">Add a Comment</label>
                         <div className="mb-3 text-center">
                             <ReactStars
@@ -41,6 +41,7 @@ function RecipeComment({ recipeId }) {
                                 activeColor="#ffd700"
                                 value={rating}
                                 onChange={handleRatingChange}
+                                key={rating}
                             />
                         </div>
                         <textarea
@@ -56,10 +57,10 @@ function RecipeComment({ recipeId }) {
                         ></textarea>
                     </div>
                     <div className="text-end">
-                        <button type="submit" className="btn" style={{ backgroundColor: '#3E6C4B', color: 'white' }}>Submit</button>
+                        <button type="submit" className="btn" style={{ backgroundColor: '#3E6C4B', color: 'white' }}>Comment</button>
                     </div>
                 </form>
-                <RecipeCommentsList recipeId={recipeId} />
+                <RecipeCommentsList recipeId={recipeId} comments={comments} setComments={setComments} />
             </div>
         </div>
     );

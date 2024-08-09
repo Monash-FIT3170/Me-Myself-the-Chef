@@ -107,14 +107,6 @@ function Recipe() {
                 />
                 <RecipeInstructions instructions={instructions} />
                 <RecipeComment recipeId={recipeId} fetchComments={fetchComments} />
-                <div className="mt-4">
-                    {comments.map((comment, index) => (
-                        <div key={index} className="mb-3">
-                            <div><strong>Rating:</strong> {comment.rating} / 5</div>
-                            <div><strong>Comment:</strong> {comment.comment}</div>
-                        </div>
-                    ))}
-                </div>
             </div>
         </div>
     );

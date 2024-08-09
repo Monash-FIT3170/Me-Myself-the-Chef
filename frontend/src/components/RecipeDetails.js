@@ -2,7 +2,7 @@ import React from 'react';
 import ReactStars from 'react-rating-stars-component';
 
 // Functional component for displaying recipe details
-function RecipeDetails({ title, image, servings, setServings, prepTime, cookTime, adjustIngredients }) {
+function RecipeDetails({ title, image, servings, setServings, prepTime, cookTime, adjustIngredients , averageRating}) {
 
    // Function to handle increasing servings
    const handleIncreaseServings = () => {
@@ -47,7 +47,7 @@ function RecipeDetails({ title, image, servings, setServings, prepTime, cookTime
                                  count={5}
                                  size={24}
                                  activeColor="#ffd700"
-                                 value={4} // Set the initial rating value
+                                 value={averageRating} // Set the initial rating value
                                  edit={false} // Set to true if you want it to be interactive
                               />
                            </div>

@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const CommentSchema = new mongoose.Schema({
-    recipeId: {type: Number, required: true},
-    rating: {type: Number, required: true},
+    recipeId: { type: String, required: true },
+    rating: { type: Number, required: true },
     author: { type: String, default: "Anonymous" },
     text: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
