@@ -19,6 +19,13 @@ function RecipeComment({ recipeId }) {
             setComments([...comments, response.data]);
             setComment('');
             setRating(0);
+
+            // Recalculate the average rating
+            axios.get(`http://localhost:8080/api/comments/average-rating/${recipeId}`)
+            .then(response => {
+                setAverageRating(response.data.averageRating);
+                console.log(response.data.averageRating)
+            });
           })
           .catch(error => {
             console.error("There was an error posting the comment!", error);
