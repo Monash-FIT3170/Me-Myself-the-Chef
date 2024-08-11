@@ -24,7 +24,7 @@ router.get('/average-rating/:recipeId', async (req, res) => {
       const totalRating = comments.reduce((sum, comment) => sum + comment.rating, 0);
   
       // Calculate the average rating
-      const averageRating = (comments.length === 0) ? 0 : (totalRating / comments.length).toFixed(2);
+      const averageRating = (comments.length === 0) ? 0 : Math.round(totalRating / comments.length);
   
       // Return the average rating
       res.json({ averageRating });
