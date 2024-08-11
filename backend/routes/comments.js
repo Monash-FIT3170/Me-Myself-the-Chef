@@ -12,6 +12,27 @@ router.get('/:recipeId', async (req, res) => {
     }
 });
 
+// Get average rating for a specific recipeId
+router.get('/average-rating/:recipeId', async (req, res) => {
+    const { recipeId } = req.params;
+  
+    try {
+      // Find comments that have the specific recipeId
+      const comments = await Comment.find({ recipeId });
+  
+      // Calculate the total rating for the filtered comments
+      const totalRating = comments.reduce((sum, comment) => sum + comment.rating, 0);
+  
+      // Calculate the average rating
+      const averageRating = (comments.length === 0) ? 0 : (totalRating / comments.length).toFixed(2);
+  
+      // Return the average rating
+      res.json({ averageRating });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  });
+
 // Create a new comment
 router.post('/', async (req, res) => {
     const comment = new Comment({
