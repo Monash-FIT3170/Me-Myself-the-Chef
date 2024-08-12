@@ -9,7 +9,6 @@ const RECIPES = mongoose.connection.collection('recipes')
 const complexSearch = async (req, res) => {
     // To use this one send a POST request with query, ingredients and preferences (all are optional)
     let {query, ingredients, preferences} = req.body
-    console.log(req.body)
 
     // Process list of ingredients.
     let ingredientsString = ""
@@ -24,7 +23,7 @@ const complexSearch = async (req, res) => {
     // Process list of diets.
     const diets = preferences ? preferences.dietaryRequirements : []
     let dietString = ""
-    for (i = 0; i < diets.length; i++) {
+    for (let i = 0; i < diets.length; i++) {
         if (diets[i].state) {
             dietString += diets[i].name
 
@@ -35,13 +34,13 @@ const complexSearch = async (req, res) => {
     }
 
     let diet_array = diets.filter(diet => diet.state)
-    diets1 = diet_array.map(diet => diet.name)
+    let diets1 = diet_array.map(diet => diet.name)
     dietString = diets1.join()
 
     // Process list of allergies
     const allergies = preferences ? preferences.allergies : []
     let allergiesString = ""
-    for (i = 0; i < allergies.length; i++) {
+    for (let i = 0; i < allergies.length; i++) {
         allergiesString += allergies[i].title
         if (i < (allergies.length - 1)) {
             allergiesString += ","
@@ -50,15 +49,6 @@ const complexSearch = async (req, res) => {
 
     // Process max prep time
     const maxPrepTime = 20  // preferences ? preferences.maxPrepTime : 20
-
-    console.log("diet: " + dietString)
-    if (query) {
-        console.log("query: " + query)
-    }
-
-    console.log("allergies: " + allergiesString)
-    console.log("ingredients: " + ingredientsString)
-    
 
     const options = {
         method: 'GET',
