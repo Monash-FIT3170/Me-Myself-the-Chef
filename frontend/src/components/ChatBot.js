@@ -11,17 +11,58 @@ function Chatbot() {
       borderRadius: '5px',
       margin: '0 auto',
       padding: '10px',
+      position: 'fixed',
+      bottom: 0,
+      right: 0
+    },
+    chatboxHeader: {
+      background: '#458D59',
+      color: '#fff',
+      padding: '10px',
+      display: 'flex',
+      'justify-content': 'space-between',
+      'align-items': 'center',
+      'border-top-left-radius': '10px',
+      'border-top-right-radius': '10px'
+    },
+    chatboxHeader_h2: {
+        margin: '0',
+        'font-size': '18px',
+    },
+    chatboxHeader_button: {
+        background: 'transparent',
+        border: 'none',
+        color: '#fff',
+        'font-size': '20px',
+        cursor: 'pointer'
     },
     chatbox: {
       display: 'flex',
       flexDirection: 'column',
+    },
+    chatbotButton: {
+      position: 'fixed',
+      bottom: '20px',
+      right: '20px',
+      background: '#458D59', // Dark Green
+      color: '#fff',
+      border: 'none',
+      'border-radius': '50%',
+      width: '60px',
+      height: '60px',
+      'font-size': '18px',
+      cursor: 'pointer',
+      display: 'flex',
+      'align-items': 'center',
+      'justify-content': 'center'
     },
     messages: {
       maxHeight: '300px',
       overflowY: 'scroll',
     },
     message: {
-      marginBottom: '10px',
+      marginBottom: '5px',
+      marginTop: '5px'
     },
     botMessage: {
       backgroundColor: '#458D59', // Dark Green ('#007bff' Blue)
@@ -52,7 +93,7 @@ function Chatbot() {
       marginBottom: '10px',
     },
     button: {
-      backgroundColor: '#007bff',
+      backgroundColor: '#458D59', // Dark Green
       color: 'white',
       border: 'none',
       padding: '10px 20px',
@@ -64,11 +105,24 @@ function Chatbot() {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     let userInputStorage = "";
+    const [isVisible, setIsVisible] = useState(false); // controls wether the chatbox is visible
 
     const handleInputChange = (e) => {
         setInput(e.target.value);
     };
     
+  const toggleChatbotVisibility = () => {
+    setIsVisible(prevState => !prevState);
+  }
+
+  // This is what allows the chatbox message to scroll to the bottom whenever a message is sent
+  const scrollableDiv = document.getElementById("messagesPane");
+  const scrollToBottom = () => {
+    scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
+  };
+
+
+  
 
   const handleSendMessage = async () => {
     try {
@@ -77,6 +131,9 @@ function Chatbot() {
   
       // Add the user message to the messages array
       setMessages(prevMessages => [...prevMessages, { role: 'user', text: input }]);
+
+      // Scroll to the bottom of the updated message area
+      // scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
 
       // Disable the user inputs while it waits
       document.getElementById('chatbotInput').setAttribute("disabled", "true");
@@ -113,41 +170,50 @@ function Chatbot() {
         setInput(userInputStorage);
     }
      // ReEnable the user inputs once it's done
-     setInput(userInputStorage);
      document.getElementById('chatbotInput').removeAttribute("disabled");
      document.getElementById('chatbotInput').focus();
      document.getElementById('chatbotButton').removeAttribute("disabled");
      document.getElementById('chatbotButton').focus();
+     // scroll to the bottom of the message pane so the message is visible
+     // scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
   };
 
 
   return (
-    <div className="chatbot" style={chatbotStyles.chatbot}>
-      <div className="chatbox" style={chatbotStyles.chatbox}>
-        <div className="messages" style={chatbotStyles.messages}>
-          {messages.map((message, index) => (
-            <div key={index} className="message" style={chatbotStyles.message}>
-              {message.role === 'bot' ? (
-                <div className="bot-message" style={chatbotStyles.botMessage}>{message.text}</div>
-              ) : message.role === 'error' ? (
-                <div className="error-message" style={chatbotStyles.errorMessage}>{message.text}</div>
-              ) : (
-                <div className="user-message" style={chatbotStyles.userMessage}>{message.text}</div>
-              )}
-            </div>
-          ))}
+    <div>
+      {!isVisible && <button className="chatbotButton" style={chatbotStyles.chatbotButton} onClick={toggleChatbotVisibility}>CB</button>}
+      {isVisible && <div className="chatbot" style={chatbotStyles.chatbot}>
+        <div className="chatbotHeader" style={chatbotStyles.chatboxHeader}>
+          <h2 style={chatbotStyles.chatboxHeader_h2}>Chat</h2>
+          <button onClick={toggleChatbotVisibility} style={chatbotStyles.chatboxHeader_button}>&times;</button>
         </div>
-        <input
-          id="chatbotInput"
-          type="text"
-          value={input}
-          onChange={handleInputChange}
-          placeholder="Type a message..."
-          style={chatbotStyles.input}
-        />
-        <button onClick={handleSendMessage} style={chatbotStyles.button} id="chatbotButton">Send</button>
-      </div>
-    </div>
+        <div className="chatbox" style={chatbotStyles.chatbox}>
+          <div id='messagesPane' className="messages" style={chatbotStyles.messages} onChange={scrollToBottom}>
+            {messages.map((message, index) => (
+              <div key={index} className="message" style={chatbotStyles.message}>
+                {message.role === 'bot' ? (
+                  <div className="bot-message" style={chatbotStyles.botMessage}>{message.text}</div>
+                ) : message.role === 'error' ? (
+                  <div className="error-message" style={chatbotStyles.errorMessage}>{message.text}</div>
+                ) : (
+                  <div className="user-message" style={chatbotStyles.userMessage}>{message.text}</div>
+                )}
+              </div>
+            ))}
+          </div>
+          <input
+            id="chatbotInput"
+            type="text"
+            value={input}
+            onChange={handleInputChange}
+            placeholder="Type a message..."
+            style={chatbotStyles.input}
+            autocomplete="off"
+          />
+          <button onClick={handleSendMessage} style={chatbotStyles.button} id="chatbotButton">Send</button>
+        </div>
+      </div>}
+  </div>
   );
 }
 
