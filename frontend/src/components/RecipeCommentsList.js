@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import ReactStars from 'react-rating-stars-component';
 
-function RecipeCommentsList({ recipeId, comments, setComments , setAverageRating}) {
+function RecipeCommentsList({ recipeId, comments, setComments }) {
     useEffect(() => {
         const fetchComments = async () => {
             try {
@@ -9,10 +9,6 @@ function RecipeCommentsList({ recipeId, comments, setComments , setAverageRating
                 if (response.ok) {
                     const data = await response.json();
                     setComments(data);
-
-                    const totalRating = data.reduce((sum, comment) => sum + comment.rating, 0);
-                    const avgRating = data.length ? totalRating / data.length : 0;
-                    setAverageRating(avgRating);
 
                 } else {
                     console.error('Failed to fetch comments');
@@ -23,7 +19,7 @@ function RecipeCommentsList({ recipeId, comments, setComments , setAverageRating
         };
 
         fetchComments();
-    }, [recipeId, setComments, setAverageRating]);
+    }, [recipeId, setComments]);
 
     return (
         <div className="comments-list mt-4">

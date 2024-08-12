@@ -7,7 +7,7 @@ function RecipeComment({ recipeId }) {
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
     const [rating, setRating] = useState(0);
-    const [averageRating, setAverageRating] = useState(0);
+
 
     const handleCommentChange = (e) => setComment(e.target.value);
     const handleRatingChange = (newRating) => setRating(newRating);
@@ -20,12 +20,7 @@ function RecipeComment({ recipeId }) {
             setComment('');
             setRating(0);
 
-            // Recalculate the average rating
-            axios.get(`http://localhost:8080/api/comments/average-rating/${recipeId}`)
-            .then(response => {
-                setAverageRating(response.data.averageRating);
-                console.log(response.data.averageRating)
-            });
+            
           })
           .catch(error => {
             console.error("There was an error posting the comment!", error);

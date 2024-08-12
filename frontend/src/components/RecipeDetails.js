@@ -47,8 +47,8 @@ function RecipeDetails({ title, image, servings, setServings, prepTime, cookTime
                                  count={5}
                                  size={24}
                                  activeColor="#ffd700"
-                                 value={averageRating} // Set the initial rating value
-                                 edit={false} // Set to true if you want it to be interactive
+                                 value={averageRating} 
+                                 edit={false} 
                               />
                            </div>
                      </div>
