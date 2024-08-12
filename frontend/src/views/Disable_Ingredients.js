@@ -8,7 +8,7 @@ import DisabledIngredientSearch from '../components/DisabledIngredientSearch'; /
 function Disable_Ingredients() {
 
     const [d_ingredientList, setDIngredientList] = useState(() => {
-        const localValue = localStorage.getItem("INGREDIENTS") // check if we also need to change this 
+        const localValue = localStorage.getItem("DINGREDIENTS") // check if we also need to change this 
         if (localValue == null) return []
 
         return JSON.parse(localValue)
@@ -16,7 +16,7 @@ function Disable_Ingredients() {
 
     // is called everytime the page reloads/renders
     useEffect(() => {
-        localStorage.setItem("INGREDIENTS", JSON.stringify(d_ingredientList))
+        localStorage.setItem("DINGREDIENTS", JSON.stringify(d_ingredientList))
     }, [d_ingredientList]);
 
     // function to add ingredients to list

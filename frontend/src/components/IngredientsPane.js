@@ -31,7 +31,7 @@ function IngredientsPane({ ingredientList, deleteIngredient }) {
 
                 </div>
                 <Link className="react_link" to="/disable_Ingredients">
-                    <button type="button" className="btn btn-light btn-lg" id="change-button">Add Ingredients to Disable</button>
+                    <button type="button" className="btn btn-light btn-lg" id="change-button" style={{ fontSize: '15px' }}>Add Ingredients to Disable</button>
                 </Link>
             </div>
         </div>

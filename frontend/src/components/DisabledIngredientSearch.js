@@ -17,7 +17,7 @@ function DisabledIngredientSearch({addIngredient}) {
             <div className="container">
                 
                 <div className="row search_section">
-                    <h1 className="heading">Select your Ingredients to Disable</h1>
+                    <h1 className="heading">Select your Ingredients</h1>
                 </div>
 
                 <div className="row mt-4">

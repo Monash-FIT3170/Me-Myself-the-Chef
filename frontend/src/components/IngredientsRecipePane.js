@@ -10,7 +10,7 @@ function IngredientsRecipePane({ ingredientList }) {
             <div className="container">
 
                 <div className="row pt-5 text-center">
-                    <h2>Ingredients 2</h2>
+                    <h2>Ingredients</h2>
                     
                     <div className="horiz_line"></div>
                 </div>
