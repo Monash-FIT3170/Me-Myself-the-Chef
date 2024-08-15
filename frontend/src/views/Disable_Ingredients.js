@@ -30,7 +30,8 @@ function Disable_Ingredients() {
     function addIngredient(name) {
         const isFoundInThisList = d_ingredientList.some(ing => ing.title === name); // will be true if item is already in ingredients to exclude list 
         const isFoundInIngList = ingredients.some(ing => ing.title === name);   // will be true if item is in ingredients to include list 
-        console.log(d_ingredientList)
+        
+        //console.log(d_ingredientList)
         if(!isFoundInThisList && !isFoundInIngList){
             console.log("ingredient added to list ")
             setDIngredientList((currentDIngredients) => {
