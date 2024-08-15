@@ -43,11 +43,9 @@ function DisabledIngredientSearch({addIngredient}) {
             </div>
 
             {/* <!-- Generate recipe button --> */}
-            <Link className="react_link" to="/ingredients">
+            <Link className="react_link" to="/recipe_recommendation">
                 <button type="button" className="btn btn-light btn-lg" id="gen-button">Generate Recipes</button>
             </Link>
-
-            
             
         </div>
     );
