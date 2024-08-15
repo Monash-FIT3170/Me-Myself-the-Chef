@@ -21,6 +21,7 @@ function Ingredients() {
 
     // function to add ingredients to list
     function addIngredient(title) {
+        console.log("hi")
         setIngredientList((currentIngredients) => {
             return [
                 ...currentIngredients,

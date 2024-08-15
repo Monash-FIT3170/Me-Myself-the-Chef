@@ -2,8 +2,7 @@ import React from 'react';
 import AutoSearchBar from '../components/AutoSearchBar';
 import { Link } from "react-router-dom";
 
-
-function DisabledIngredientSearch({addIngredient}) {
+function DisabledIngredientSearch({ingredients, addIngredient}) {
 
     // function to handle the user searching an ingredient
     function onIngredientSearch(ingredient) {

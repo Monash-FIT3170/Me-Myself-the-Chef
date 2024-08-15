@@ -14,6 +14,13 @@ function RecipeRecommendation() {
         return JSON.parse(localValue)
     });
 
+    const [excludeIngredients, setDIngredientList] = useState(() => {
+        const localValue = localStorage.getItem("DINGREDIENTS") // check if we also need to change this 
+        if (localValue == null) return []
+
+        return JSON.parse(localValue)
+    });
+
     let preferences = localStorage.getItem("preferences")
     if (preferences != null) {
         preferences = JSON.parse(preferences)
@@ -27,13 +34,17 @@ function RecipeRecommendation() {
     }, [ingredients]);
 
     useEffect(() => {
+        localStorage.setItem("DINGREDIENTS", JSON.stringify(excludeIngredients))
+    }, [excludeIngredients]);
+
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 // Cannot use a GET request as we are sending objects to the backend for processing
                 const response = await fetch("http://localhost:8080/api/recipes/complexSearch", {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ingredients, preferences})
+                    body: JSON.stringify({ingredients, preferences, excludeIngredients})
                 })
                 const json = await response.json()
                 console.log(json)
