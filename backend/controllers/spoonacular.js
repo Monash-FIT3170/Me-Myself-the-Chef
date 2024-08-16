@@ -48,6 +48,13 @@ const complexSearch = async (req, res) => {
         }
     }
 
+    // Processlist of nutritional preferences
+    const nutritions = preferences ? preferences.nutrition : []
+    const minSodium = nutritions[0].min_amount
+    const maxSodium = nutritions[0].max_amount
+    const minProtein = nutritions[1].min_amount
+    const maxProtein = nutritions[1].max_amount 
+
     // Process max prep time
     const maxPrepTime = 20  // preferences ? preferences.maxPrepTime : 20
 
@@ -68,8 +75,12 @@ const complexSearch = async (req, res) => {
             query: query,
             diet: dietString,
             intolerances: allergiesString,
-            includeIngredients: ingredientsString
+            includeIngredients: ingredientsString,
             // maxReadyTime: maxPrepTime
+            minSodium: minSodium,
+            maxSodium: maxSodium,
+            minProtein: minProtein, 
+            maxProtein: maxProtein
         }
     }
 
