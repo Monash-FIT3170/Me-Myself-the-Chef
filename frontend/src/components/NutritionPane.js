@@ -64,17 +64,17 @@ function NutritionPane({ nutritionList, updateNutrition }) {
 
                             <div class="range_container">
                                 <div class="sliders_control">
-                                    <input type="range" min={getFormInfo(nutrient.id).min_limit} max={getFormInfo(nutrient.id).max_limit} step={getFormInfo(nutrient.id).step} id={nutrient.id} name="min_val" value={nutrient.min_amount} onChange={updateNutrition}/>
-                                    <input type="range" min={getFormInfo(nutrient.id).min_limit} max={getFormInfo(nutrient.id).max_limit} step={getFormInfo(nutrient.id).step} id={nutrient.id} name="max_val" value={nutrient.max_amount} onChange={updateNutrition}/>
+                                    <input type="range" min={getFormInfo(nutrient.id).min_limit} max={getFormInfo(nutrient.id).max_limit} step={getFormInfo(nutrient.id).step} id={`from_slider_${nutrient.id}`} name="min_val" value={nutrient.min_amount} onChange={updateNutrition}/>
+                                    <input type="range" min={getFormInfo(nutrient.id).min_limit} max={getFormInfo(nutrient.id).max_limit} step={getFormInfo(nutrient.id).step} id={`to_slider_${nutrient.id}`} name="max_val" value={nutrient.max_amount} onChange={updateNutrition}/>
                                 </div>
                                 <div class="form_control">
                                     <div class="form_control_container">
                                         <div class="form_control_container__time">Min</div>
-                                        <input class="form_control_container__time__input" type="number" min={getFormInfo(nutrient.id).min_limit} max={getFormInfo(nutrient.id).max_limit} step={getFormInfo(nutrient.id).step} id={nutrient.id} name="min_val" value={nutrient.min_amount} onChange={updateNutrition}/>
+                                        <p class="form_control_container__time__input">{nutrient.min_amount}</p>
                                     </div>
                                     <div class="form_control_container">
                                         <div class="form_control_container__time">Max</div>
-                                        <input class="form_control_container__time__input" type="number" min={getFormInfo(nutrient.id).min_limit} max={getFormInfo(nutrient.id).max_limit} step={getFormInfo(nutrient.id).step} id={nutrient.id} name="max_val" value={nutrient.max_amount} onChange={updateNutrition}/>
+                                        <p class="form_control_container__time__input">{nutrient.max_amount}</p>
                                     </div>
                                 </div>
                             </div>

@@ -45,11 +45,26 @@ function NutritionPreference(){
     }, [nutritionList]);
 
 
+    function fillSlider(from, to, sliderColor, rangeColor, controlSlider) {
+        const rangeDistance = to.max-to.min;
+        const fromPosition = from.value - to.min;
+        const toPosition = to.value - to.min;
+        controlSlider.style.background = `linear-gradient(
+          to right,
+          ${sliderColor} 0%,
+          ${sliderColor} ${(fromPosition)/(rangeDistance)*100}%,
+          ${rangeColor} ${((fromPosition)/(rangeDistance))*100}%,
+          ${rangeColor} ${(toPosition)/(rangeDistance)*100}%, 
+          ${sliderColor} ${(toPosition)/(rangeDistance)*100}%, 
+          ${sliderColor} 100%)`;
+    }
+
+
     // updates the nutrition list based on the new input value
     const updateNutrition = (event) => {
 
         // edited nutrition field is identifiable by its id (nutrient id) and name (min_val or max_val)
-        const id = event.target.id;
+        const id = parseInt(event.target.id.split("_").pop());
         let input_type = event.target.name;
         let new_amount = parseInt(event.target.value);
 
@@ -66,6 +81,11 @@ function NutritionPreference(){
                 obj.id === updatedObj.id ? updatedObj : obj
             )
         )
+
+        // set slider fill colour
+        let from_slider = document.querySelector(`#from_slider_${id}`);
+        let to_slider = document.querySelector(`#to_slider_${id}`);
+        fillSlider(from_slider, to_slider, '#C6C6C6', '#25daa5', to_slider);
     }
 
     return (
