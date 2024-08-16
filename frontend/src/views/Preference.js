@@ -2,6 +2,7 @@ import React from 'react'
 import PrefNavBar from '../components/PreferenceNavBar'
 import { DietaryInformation, NutritionInformation, PreparationTimeInformation } from '../components/PreferenceInformation'
 import '../css/preference.css'
+import '../css/slider.css'
 
 
 export const Preference = () => {
