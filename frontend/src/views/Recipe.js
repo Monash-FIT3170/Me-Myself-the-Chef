@@ -19,6 +19,7 @@ function Recipe() {
     const [servings, setServings] = useState(1);
     const [originalServings, setOriginalServings] = useState(null);
     const [comments, setComments] = useState([]);
+    const [averageRating, setAverageRating] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,6 +27,10 @@ function Recipe() {
                 const response = await fetch('http://localhost:8080/api/recipes/id/' + recipeId)
                 const json = await response.json()
                 console.log(json);
+                const getAverageRating = async () => {
+                    const rating = await fetchAverageRating();
+                    setAverageRating(rating);
+                };
                 setRecipeInfo(json);
 
                 const initialServings = json.servings;
@@ -40,6 +45,7 @@ function Recipe() {
                 setOriginalIngredients(json.extendedIngredients);
                 setNutrition(formatNutrition(json.nutrition.nutrients));
                 fetchComments();
+                getAverageRating();
             } catch (error) {
                 console.log(error);
             }
@@ -55,6 +61,16 @@ function Recipe() {
             setComments(json);
         } catch (error) {
             console.error('Error fetching comments:', error);
+        }
+    };
+
+    const fetchAverageRating = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/api/comments/average-rating/' + recipeId);
+            const json = await response.json();
+            return(json.averageRating);
+        } catch (error) {
+            console.error('Error fetching average rating:', error);
         }
     };
 
@@ -104,6 +120,7 @@ function Recipe() {
                     prepTime={recipeInfo.preparationMinutes}
                     cookTime={recipeInfo.readyInMinutes}
                     adjustIngredients={adjustIngredients}
+                    averageRating={averageRating}
                 />
                 <RecipeInstructions instructions={instructions} />
                 <RecipeComment recipeId={recipeId} fetchComments={fetchComments} />
