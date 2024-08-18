@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from "react-router-dom";
 
 // CHATBOT STUFF
 function Chatbot() {
@@ -20,20 +21,20 @@ function Chatbot() {
       color: '#fff',
       padding: '10px',
       display: 'flex',
-      'justify-content': 'space-between',
-      'align-items': 'center',
-      'border-top-left-radius': '10px',
-      'border-top-right-radius': '10px'
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      borderTopLeftRadius: '10px',
+      borderTopRightRadius: '10px'
     },
     chatboxHeader_h2: {
         margin: '0',
-        'font-size': '18px',
+        fontSize: '18px',
     },
     chatboxHeader_button: {
         background: 'transparent',
         border: 'none',
         color: '#fff',
-        'font-size': '20px',
+        fontSize: '20px',
         cursor: 'pointer'
     },
     chatbox: {
@@ -47,14 +48,14 @@ function Chatbot() {
       background: '#458D59', // Dark Green
       color: '#fff',
       border: 'none',
-      'border-radius': '50%',
+      borderRadius: '50%',
       width: '60px',
       height: '60px',
-      'font-size': '18px',
+      fontSize: '18px',
       cursor: 'pointer',
       display: 'flex',
-      'align-items': 'center',
-      'justify-content': 'center'
+      alignItems: 'center',
+      justifyContent: 'center'
     },
     messages: {
       maxHeight: '300px',
@@ -76,7 +77,7 @@ function Chatbot() {
       padding: '5px 10px',
       borderRadius: '5px',
       marginRight: 'auto',
-      'text-align': 'right',
+      textAlign: 'right',
     },
     errorMessage: {
       backgroundColor: '#E4080A',
@@ -99,6 +100,9 @@ function Chatbot() {
       padding: '10px 20px',
       borderRadius: '5px',
       cursor: 'pointer',
+      marginTop: '5px',
+      marginBottom: '5px',
+      textAlign: 'left'
     },
   };
 
@@ -121,7 +125,23 @@ function Chatbot() {
     scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
   };
 
+  const handleGenerateRecipe = async () => {
+    const output = await fetch("http://localhost:8080/api/chatbot/recipe", {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+    })
 
+    if (!output.ok) {
+      console.error("Chatbot Error - output did not ok");
+    }
+
+    // extract the recipe JSON
+    const recipe = await output.json();
+    const recipeTEXT = recipe.message; // its in string format to store
+    // store it in local Storage
+    localStorage.setItem("AIrecipe", recipeTEXT);
+
+  }
   
 
   const handleSendMessage = async () => {
@@ -184,10 +204,13 @@ function Chatbot() {
       {!isVisible && <button className="chatbotButton" style={chatbotStyles.chatbotButton} onClick={toggleChatbotVisibility}>CB</button>}
       {isVisible && <div className="chatbot" style={chatbotStyles.chatbot}>
         <div className="chatbotHeader" style={chatbotStyles.chatboxHeader}>
-          <h2 style={chatbotStyles.chatboxHeader_h2}>Chat</h2>
-          <button onClick={toggleChatbotVisibility} style={chatbotStyles.chatboxHeader_button}>&times;</button>
+          <h2 style={chatbotStyles.chatboxHeader_h2}>Chatbot</h2>
+          <button onClick={toggleChatbotVisibility} style={chatbotStyles.chatboxHeader_button} >&times;</button>
         </div>
         <div className="chatbox" style={chatbotStyles.chatbox}>
+          <Link to="/AIRecipe">
+                <button onClick={handleGenerateRecipe} style={chatbotStyles.button}>Generate Recipe</button>
+          </Link>
           <div id='messagesPane' className="messages" style={chatbotStyles.messages} onChange={scrollToBottom}>
             {messages.map((message, index) => (
               <div key={index} className="message" style={chatbotStyles.message}>
@@ -208,7 +231,7 @@ function Chatbot() {
             onChange={handleInputChange}
             placeholder="Type a message..."
             style={chatbotStyles.input}
-            autocomplete="off"
+            autoComplete="off"
           />
           <button onClick={handleSendMessage} style={chatbotStyles.button} id="chatbotButton">Send</button>
         </div>

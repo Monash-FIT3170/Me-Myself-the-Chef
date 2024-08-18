@@ -11,6 +11,7 @@ import Recipe from './views/Recipe';
 import { Preference, DietaryRequirements, PreparationTime } from './views/Preference'
 import LoggedInPage from './views/LoggedInPage';
 import Chatbot from './components/ChatBot';
+import AIRecipe from './views/AIRecipe';
 
 function App() {
 
@@ -49,6 +50,9 @@ function App() {
 
             {/* Preference page */}
             <Route path="/logged_in" element={<LoggedInPage />} />
+
+            {/* AI Recipe page */}
+            <Route path="/AIRecipe" element={<AIRecipe />} />
 
           </Routes>
 

@@ -18,4 +18,9 @@ module.exports = function(app) {
         "/api/chatbot",
         controller.askChatbot
     );
+
+    app.post(
+      "/api/chatbot/recipe",
+      controller.generateRecipe
+    );
 }
