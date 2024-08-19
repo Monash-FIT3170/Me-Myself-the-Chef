@@ -14,6 +14,7 @@ const AuthProvider = ({ children }) => {
 
     const login = async (data) => {
         localStorage.setItem('token', data.accessToken);
+        localStorage.setItem('username', data.username);
         //localStorage.setItem('searchHistory', JSON.stringify(data.searchHistory));
         await retrievePreferences();
         setIsLoggedIn(true);
