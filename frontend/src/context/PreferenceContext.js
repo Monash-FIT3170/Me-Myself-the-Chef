@@ -10,6 +10,9 @@ const PreferenceProvider = ({ children }) => {
     const [searchHistory, setSearchHistory] = useState([]);
     const [allergies, setAllergies] = useState([]); 
     const [diet, setDiet] = useState(null); 
+
+    const [prepTime, setPrepTime] = useState(null); 
+
     const { isLoggedIn } = useContext(AuthContext);
     const [alertMessage, setAlertMessage] = useState('');
     const [alertType, setAlertType] = useState('');
@@ -22,16 +25,24 @@ const PreferenceProvider = ({ children }) => {
         if (Object.keys(storedPreferences).length > 0) {
             const storedDiets = storedPreferences.dietaryRequirements; 
             const storedAllergies = storedPreferences.allergies;
+
+            const storedPrepTime = storedPreferences.prepTime;
             
             setDiet(storedDiets);
             setAllergies(storedAllergies);
+
+            setPrepTime(storedPrepTime);
         } else {
             setDiet(null);
             setAllergies([]);
+
+            setPrepTime("180");
         }
         
         setPreferences(storedPreferences);
         setSearchHistory(storedSearchHistory);
+
+        
     }, [isLoggedIn]);
 
     const updatePreferences = async () => {
@@ -40,7 +51,7 @@ const PreferenceProvider = ({ children }) => {
             dietaryRequirements: diet,
             dietaryCombination: "test",
             allergies: allergies,
-            maxPrepTime: 0
+            maxPrepTime: prepTime
         };
 
         setPreferences(newPreferences);
@@ -89,7 +100,7 @@ const PreferenceProvider = ({ children }) => {
     };
 
     return (
-        <PreferenceContext.Provider value={{ preferences, searchHistory, allergies, setAllergies, diet, setDiet, updatePreferences, updateSearchHistory, alertMessage, alertType, setAlertMessage }}>
+        <PreferenceContext.Provider value={{ preferences, searchHistory, allergies, setAllergies, diet, setDiet, prepTime, setPrepTime, updatePreferences, updateSearchHistory, alertMessage, alertType, setAlertMessage }}>
             {children}
         </PreferenceContext.Provider>
     );

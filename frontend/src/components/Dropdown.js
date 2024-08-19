@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react'
+import { useEffect, useState, useContext } from 'react';
+import { PreferenceContext } from '../context/PreferenceContext';
 
 function Dropdown({}) {
   const [display, setDisplay] = useState('none');
   const [servingSize, setServingSize] = useState(1); // Initial serving size
+
+  const { prepTime, setPrepTime } = useContext(PreferenceContext);
 
   const handleClick = () => {
     setDisplay(display === 'none' ? 'block' : 'none');
@@ -18,6 +22,36 @@ function Dropdown({}) {
     }
   };
 
+  function selectElement(id, valueToSelect) {    
+    let element = document.getElementById(id);
+    element.value = valueToSelect;
+  }
+
+  console.log("Prep time:" + prepTime)
+
+  const [actualPrepTime, setActualPrepTime] = useState(() => {
+    if (prepTime === undefined) return "180";
+    return prepTime;
+  })
+
+  // Listen for changes in the diet context and update dietaryList
+  useEffect(() => {
+    setActualPrepTime(prepTime || "180");
+  }, [prepTime]);
+
+  // converts object into JSON and sets it into localStorage
+  useEffect(() => {
+    setPrepTime(actualPrepTime)
+  }, [actualPrepTime])
+
+
+  const updatePrepTime = (event) => {
+    console.log(event.target.value)
+    setActualPrepTime(event.target.value)
+    
+}
+
+
   return (
     <div className='customise-button'>
       <label htmlFor='touch'>Customise</label>
@@ -28,7 +62,7 @@ function Dropdown({}) {
           <div className='col preference-list-text'>Preparation Time</div>
 
           <div className='col preference-options'>
-            <select name='prep-time' id='prep-time'>
+            <select name='prep-time' id='prep-time' value={prepTime} onchange={updatePrepTime}>
               <option value='5'>5 mins</option>
               <option value='15'>15 mins</option>
               <option value='30'>30 mins</option>
@@ -43,7 +77,16 @@ function Dropdown({}) {
           <div className='col preference-list-text'>Cuisine</div>
 
           <div className='col preference-options'>
-            <select name='cuisine' id='cuisine'>
+          <div className="dropdown">
+            <button>Select Fruits</button>
+            <div className="dropdown-content">
+              <label><input type="checkbox" className="dropdown_left" name="fruits" value="apple"/> Apple</label>
+              <label><input type="checkbox" className="dropdown_left" name="fruits" value="orange"/> Orange</label>
+              <label><input type="checkbox" className="dropdown_left" name="fruits" value="banana"/> Banana</label>
+              <label><input type="checkbox" className="dropdown_left" name="fruits" value="grape"/> Grape</label>
+            </div>
+          </div>
+            {/* <select name='cuisine' id='cuisine'>
               <option value='african'>African</option>
               <option value='asian'>Asian</option>
               <option value='american'>American</option>
@@ -71,9 +114,11 @@ function Dropdown({}) {
               <option value='spanish'>Spanish</option>
               <option value='thai'>Thai</option>
               <option value='vietnamese'>Vietnamese</option>
-            </select>
+            </select> */}
           </div>
         </div>
+
+        
 
         <div className='row'>
           <div className='col preference-list-text'>Serving Size</div>
@@ -85,8 +130,13 @@ function Dropdown({}) {
           </div>
         </div>
       </ul>
+
+      <script>
+        selectElement('prep-time', prepTime);
+      </script>
     </div>
   );
+
 }
 
 export default Dropdown;
