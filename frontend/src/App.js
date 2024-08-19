@@ -10,6 +10,7 @@ import Ingredients from './views/Ingredients';
 import Recipe from './views/Recipe';
 import { Preference, DietaryRequirements, PreparationTime } from './views/Preference'
 import LoggedInPage from './views/LoggedInPage';
+import SavedRecipe from './views/SavedRecipe';
 
 function App() {
 
@@ -34,6 +35,10 @@ function App() {
 
             {/* Ingredients search page */}
             <Route path="/ingredients" element={<Ingredients />} />
+
+            {/* Saved Recipes */}
+            <Route path="/saved_recipe" element={<SavedRecipe />} />
+
 
             {/* Single detailed recipe view page */}
             <Route path="/recipe" element={<Recipe />} />
