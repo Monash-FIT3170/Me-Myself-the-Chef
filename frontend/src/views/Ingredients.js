@@ -14,19 +14,34 @@ function Ingredients() {
         return JSON.parse(localValue)
     });
 
+    const [d_ingredientList, setDIngredientList] = useState(() => {
+        const localValue = localStorage.getItem("DINGREDIENTS") // check if we also need to change this 
+        if (localValue == null) return []
+
+        return JSON.parse(localValue)
+    });
+
     // is called everytime the page reloads/renders
     useEffect(() => {
         localStorage.setItem("INGREDIENTS", JSON.stringify(ingredientList))
     }, [ingredientList]);
 
     // function to add ingredients to list
-    function addIngredient(title) {
+    function addIngredient(name) {
+        const isFoundInThisList = ingredientList.some(ing => ing.title === name); // will be true if item is already in ingredients to exclude list 
+        const isFoundInDList = d_ingredientList.some(ing => ing.title === name);   // will be true if item is in ingredients to include list 
+        if(!isFoundInThisList && !isFoundInDList){
+            console.log("ingredient added to list ")
         setIngredientList((currentIngredients) => {
             return [
                 ...currentIngredients,
-                {id: crypto.randomUUID(), title: title}
+                {id: crypto.randomUUID(), title: name}
             ]
         })
+    }
+    else{
+        console.log("ingredient already in one of the lists - not added again")
+    }
     }
 
     // function to delete ingredients from list
