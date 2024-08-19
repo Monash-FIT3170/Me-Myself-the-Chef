@@ -14,7 +14,7 @@ function RecipeRecommendation() {
         return JSON.parse(localValue)
     });
 
-    const [excludeIngredients, setDIngredientList] = useState(() => {
+    const [excIngredients, setDIngredientList] = useState(() => {
         const localValue = localStorage.getItem("DINGREDIENTS") // check if we also need to change this 
         if (localValue == null) return []
 
@@ -34,8 +34,8 @@ function RecipeRecommendation() {
     }, [ingredients]);
 
     useEffect(() => {
-        localStorage.setItem("DINGREDIENTS", JSON.stringify(excludeIngredients))
-    }, [excludeIngredients]);
+        localStorage.setItem("DINGREDIENTS", JSON.stringify(excIngredients))
+    }, [excIngredients]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -44,7 +44,7 @@ function RecipeRecommendation() {
                 const response = await fetch("http://localhost:8080/api/recipes/complexSearch", {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ingredients, preferences, excludeIngredients})
+                    body: JSON.stringify({ingredients, preferences, excIngredients})
                 })
                 const json = await response.json()
                 console.log(json)
