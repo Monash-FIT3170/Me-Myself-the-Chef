@@ -141,6 +141,7 @@ function Chatbot() {
     // store it in local Storage
     localStorage.setItem("AIrecipe", recipeTEXT);
 
+    window.location.reload()
   }
   
 
