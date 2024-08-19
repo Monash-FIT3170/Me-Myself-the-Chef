@@ -4,17 +4,20 @@ import React from "react";
 function getFormInfo(id) {
     /*Keep the order/ids the same as the baseNutritionList in NurtitionPreference*/
     const NutritionFormInfo = [
-        {min_limit: 0, max_limit: 300, unit: "mg", step: 20 },
-        {min_limit: 0, max_limit: 100, unit: "g", step: 10 },
-        {min_limit: 0, max_limit: 400, unit: "g", step: 5 },
-        {min_limit: 0, max_limit: 500, unit: "g", step: 2 },
+        {min_limit: 0, max_limit: 5000, unit: "kJ", step: 100 },
+        {min_limit: 0, max_limit: 100, unit: "g", step: 5 },
+        {min_limit: 0, max_limit: 100, unit: "g", step: 5 },
+        {min_limit: 0, max_limit: 100, unit: "g", step: 5 },
+        {min_limit: 0, max_limit: 100, unit: "g", step: 5 },
+        {min_limit: 0, max_limit: 100, unit: "g", step: 5 },
+        {min_limit: 0, max_limit: 1000, unit: "mg", step: 50 },
     ]
 
     if (id < NutritionFormInfo.length) {
         return NutritionFormInfo[id]
     }
     else {
-        return {min_limit: 0, max_limit: 100, unit: "missing unit", step: 1 }
+        return {min_limit: 0, max_limit: 100, unit: "?", step: 1 }
     }
 }
 
@@ -42,25 +45,9 @@ function NutritionPane({ nutritionList, updateNutrition }) {
             {nutritionList.map((nutrient) => (
                 <div class="col-md-4" style={{ paddingBottom: "10px" }} >
                     <div class="container d-flex" style={{ paddingLeft: "60px", paddingBottom: "20px" }}>
-                        <div class="list-group">
+                        <div style={{width:"250px"}}>
                             <h4>{nutrient.name}</h4>
                             <div>(Must be below {getFormInfo(nutrient.id).max_limit} {getFormInfo(nutrient.id).unit})</div>
-
-                            {/* TODO: put inputs inside label tags maybe */}
-                            {/* <label style={{ borderColor: "transparent" }}>
-                                Min
-                            </label>
-                            <div style={{ display: "flex" }}>
-                                <input style={{ width: "70px" }} type="number" min={getFormInfo(nutrient.id).min_limit} max={getFormInfo(nutrient.id).max_limit} step={getFormInfo(nutrient.id).step} id={nutrient.id} name="min_val" placeholder={nutrient.min_amount} onChange={updateNutrition} />
-                                <span style={{ paddingLeft: "10px" }}>{getFormInfo(nutrient.id).unit}</span>
-                            </div>
-                            <label style={{ borderColor: "transparent" }}>
-                                Max
-                            </label>
-                            <div style={{ display: "flex" }}>
-                                <input style={{ width: "70px" }} type="number" min={getFormInfo(nutrient.id).min_limit} max={getFormInfo(nutrient.id).max_limit} step={getFormInfo(nutrient.id).step} id={nutrient.id} name="max_val" placeholder={nutrient.max_amount} onChange={updateNutrition} />
-                                <span style={{ paddingLeft: "10px" }}>{getFormInfo(nutrient.id).unit}</span>
-                            </div> */}
 
                             <div class="range_container">
                                 <div class="sliders_control">

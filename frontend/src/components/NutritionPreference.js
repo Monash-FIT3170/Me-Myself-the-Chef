@@ -5,8 +5,7 @@ import '../css/base.css'
 import { PreferenceContext } from '../context/PreferenceContext';
 import NutritionPane from './NutritionPane';
 
-function NutritionPreference(){
-
+function NutritionPreference() {
     // access to temp list for preferences
     const { nutrition, setNutrition } = useContext(PreferenceContext);
 
@@ -16,12 +15,25 @@ function NutritionPreference(){
     // ----------------------------
     // if you make changes to this after running, you must clear localStorage to see changes
     const baseNutritionList = [
-        {id: 0, name: "Sodium", min_amount: 0, max_amount: 200},
+        {id: 0, name: "Energy", min_amount: 0, max_amount: 5000},
         {id: 1, name: "Protein", min_amount: 0, max_amount: 100},
-        {id: 2, name: "Sugar", min_amount: 0, max_amount: 100},
-        {id: 3, name: "Fat", min_amount: 0, max_amount: 100},
-        {id: 4, name: "Energy", min_amount: 0, max_amount: 100},
+        {id: 2, name: "Total Fat", min_amount: 0, max_amount: 100},
+        {id: 3, name: "Saturated Fat", min_amount: 0, max_amount: 100},
+        {id: 4, name: "Carbohydrate", min_amount: 0, max_amount: 100},
+        {id: 5, name: "Sugars", min_amount: 0, max_amount: 100},
+        {id: 6, name: "Sodium", min_amount: 0, max_amount: 1000},
     ]
+
+    useEffect(
+        () => {
+            for (let i = 0; i <= baseNutritionList.length - 1; i++) {
+                // set slider fill colour
+                let from_slider = document.querySelector(`#from_slider_${i}`);
+                let to_slider = document.querySelector(`#to_slider_${i}`);
+                fillSlider(from_slider, to_slider, '#C6C6C6', '#25daa5', to_slider);
+            }
+        }
+    )
     
     // obtains the nutrition list from localStorage or uses the base one
     // sets the list as an object to handle in js
@@ -68,12 +80,19 @@ function NutritionPreference(){
         let input_type = event.target.name;
         let new_amount = parseInt(event.target.value);
 
+        let from_value = document.querySelector(`#from_slider_${id}`).value;
+        let to_value = document.querySelector(`#to_slider_${id}`).value;
+
         let updatedObj = {}
         if (input_type === "min_val") {
-            updatedObj = {...nutritionList[id], min_amount: new_amount};
+            if (new_amount < to_value){
+                updatedObj = {...nutritionList[id], min_amount: new_amount};
+            }
         }
         else {
-            updatedObj = {...nutritionList[id], max_amount: new_amount};
+            if (new_amount > from_value){
+                updatedObj = {...nutritionList[id], max_amount: new_amount};
+            }
         }
 
         setNutritionList(
