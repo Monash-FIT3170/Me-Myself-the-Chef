@@ -105,6 +105,7 @@ function Chatbot() {
       color: 'white',
       border: 'none',
       padding: '10px 20px',
+      width: '100%',
       borderRadius: '5px',
       cursor: 'pointer',
       marginTop: '5px',
