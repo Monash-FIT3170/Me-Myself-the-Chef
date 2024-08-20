@@ -50,10 +50,20 @@ const complexSearch = async (req, res) => {
 
     // Processlist of nutritional preferences
     const nutritions = preferences ? preferences.nutrition : []
-    const minSodium = nutritions[0].min_amount
-    const maxSodium = nutritions[0].max_amount
+    const minEnergy = nutritions[0].min_amount
+    const maxEnergy = nutritions[0].max_amount
     const minProtein = nutritions[1].min_amount
     const maxProtein = nutritions[1].max_amount 
+    const minTotalFat = nutritions[2].min_amount
+    const maxTotalFat = nutritions[2].max_amount
+    const minSaturatedFat = nutritions[3].min_amount
+    const maxSaturatedFat = nutritions[3].max_amount
+    const minCarbs = nutritions[4].min_amount
+    const maxCarbs = nutritions[4].max_amount
+    const minSugar = nutritions[5].min_amount
+    const maxSugar = nutritions[5].max_amount
+    const minSodium = nutritions[6].min_amount
+    const maxSodium = nutritions[6].max_amount
 
     // Process max prep time
     const maxPrepTime = 20  // preferences ? preferences.maxPrepTime : 20
@@ -77,10 +87,20 @@ const complexSearch = async (req, res) => {
             intolerances: allergiesString,
             includeIngredients: ingredientsString,
             // maxReadyTime: maxPrepTime
+            minCalories: minEnergy,
+            maxCalories: maxEnergy,
+            minProtein: minProtein, 
+            maxProtein: maxProtein,
+            minCarbs: minCarbs,
+            maxCarbs: maxCarbs,
+            minSugar: minSugar,
+            maxSugar: maxSugar,
+            minFat: minTotalFat,
+            maxFat: maxTotalFat,
+            minSaturatedFat: minSaturatedFat,
+            maxSaturatedFat: maxSaturatedFat,
             minSodium: minSodium,
             maxSodium: maxSodium,
-            minProtein: minProtein, 
-            maxProtein: maxProtein
         }
     }
 
