@@ -1,5 +1,6 @@
 import React from 'react'
 import { useEffect, useState, useContext } from 'react';
+import DropdownPane from "./DropdownPane"
 import { PreferenceContext } from '../context/PreferenceContext';
 
 function Dropdown({}) {
@@ -27,14 +28,37 @@ function Dropdown({}) {
 
   //Cuisine List Handlers
   const baseCuisineList = [
-    {id: 0, name: "Apple", state: false},
-    {id: 1, name: "Orange", state: false},
-    {id: 2, name: "Banana", state:false},
-    {id: 3, name: "Grape", state: false}
+    {id: 0, name: "African", value: "african", state: false},
+    {id: 1, name: "Asian", value: "asian", state: false},
+    {id: 2, name: "American", value: "american", state:false},
+    {id: 3, name: "British", value: "british", state: false},
+    {id: 4, name: "Cajun", value: "cajun", state: false},
+    {id: 5, name: "Caribbean", value: "caribbean", state: false},
+    {id: 6, name: "Chinese", value: "chinese", state: false},
+    {id: 7, name: "Eastern European", value: "easterneuropean", state: false},
+    {id: 8, name: "European", value: "european", state: false},
+    {id: 9, name: "French", value: "french", state: false},
+    {id: 10, name: "German", value: "german", state: false},
+    {id: 11, name: "Greek", value: "greek", state: false},
+    {id: 12, name: "Indian", value: "indian", state: false},
+    {id: 13, name: "Irish", value: "irish", state: false},
+    {id: 14, name: "Italian", value: "italian", state: false},
+    {id: 15, name: "Japanese", value: "japanese", state: false},
+    {id: 16, name: "Jewish", value: "jewish", state: false},
+    {id: 17, name: "Korean", value: "korean", state: false},
+    {id: 18, name: "Latin American", value: "latinamerican", state: false},
+    {id: 19, name: "Mediterranean", value: "mediterranean", state: false},
+    {id: 20, name: "Mexican", value: "mexican", state: false},
+    {id: 21, name: "Middle Eastern", value: "middleeastern", state: false},
+    {id: 22, name: "Nordic", value: "nordic", state: false},
+    {id: 23, name: "Southern", value: "southern", state: false},
+    {id: 24, name: "Spanish", value: "spanish", state: false},
+    {id: 25, name: "Thai", value: "thai", state: false},
+    {id: 26, name: "Vietnamese", value: "vietnamese", state: false}
   ]
 
   const [cuisineList, setCuisineList] = useState(() => {
-    if (cuisine === null) return baseCuisineList;
+    if (cuisine === undefined) return baseCuisineList;
     return cuisine;
   });
 
@@ -70,7 +94,7 @@ function Dropdown({}) {
   }, [servingSize]);
 
   useEffect(() => {
-    setServingSize(tempServingSize)
+      setServingSize(tempServingSize);
   }, [tempServingSize]);
 
   const incrServingSize = () => {
@@ -83,86 +107,16 @@ function Dropdown({}) {
     }
   };
 
-  return (
-    <div className='customise-button'>
-      <label htmlFor='touch'>Customise</label>
-      <input type='checkbox' id='touch' />
-
-      <ul className='slide'>
-        <div className='row'>
-          <div className='col preference-list-text'>Preparation Time</div>
-
-          <div className='col preference-options'>
-            <select name='prep-time' id='prep-time' value={prepTime} onChange={updatePrepTime}>
-              <option value='5'>5 mins</option>
-              <option value='15'>15 mins</option>
-              <option value='30'>30 mins</option>
-              <option value='60'>1 hr</option>
-              <option value='120'>2 hrs</option>
-              <option value='180'>3 hrs</option>
-            </select>
-          </div>
-        </div>
-
-        <div className='row'>
-          <div className='col preference-list-text'>Cuisine</div>
-
-          <div className='col preference-options'>
-          <div className="dropdown">
-            <button>Select Fruits</button>
-            <div className="dropdown-content">
-              <label><input type="checkbox" className="dropdown_left" name="fruits" value="apple"/> Apple</label>
-              <label><input type="checkbox" className="dropdown_left" name="fruits" value="orange"/> Orange</label>
-              <label><input type="checkbox" className="dropdown_left" name="fruits" value="banana"/> Banana</label>
-              <label><input type="checkbox" className="dropdown_left" name="fruits" value="grape"/> Grape</label>
-            </div>
-          </div>
-            {/* <select name='cuisine' id='cuisine'>
-              <option value='african'>African</option>
-              <option value='asian'>Asian</option>
-              <option value='american'>American</option>
-              <option value='british'>British</option>
-              <option value='cajun'>Cajun</option>
-              <option value='caribbean'>Caribbean</option>
-              <option value='chinese'>Chinese</option>
-              <option value='easterneuropean'>Eastern European</option>
-              <option value='european'>European</option>
-              <option value='french'>French</option>
-              <option value='german'>German</option>
-              <option value='greek'>Greek</option>
-              <option value='indian'>Indian</option>
-              <option value='irish'>Irish</option>
-              <option value='italian'>Italian</option>
-              <option value='japanese'>Japanese</option>
-              <option value='jewish'>Jewish</option>
-              <option value='korean'>Korean</option>
-              <option value='latinamerican'>Latin American</option>
-              <option value='mediterranean'>Mediterranean</option>
-              <option value='mexican'>Mexican</option>
-              <option value='middleeastern'>Middle Eastern</option>
-              <option value='nordic'>Nordic</option>
-              <option value='southern'>Southern</option>
-              <option value='spanish'>Spanish</option>
-              <option value='thai'>Thai</option>
-              <option value='vietnamese'>Vietnamese</option>
-            </select> */}
-          </div>
-        </div>
-
-        
-
-        <div className='row'>
-          <div className='col preference-list-text'>Serving Size</div>
-
-          <div className='col preference-options'>
-            <button className='serving-size-box' onClick={decrServingSize}>-</button>
-            <span className='serving-size-box'>{servingSize}</span>
-            <button className='serving-size-box' onClick={incrServingSize}>+</button>
-          </div>
-        </div>
-      </ul>
-
-    </div>
+  return(
+    <DropdownPane 
+      prepTime={tempPrepTime}
+      updatePrepTime={updatePrepTime}
+      cuisineList={cuisineList}
+      updateCuisineList={updateCuisine}
+      decrServingSize={decrServingSize} 
+      servingSize={tempServingSize}
+      incrServingSize={incrServingSize} 
+    />
   );
 
 }
