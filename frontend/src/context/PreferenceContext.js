@@ -11,7 +11,9 @@ const PreferenceProvider = ({ children }) => {
     const [allergies, setAllergies] = useState([]); 
     const [diet, setDiet] = useState(null); 
 
-    const [prepTime, setPrepTime] = useState(null); 
+    const [prepTime, setPrepTime] = useState('');
+    const [cuisine, setCuisine] = useState([]); 
+    const [servingSize, setServingSize] = useState('');
 
     const { isLoggedIn } = useContext(AuthContext);
     const [alertMessage, setAlertMessage] = useState('');
@@ -27,21 +29,26 @@ const PreferenceProvider = ({ children }) => {
             const storedAllergies = storedPreferences.allergies;
 
             const storedPrepTime = storedPreferences.prepTime;
+            const storedCuisine = storedPreferences.cuisine;
+            const storedServingSize = storedPreferences.servingSize;
             
             setDiet(storedDiets);
             setAllergies(storedAllergies);
 
             setPrepTime(storedPrepTime);
+            setCuisine(storedCuisine);
+            setServingSize(storedServingSize);
         } else {
             setDiet(null);
             setAllergies([]);
 
             setPrepTime("180");
+            setCuisine([]);
+            setServingSize("1")
         }
         
         setPreferences(storedPreferences);
         setSearchHistory(storedSearchHistory);
-
         
     }, [isLoggedIn]);
 
@@ -51,7 +58,9 @@ const PreferenceProvider = ({ children }) => {
             dietaryRequirements: diet,
             dietaryCombination: "test",
             allergies: allergies,
-            maxPrepTime: prepTime
+            maxPrepTime: prepTime,
+            cuisines: cuisine,
+            servingSize: servingSize
         };
 
         setPreferences(newPreferences);
@@ -100,7 +109,15 @@ const PreferenceProvider = ({ children }) => {
     };
 
     return (
-        <PreferenceContext.Provider value={{ preferences, searchHistory, allergies, setAllergies, diet, setDiet, prepTime, setPrepTime, updatePreferences, updateSearchHistory, alertMessage, alertType, setAlertMessage }}>
+        <PreferenceContext.Provider value={{ 
+            preferences, searchHistory, 
+            allergies, setAllergies, 
+            diet, setDiet, 
+            prepTime, setPrepTime, 
+            cuisine, setCuisine,
+            servingSize, setServingSize,
+            updatePreferences, updateSearchHistory, 
+            alertMessage, alertType, setAlertMessage }}>
             {children}
         </PreferenceContext.Provider>
     );

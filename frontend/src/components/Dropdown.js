@@ -3,54 +3,85 @@ import { useEffect, useState, useContext } from 'react';
 import { PreferenceContext } from '../context/PreferenceContext';
 
 function Dropdown({}) {
-  const [display, setDisplay] = useState('none');
-  const [servingSize, setServingSize] = useState(1); // Initial serving size
-
   const { prepTime, setPrepTime } = useContext(PreferenceContext);
+  const { cuisine, setCuisine } = useContext(PreferenceContext);
+  const { servingSize, setServingSize } = useContext(PreferenceContext);
 
-  const handleClick = () => {
-    setDisplay(display === 'none' ? 'block' : 'none');
-  };
-
-  const increaseServingSize = () => {
-    setServingSize(servingSize + 1);
-  };
-
-  const decreaseServingSize = () => {
-    if (servingSize > 1) {
-      setServingSize(servingSize - 1);
-    }
-  };
-
-  function selectElement(id, valueToSelect) {    
-    let element = document.getElementById(id);
-    element.value = valueToSelect;
-  }
-
-  console.log("Prep time:" + prepTime)
-
-  const [actualPrepTime, setActualPrepTime] = useState(() => {
+  //Prep Time Handlers
+  const [tempPrepTime, setTempPrepTime] = useState(() => {
     if (prepTime === undefined) return "180";
     return prepTime;
-  })
+  });
 
-  // Listen for changes in the diet context and update dietaryList
   useEffect(() => {
-    setActualPrepTime(prepTime || "180");
+    setTempPrepTime(prepTime || "180");
   }, [prepTime]);
 
-  // converts object into JSON and sets it into localStorage
   useEffect(() => {
-    setPrepTime(actualPrepTime)
-  }, [actualPrepTime])
-
+    setPrepTime(tempPrepTime)
+  }, [tempPrepTime])
 
   const updatePrepTime = (event) => {
-    console.log(event.target.value)
-    setActualPrepTime(event.target.value)
-    
-}
+    setTempPrepTime(event.target.value)    
+  }
 
+  //Cuisine List Handlers
+  const baseCuisineList = [
+    {id: 0, name: "Apple", state: false},
+    {id: 1, name: "Orange", state: false},
+    {id: 2, name: "Banana", state:false},
+    {id: 3, name: "Grape", state: false}
+  ]
+
+  const [cuisineList, setCuisineList] = useState(() => {
+    if (cuisine === null) return baseCuisineList;
+    return cuisine;
+  });
+
+  useEffect(() => {
+    setCuisineList(cuisine || baseCuisineList);
+  }, [cuisine]);
+
+  useEffect(() => {
+    setCuisine(cuisineList)
+  }, [cuisineList]);
+
+  const updateCuisine = (event) => {
+    const id = event.target.id
+    let checked = event.target.checked
+
+    const updatedObj = {...cuisineList[id], state: checked}
+
+    setCuisineList(
+        cuisineList.map( obj =>
+            obj.id === updatedObj.id ? updatedObj : obj
+        )
+    );
+  }
+
+  //Serving Size Handlers
+  const [tempServingSize, setTempServingSize] = useState(() => {
+    if (servingSize === undefined) return "1";
+    return servingSize;
+  });
+
+  useEffect(() => {
+    setTempServingSize(servingSize || "1");
+  }, [servingSize]);
+
+  useEffect(() => {
+    setServingSize(tempServingSize)
+  }, [tempServingSize]);
+
+  const incrServingSize = () => {
+    setTempServingSize(parseInt(tempServingSize) + 1);
+  };
+
+  const decrServingSize = () => {
+    if (tempServingSize > 1) {
+      setTempServingSize(parseInt(tempServingSize) - 1);
+    }
+  };
 
   return (
     <div className='customise-button'>
@@ -62,7 +93,7 @@ function Dropdown({}) {
           <div className='col preference-list-text'>Preparation Time</div>
 
           <div className='col preference-options'>
-            <select name='prep-time' id='prep-time' value={prepTime} onchange={updatePrepTime}>
+            <select name='prep-time' id='prep-time' value={prepTime} onChange={updatePrepTime}>
               <option value='5'>5 mins</option>
               <option value='15'>15 mins</option>
               <option value='30'>30 mins</option>
@@ -124,16 +155,13 @@ function Dropdown({}) {
           <div className='col preference-list-text'>Serving Size</div>
 
           <div className='col preference-options'>
-            <button className='serving-size-box' onClick={decreaseServingSize}>-</button>
+            <button className='serving-size-box' onClick={decrServingSize}>-</button>
             <span className='serving-size-box'>{servingSize}</span>
-            <button className='serving-size-box' onClick={increaseServingSize}>+</button>
+            <button className='serving-size-box' onClick={incrServingSize}>+</button>
           </div>
         </div>
       </ul>
 
-      <script>
-        selectElement('prep-time', prepTime);
-      </script>
     </div>
   );
 
