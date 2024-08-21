@@ -7,7 +7,24 @@ import {useState, useEffect} from "react";
 
 function SavedRecipe() {
 
+    const [ingredients, setIngredients] = useState(() => {
+        const localValue = localStorage.getItem("INGREDIENTS")
+        if (localValue == null) return []
+
+        return JSON.parse(localValue)
+    });
+
+    let preferences = localStorage.getItem("preferences")
+    if (preferences != null) {
+        preferences = JSON.parse(preferences)
+    }
+
     const [recipeList, setRecipeList] = useState(null);
+
+    // is called everytime the page reloads/renders
+    useEffect(() => {
+        localStorage.setItem("INGREDIENTS", JSON.stringify(ingredients))
+    }, [ingredients]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -21,8 +38,15 @@ function SavedRecipe() {
                     },
                 })
                 const json = await response.json()
-                console.log(json)
-                setRecipeList(json);
+                const temp = []
+                for (let i = 0; i<json.length; i++) {
+                    const response = await fetch("http://localhost:8080/api/recipes/id/" + json[i], {
+                        method: 'GET',
+                    })
+                    const recipe = await response.json()
+                    temp.push({...recipe})
+                }
+                setRecipeList(temp)
             } catch (error) {
                 console.log(error);
             }
@@ -38,11 +62,12 @@ function SavedRecipe() {
 
     return (
         <div className="row flex-fill">
-            {/* Display Recipe Pane */}
-            {/* <RecipePane recipeList={recipeList}/>   */}
+            {/* Ingredients Pane */}
+            <IngredientsRecipePane ingredientList={ingredients}/>
 
-            {recipeList}  
-        
+            {/* Display Recipe Pane */}
+            <RecipePane recipeList={recipeList} title={"Saved Recipes"}/>
+
         </div>
     );
 }

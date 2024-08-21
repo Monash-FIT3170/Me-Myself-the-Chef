@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Functional component for displaying recipe details
-function RecipeDetails({ title, image, servings, setServings, prepTime, cookTime, adjustIngredients }) {
+function RecipeDetails({ id, title, image, servings, setServings, prepTime, cookTime, adjustIngredients }) {
 
    // Function to handle increasing servings
    const handleIncreaseServings = () => {
@@ -20,6 +20,30 @@ function RecipeDetails({ title, image, servings, setServings, prepTime, cookTime
       }
    };
 
+   const toggleFavourite = async(event) => {
+      console.log("hello world")
+      const response = await fetch('http://localhost:8080/api/auth/getSavedRecipes', {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              'x-access-token': localStorage.getItem('token')
+          }
+      });
+      const data = await response.json();
+
+      const updatedObj = [...data, id]
+
+      const response2 = await fetch('http://localhost:8080/api/auth/updateSavedRecipes', {
+          method: 'POST',
+          body: JSON.stringify({saved_recipes: updatedObj}),
+          headers: {
+              'Content-Type': 'application/json',
+              'x-access-token': localStorage.getItem('token')
+          }
+      });
+      console.log(response2)
+  }
+
    // Render recipe details UI
    return (
       <div className="row pt-5 pb-5 white-text text-center" style={{ backgroundColor: '#3E6C4B' }}>
@@ -28,9 +52,15 @@ function RecipeDetails({ title, image, servings, setServings, prepTime, cookTime
                   <div className="col-md-6">
                      <div className="d-flex justify-content-between align-items-center ps-3">
                            <h1>{title}</h1>
-                           <button type="button" className="btn btn-danger btn-sm">
-                              <i className="bi bi-bookmark-heart"></i> Save
-                           </button>
+                           <button
+                                type="button"
+                                onClick={(e) => {
+                                    toggleFavourite(e);
+                                }}
+                                className="btn btn-danger btn-sm"
+                            >
+                                Save
+                            </button>
                      </div>
                      <p>Prep Time: {prepTime > 0 ? prepTime + " mins" : "N/A"}</p>
                      <p>Cook Time: {cookTime} mins</p>

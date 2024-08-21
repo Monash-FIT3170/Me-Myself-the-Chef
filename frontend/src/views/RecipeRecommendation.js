@@ -57,7 +57,7 @@ function RecipeRecommendation() {
             <IngredientsRecipePane ingredientList={ingredients}/>
 
             {/* Display Recipe Pane */}
-            <RecipePane recipeList={recipeList}/>
+            <RecipePane recipeList={recipeList} title={"Recipe Recommendations"}/>
         </div>
     );
 }

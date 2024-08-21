@@ -3,7 +3,7 @@ import '../css/base.css'
 import RecipeCard from "./RecipeCard";
 import { Link } from "react-router-dom";
 
-function RecipePane({ recipeList }) {
+function RecipePane({ recipeList, title }) {
    if (recipeList == null) {
       return (
          <div className="col-md-9" style={{ backgroundColor: '#ECECEC' }}>
@@ -20,8 +20,8 @@ function RecipePane({ recipeList }) {
    return (
       <div className="col-md-9" style={{ backgroundColor: '#ECECEC' }}>
          <div className="row pt-5 text-center">
-            <h2>Recipe Recommendations</h2>
-            <h5> You have {recipeList.length} recommendations</h5>
+            <h2>{title}</h2>
+            <h5> You have {recipeList.length} {title}</h5>
             <div className="horiz_line" style={{ backgroundColor: '#000000' }}></div>
          </div>
          {/* Display recipe generation result */}
