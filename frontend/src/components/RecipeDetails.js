@@ -20,7 +20,7 @@ function RecipeDetails({ id, title, image, servings, setServings, prepTime, cook
       }
    };
 
-   const toggleFavourite = async(event) => {
+   const saved = async(event) => {
       console.log("hello world")
       const response = await fetch('http://localhost:8080/api/auth/getSavedRecipes', {
           method: 'GET',
@@ -47,6 +47,38 @@ function RecipeDetails({ id, title, image, servings, setServings, prepTime, cook
       console.log(response2)
   }
 
+  const remove = async (event) => {
+   console.log("hello world");
+
+   const response = await fetch('http://localhost:8080/api/auth/getSavedRecipes', {
+       method: 'GET',
+       headers: {
+           'Content-Type': 'application/json',
+           'x-access-token': localStorage.getItem('token')
+       }
+   });
+   const data = await response.json();
+
+   if (!data.includes(id)) {
+       return;  // If the ID is not in the array, no need to proceed
+   }
+
+   // Remove the ID from the array
+   const updatedObj = data.filter(recipeId => recipeId !== id);
+
+   const response2 = await fetch('http://localhost:8080/api/auth/updateSavedRecipes', {
+       method: 'POST',
+       body: JSON.stringify({ saved_recipes: updatedObj }),
+       headers: {
+           'Content-Type': 'application/json',
+           'x-access-token': localStorage.getItem('token')
+       }
+   });
+
+   console.log(response2);
+}
+
+
    // Render recipe details UI
    return (
       <div className="row pt-5 pb-5 white-text text-center" style={{ backgroundColor: '#3E6C4B' }}>
@@ -58,11 +90,20 @@ function RecipeDetails({ id, title, image, servings, setServings, prepTime, cook
                            <button
                                 type="button"
                                 onClick={(e) => {
-                                    toggleFavourite(e);
+                                    saved(e);
                                 }}
                                 className="btn btn-danger btn-sm"
                             >
                                 Save
+                            </button>
+                            <button
+                                type="button"
+                                onClick={(e) => {
+                                    remove(e);
+                                }}
+                                className="btn btn-danger btn-sm"
+                            >
+                                Remove
                             </button>
                      </div>
                      <p>Prep Time: {prepTime > 0 ? prepTime + " mins" : "N/A"}</p>
