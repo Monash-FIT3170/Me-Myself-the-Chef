@@ -4,15 +4,17 @@ function DropdownPane({ prepTime, updatePrepTime, cuisineList, updateCuisineList
 
     return (
         <div className='customise-button'>
-          <label htmlFor='touch'>customise</label>
-          <input type='checkbox' id='touch' />
+          <label htmlFor='touch'><p id="expandable">customise</p></label>
+          <input type='checkbox' id='touch' /> 
     
           <ul className='slide'>
-            <div className='row'>
-              <div className='col preference-list-text'>Preparation Time</div>
+
+            {/* Preparation time */}
+            <div className='row pb-1'>
+              <div className='col preference-list-text'>Maximum Preparation Time</div>
     
               <div className='col preference-options'>
-                <select name='prep-time' id='prep-time' value={prepTime} onChange={updatePrepTime}>
+                <select name='prep-time' id='prep-time' className="form-select form-select-sm" value={prepTime} onChange={updatePrepTime}>
                   <option value='5'>5 mins</option>
                   <option value='15'>15 mins</option>
                   <option value='30'>30 mins</option>
@@ -22,19 +24,29 @@ function DropdownPane({ prepTime, updatePrepTime, cuisineList, updateCuisineList
                 </select>
               </div>
             </div>
-    
-            <div className='row'>
-              <div className='col preference-list-text'>Cuisine</div>
+
+            {/* Cuisine */}
+            <div className='row pb-1'>
+
+              <div className='col preference-list-text'>
+                <div className="customise_labels">
+                  Cuisine
+                </div>                
+              </div>
     
               <div className='col preference-options'>
                 <div className="dropdown">
-                    <button>Select Cuisine</button>
+                    <button className="cuisine_select btn btn-light .btn-sm">Select Cuisine</button>
                     <div className="dropdown-content">
                         {cuisineList.map( (cuisine) => (
-                            <label><input type="checkbox" name="fruits" style={{marginRight: "10px"}}
+                            <label className="cuisine_select">
+                              
+                              <input type="checkbox" name="fruits" className="cuisine_select" style={{marginRight: "10px"}}
                                 id={cuisine.id} value={cuisine.value} 
                                 checked={cuisine.state} onChange={updateCuisineList}/> 
+                                
                                 {cuisine.name}
+                                
                             </label>
                         ))}
                     </div>
@@ -43,16 +55,23 @@ function DropdownPane({ prepTime, updatePrepTime, cuisineList, updateCuisineList
             </div>
     
             
-    
-            <div className='row'>
-              <div className='col preference-list-text'>Serving Size</div>
+            {/* Number of servings: REMOVED FOR NOW */}
+
+            {/* <div className='row'>
+             <div className='col preference-list-text'>
+                <div className="customise_labels">
+                  Serving Size
+                </div>                
+              </div>
     
               <div className='col preference-options'>
                 <button className='serving-size-box' onClick={decrServingSize}>-</button>
                 <span className='serving-size-box'>{servingSize}</span>
                 <button className='serving-size-box' onClick={incrServingSize}>+</button>
               </div>
-            </div>
+            </div> */}
+
+
           </ul>
     
         </div>

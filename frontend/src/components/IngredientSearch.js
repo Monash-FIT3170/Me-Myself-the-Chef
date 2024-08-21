@@ -24,7 +24,7 @@ function IngredientSearch({addIngredient}) {
                 </div>
 
                 <div className="row mt-4">
-                    <p>Type what ingredients you have here</p>
+                    <p className="mb-0">Type what ingredients you have here</p>
                     <p>When you’re done, generate your recipes!</p>
                 </div>
 
@@ -41,6 +41,7 @@ function IngredientSearch({addIngredient}) {
                             - Examples: https://www.npmjs.com/package/react-search-autocomplete
 
                         --> */}
+                        
                         <Dropdown />
 
                     </div>

@@ -23,7 +23,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .ingredients_pane {
-    background-color:#458D59;
+    background-color:#287f41;
 }
 
 .ingredients_search {
@@ -48,7 +48,7 @@ h1, h2, h3, h4, h5, h6, p {
 .search-bar-container {
     max-width: 500px;
     margin: auto;
-  }
+}
 
 #gen-button {
     position:absolute;
@@ -95,4 +95,18 @@ h1, h2, h3, h4, h5, h6, p {
     --bs-btn-hover-bg: #f8f9fa;
     --bs-btn-hover-border-color: #e3e3e3;
     --bs-btn-active-bg: #e3e3e3;
+}
+
+#expandable {
+    font-size: 0.9em; 
+    text-decoration: underline;
+}
+
+#prep-time {
+    width: 60%;
+    float: right;
+}
+
+.cuisine_select {
+    font-size: 10pt;
 }
