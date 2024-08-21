@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ReactStars from 'react-rating-stars-component';
 import RecipeCommentsList from './RecipeCommentsList';
 import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
 
-function RecipeComment({ recipeId, fetchAverageRating}) {
+function RecipeComment({ recipeId, fetchAverageRating }) {
+    const { isLoggedIn, username } = useContext(AuthContext);
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
     const [rating, setRating] = useState(0);
@@ -15,7 +17,8 @@ function RecipeComment({ recipeId, fetchAverageRating}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/api/comments', { recipeId, rating, text: comment });
+            const author = isLoggedIn ? username : 'Anonymous';
+            const response = await axios.post('http://localhost:8080/api/comments', { recipeId, rating, text: comment, author });
             setComments([...comments, response.data]);
             setComment('');
             setRating(0);

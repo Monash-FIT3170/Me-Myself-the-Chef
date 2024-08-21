@@ -39,6 +39,7 @@ router.post('/', async (req, res) => {
         recipeId: req.body.recipeId,
         rating: req.body.rating,
         text: req.body.text,
+        author: req.body.author || 'Anonymous',
     });
 
     try {
