@@ -45,7 +45,7 @@ const PreferenceProvider = ({ children }) => {
             setDiet(null);
             setAllergies([]);
 
-            setPrepTime("180");
+            setPrepTime(null);
             setCuisine([]);
             setServingSize("1")
             setNutrition(null);

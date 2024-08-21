@@ -9,13 +9,22 @@ function Dropdown({}) {
   const { servingSize, setServingSize } = useContext(PreferenceContext);
 
   //Prep Time Handlers
+  const prepTimeList = [
+    {id: 0, label: "5 minutes", value: "5"},
+    {id: 1, label: "10 minutes", value: "10"},
+    {id: 2, label: "30 minutes", value: "30"},
+    {id: 3, label: "1 hour", value: "60"},
+    {id: 4, label: "2 hours", value: "120"},
+    {id: 5, label: "3 hours", value: "180"}
+  ]
+
   const [tempPrepTime, setTempPrepTime] = useState(() => {
-    if (prepTime === undefined) return "180";
+    if (prepTime === null) return prepTimeList[prepTimeList.length - 1].value;
     return prepTime;
   });
 
   useEffect(() => {
-    setTempPrepTime(prepTime || "180");
+    setTempPrepTime(prepTime || prepTimeList[prepTimeList.length - 1].value);
   }, [prepTime]);
 
   useEffect(() => {
@@ -109,6 +118,7 @@ function Dropdown({}) {
 
   return(
     <DropdownPane 
+      prepTimeList = {prepTimeList}
       prepTime={tempPrepTime}
       updatePrepTime={updatePrepTime}
       cuisineList={cuisineList}
