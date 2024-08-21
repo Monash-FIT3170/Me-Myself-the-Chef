@@ -1,4 +1,5 @@
 import React from 'react';
+import {useState, useEffect} from "react";
 
 // Functional component for displaying recipe details
 function RecipeDetails({ id, title, image, servings, setServings, prepTime, cookTime, adjustIngredients }) {
@@ -19,6 +20,29 @@ function RecipeDetails({ id, title, image, servings, setServings, prepTime, cook
          adjustIngredients(newServings);
       }
    };
+ 
+   const [isSaved, setSaved] = useState(null);
+
+   useEffect(() => {
+      const fetchData = async () => {
+          try {
+              // Cannot use a GET request as we are sending objects to the backend for processing
+              const response = await fetch("http://localhost:8080/api/auth/getSavedRecipes", {
+                  method: 'GET',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'x-access-token': localStorage.getItem('token')
+                  },
+              })
+              const json = await response.json()
+            
+              setSaved(json.includes(id))
+          } catch (error) {
+              console.log(error);
+          }
+      };
+      fetchData();
+  }, [id]);
 
    const saved = async(event) => {
       console.log("hello world")
@@ -87,16 +111,16 @@ function RecipeDetails({ id, title, image, servings, setServings, prepTime, cook
                   <div className="col-md-6">
                      <div className="d-flex justify-content-between align-items-center ps-3">
                            <h1>{title}</h1>
-                           <button
+                           {!isSaved &&<button
                                 type="button"
                                 onClick={(e) => {
                                     saved(e);
                                 }}
-                                className="btn btn-danger btn-sm"
+                                className="btn btn-primary btn-sm me-2" 
                             >
                                 Save
-                            </button>
-                            <button
+                            </button>}
+                            {isSaved && <button
                                 type="button"
                                 onClick={(e) => {
                                     remove(e);
@@ -104,7 +128,7 @@ function RecipeDetails({ id, title, image, servings, setServings, prepTime, cook
                                 className="btn btn-danger btn-sm"
                             >
                                 Remove
-                            </button>
+                            </button>}
                      </div>
                      <p>Prep Time: {prepTime > 0 ? prepTime + " mins" : "N/A"}</p>
                      <p>Cook Time: {cookTime} mins</p>
