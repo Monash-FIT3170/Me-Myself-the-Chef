@@ -4,11 +4,15 @@ function DropdownPane({ prepTimeList, prepTime, updatePrepTime, cuisineList, upd
 
     return (
         <div className='customise-button'>
-          <label htmlFor='touch'><p id="expandable">customise</p></label>
+          <label htmlFor='touch'>
+            <p style={{marginBottom: "0px", paddingRight: "10px", color: "#4F4F4F", cursor: "pointer"}}>
+              customise
+            </p>
+          </label>
           <input type='checkbox' id='touch' /> 
     
           <ul className='slide'>
-
+            <hr style={{marginTop: "0px"}}/>
             {/* Preparation time */}
             <div className='row pb-1'>
               <div className='col preference-list-text'>Maximum Preparation Time</div>
@@ -38,7 +42,7 @@ function DropdownPane({ prepTimeList, prepTime, updatePrepTime, cuisineList, upd
                         {cuisineList.map( (cuisine) => (
                             <label className="cuisine_select">
                               
-                              <input type="checkbox" name="fruits" className="cuisine_select" style={{marginRight: "10px"}}
+                              <input type="checkbox" name="cuisines" className="cuisine_select" style={{marginRight: "10px"}}
                                 id={cuisine.id} value={cuisine.value} 
                                 checked={cuisine.state} onChange={updateCuisineList}/> 
                                 
