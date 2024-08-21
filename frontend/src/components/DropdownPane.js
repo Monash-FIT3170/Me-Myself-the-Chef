@@ -1,6 +1,6 @@
 import React from 'react'
 
-function DropdownPane({ prepTime, updatePrepTime, cuisineList, updateCuisineList, decrServingSize, servingSize, incrServingSize }){
+function DropdownPane({ prepTimeList, prepTime, updatePrepTime, cuisineList, updateCuisineList, decrServingSize, servingSize, incrServingSize }){
 
     return (
         <div className='customise-button'>
@@ -15,12 +15,9 @@ function DropdownPane({ prepTime, updatePrepTime, cuisineList, updateCuisineList
     
               <div className='col preference-options'>
                 <select name='prep-time' id='prep-time' className="form-select form-select-sm" value={prepTime} onChange={updatePrepTime}>
-                  <option value='5'>5 mins</option>
-                  <option value='15'>15 mins</option>
-                  <option value='30'>30 mins</option>
-                  <option value='60'>1 hr</option>
-                  <option value='120'>2 hrs</option>
-                  <option value='180'>3 hrs</option>
+                  {prepTimeList.map( (prepTime) => (
+                            <option value={prepTime.value}>{prepTime.label}</option>
+                        ))}
                 </select>
               </div>
             </div>
