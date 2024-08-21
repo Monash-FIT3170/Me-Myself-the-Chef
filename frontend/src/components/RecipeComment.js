@@ -3,7 +3,7 @@ import ReactStars from 'react-rating-stars-component';
 import RecipeCommentsList from './RecipeCommentsList';
 import axios from 'axios';
 
-function RecipeComment({ recipeId }) {
+function RecipeComment({ recipeId, fetchAverageRating}) {
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
     const [rating, setRating] = useState(0);
@@ -12,19 +12,18 @@ function RecipeComment({ recipeId }) {
     const handleCommentChange = (e) => setComment(e.target.value);
     const handleRatingChange = (newRating) => setRating(newRating);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        axios.post('http://localhost:8080/api/comments', { recipeId, rating, text: comment })
-          .then(response => {
+        try {
+            const response = await axios.post('http://localhost:8080/api/comments', { recipeId, rating, text: comment });
             setComments([...comments, response.data]);
             setComment('');
             setRating(0);
 
-            
-          })
-          .catch(error => {
+            await fetchAverageRating();
+        } catch (error) {
             console.error("There was an error posting the comment!", error);
-          });
+        }
     };
 
     return (
@@ -62,7 +61,7 @@ function RecipeComment({ recipeId }) {
                         <button type="submit" className="btn" style={{ backgroundColor: '#3E6C4B', color: 'white' }}>Comment</button>
                     </div>
                 </form>
-                <RecipeCommentsList recipeId={recipeId} comments={comments} setComments={setComments} />
+                <RecipeCommentsList recipeId={recipeId} comments={comments} setComments={setComments} fetchAverageRating={fetchAverageRating}/>
             </div>
         </div>
     );

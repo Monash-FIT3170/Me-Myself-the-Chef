@@ -26,26 +26,22 @@ function Recipe() {
             try {
                 const response = await fetch('http://localhost:8080/api/recipes/id/' + recipeId)
                 const json = await response.json()
-                console.log(json);
-                const getAverageRating = async () => {
-                    const rating = await fetchAverageRating();
-                    setAverageRating(rating);
-                };
+                
                 setRecipeInfo(json);
 
-                const initialServings = json.servings;
                 // Set initial servings and original servings only once
                 if (originalServings === null) {
-                    setOriginalServings(initialServings);
-                    setServings(initialServings);
+                    setOriginalServings(json.servings);
+                    setServings(json.servings);
                 }
                 // Format and set instructions, ingredients, and nutrition
                 setInstructions(formatInstructions(json.analyzedInstructions[0].steps));
-                setIngredients(formatIngredients(json.extendedIngredients, initialServings));
+                setIngredients(formatIngredients(json.extendedIngredients, json.servings));
                 setOriginalIngredients(json.extendedIngredients);
                 setNutrition(formatNutrition(json.nutrition.nutrients));
+                
                 fetchComments();
-                getAverageRating();
+                fetchAverageRating(); 
             } catch (error) {
                 console.log(error);
             }
@@ -66,13 +62,15 @@ function Recipe() {
 
     const fetchAverageRating = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/comments/average-rating/' + recipeId);
+            const response = await fetch(`http://localhost:8080/api/comments/average-rating/${recipeId}`);
             const json = await response.json();
-            return(json.averageRating);
+            setAverageRating(json.averageRating);  
+            return json.averageRating;
         } catch (error) {
             console.error('Error fetching average rating:', error);
         }
     };
+    
 
     // Format instructions to extract step text
     function formatInstructions(steps) {
@@ -123,7 +121,7 @@ function Recipe() {
                     averageRating={averageRating}
                 />
                 <RecipeInstructions instructions={instructions} />
-                <RecipeComment recipeId={recipeId} fetchComments={fetchComments} />
+                <RecipeComment recipeId={recipeId} fetchComments={fetchComments} fetchAverageRating={fetchAverageRating}/>
             </div>
         </div>
     );
