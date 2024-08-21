@@ -17,7 +17,7 @@ function DietaryPreference(){
         {id: 2, name: "Vegetarian", state: false},
         {id: 3, name: "Vegan", state: false},
         {id: 4, name: "Pescetarian", state: false},
-        ]
+    ]
     
     // obtains the dietary list from localStorage or uses the base one
     // sets the list as an object to handle in js

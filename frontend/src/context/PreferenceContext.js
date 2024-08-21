@@ -9,6 +9,7 @@ const PreferenceProvider = ({ children }) => {
     const [preferences, setPreferences] = useState({});
     const [searchHistory, setSearchHistory] = useState([]);
     const [allergies, setAllergies] = useState([]); 
+    const [nutrition, setNutrition] = useState(null); 
     const [diet, setDiet] = useState(null); 
 
     const [prepTime, setPrepTime] = useState('');
@@ -31,6 +32,7 @@ const PreferenceProvider = ({ children }) => {
             const storedPrepTime = storedPreferences.prepTime;
             const storedCuisine = storedPreferences.cuisine;
             const storedServingSize = storedPreferences.servingSize;
+            const storedNutrition = storedPreferences.nutrition;
             
             setDiet(storedDiets);
             setAllergies(storedAllergies);
@@ -38,6 +40,7 @@ const PreferenceProvider = ({ children }) => {
             setPrepTime(storedPrepTime);
             setCuisine(storedCuisine);
             setServingSize(storedServingSize);
+            setNutrition(storedNutrition);
         } else {
             setDiet(null);
             setAllergies([]);
@@ -45,6 +48,7 @@ const PreferenceProvider = ({ children }) => {
             setPrepTime("180");
             setCuisine([]);
             setServingSize("1")
+            setNutrition(null);
         }
         
         setPreferences(storedPreferences);
@@ -60,7 +64,8 @@ const PreferenceProvider = ({ children }) => {
             allergies: allergies,
             maxPrepTime: prepTime,
             cuisines: cuisine,
-            servingSize: servingSize
+            servingSize: servingSize,
+            nutrition: nutrition
         };
 
         setPreferences(newPreferences);
@@ -116,6 +121,7 @@ const PreferenceProvider = ({ children }) => {
             prepTime, setPrepTime, 
             cuisine, setCuisine,
             servingSize, setServingSize,
+            nutrition, setNutrition,
             updatePreferences, updateSearchHistory, 
             alertMessage, alertType, setAlertMessage }}>
             {children}
