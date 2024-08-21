@@ -31,6 +31,9 @@ function RecipeDetails({ id, title, image, servings, setServings, prepTime, cook
       });
       const data = await response.json();
 
+      if (data.includes(id)) {
+         return 
+      }
       const updatedObj = [...data, id]
 
       const response2 = await fetch('http://localhost:8080/api/auth/updateSavedRecipes', {
