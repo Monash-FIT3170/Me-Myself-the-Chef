@@ -61,8 +61,39 @@ const complexSearch = async (req, res) => {
         }
     }
 
+    //--------------------------------------------------------------------              <-OOOO
+    // Process list of cuisines to exclude.
+    const cuisines = preferences ? preferences.cuisines : []
+    let cuisinesString = ""
+    for (i = 0; i < cuisines.length; i++) {
+        if (cuisines[i].state) {
+            cuisinesString += cuisines[i].name
+
+            if (i < (cuisines.length - 1)) {
+                cuisinesString += ","
+            }
+        }
+    }
+
+    // Processlist of nutritional preferences
+    const nutritions = preferences ? preferences.nutrition : []
+    const minEnergy = nutritions[0].min_amount
+    const maxEnergy = nutritions[0].max_amount
+    const minProtein = nutritions[1].min_amount
+    const maxProtein = nutritions[1].max_amount 
+    const minTotalFat = nutritions[2].min_amount
+    const maxTotalFat = nutritions[2].max_amount
+    const minSaturatedFat = nutritions[3].min_amount
+    const maxSaturatedFat = nutritions[3].max_amount
+    const minCarbs = nutritions[4].min_amount
+    const maxCarbs = nutritions[4].max_amount
+    const minSugar = nutritions[5].min_amount
+    const maxSugar = nutritions[5].max_amount
+    const minSodium = nutritions[6].min_amount
+    const maxSodium = nutritions[6].max_amount
+
     // Process max prep time
-    const maxPrepTime = 20  // preferences ? preferences.maxPrepTime : 20
+    const maxPrepTime = preferences ? preferences.maxPrepTime : 180
 
     console.log("diet: " + dietString)
     if (query) {
@@ -82,8 +113,26 @@ const complexSearch = async (req, res) => {
             diet: dietString,
             intolerances: allergiesString,
             includeIngredients: ingredientsString,
-            excludeIngredients: excludeIngredientsString
-            // maxReadyTime: maxPrepTime
+            excludeIngredients: excludeIngredientsString,
+
+            // new prefs
+            maxReadyTime: maxPrepTime,
+            cuisine: cuisinesString,
+            
+            minCalories: minEnergy,
+            maxCalories: maxEnergy,
+            minProtein: minProtein, 
+            maxProtein: maxProtein,
+            minCarbs: minCarbs,
+            maxCarbs: maxCarbs,
+            minSugar: minSugar,
+            maxSugar: maxSugar,
+            minFat: minTotalFat,
+            maxFat: maxTotalFat,
+            minSaturatedFat: minSaturatedFat,
+            maxSaturatedFat: maxSaturatedFat,
+            minSodium: minSodium,
+            maxSodium: maxSodium,
         }
     }
 

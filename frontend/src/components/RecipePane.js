@@ -9,8 +9,10 @@ function RecipePane({ recipeList }) {
          <div className="col-md-9" style={{ backgroundColor: '#ECECEC' }}>
             <div className="row pt-5 text-center">
                <h2>Recipe Recommendations</h2>
-               <h5> No recipes found</h5>
-               <h5>Please try a different combination of ingredients</h5>
+
+               <h5 className="pt-3"> No recipes found.</h5>
+               <h5>Please try a different combination of ingredients.</h5>
+
                <div className="horiz_line" style={{ backgroundColor: '#000000' }}></div>
             </div>
          </div>
@@ -18,12 +20,17 @@ function RecipePane({ recipeList }) {
    }
 
    return (
-      <div className="col-md-9" style={{ backgroundColor: '#ECECEC' }}>
-         <div className="row pt-5 text-center">
+      <div className="col-md-9 recipe-container" style={{ backgroundColor: '#ECECEC'}}>
+
+         <div className="row pt-5 pb-5 text-center">
             <h2>Recipe Recommendations</h2>
-            <h5> You have {recipeList.length} recommendations</h5>
-            <div className="horiz_line" style={{ backgroundColor: '#000000' }}></div>
+
+            <h6 className="pt-3"> You have <span className="recipe_number">{recipeList.length}</span> recommendations</h6>
+
+            {/* <div className="horiz_line" style={{ backgroundColor: '#000000' }}></div> */}
+
          </div>
+
          {/* Display recipe generation result */}
          <div className="container">
             <div className="row">

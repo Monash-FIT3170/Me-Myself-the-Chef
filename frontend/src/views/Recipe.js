@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { useLocation } from 'react-router-dom';
 import RecipeInstructions from '../components/RecipeInstructions';
 import RecipeDetails from '../components/RecipeDetails';
-import NutritionPane from '../components/NutritionPane';
 import IngredientExpandedPane from '../components/IngredientExpandedPane';
+import NutritionInformation from '../components/NutritionInformation';
 
 
 function Recipe() {
@@ -80,7 +80,7 @@ function Recipe() {
         <div className="row flex-fill">
             <div className="col-md-3 d-flex flex-column white-text">
                 <IngredientExpandedPane ingredients={ingredients} />
-                <NutritionPane nutrition={nutrition} />
+                <NutritionInformation nutrition={nutrition} />
             </div>
             <div className="col-md-9 d-flex flex-column">
                 <RecipeDetails

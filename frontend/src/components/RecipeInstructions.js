@@ -2,7 +2,7 @@ import React from 'react';
 
 function RecipeInstructions({ instructions }) {
    return (
-       <div className="row mt-4 text-left">
+       <div className="row mt-5 text-left">
            <div className="col-md-12">
                {/* Recipe Instructions */}
                <div className="text-center">
