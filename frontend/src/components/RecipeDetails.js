@@ -27,7 +27,7 @@ function RecipeDetails({ title, image, servings, setServings, prepTime, cookTime
 
             
                <div className="row">
-                  <div className="col-md-5" style={{paddingLeft: "5%"}}>
+                  <div className="col-md-7" style={{paddingLeft: "5%"}}>
                      <div className="row">
                         <div className="col-md-8">
                            <h1>{title}</h1>
@@ -59,7 +59,7 @@ function RecipeDetails({ title, image, servings, setServings, prepTime, cookTime
 
                   </div>
 
-                  <div className="col-md-4 mt-2">
+                  <div className="col-md-2 mt-2">
                      
                   </div>
 
