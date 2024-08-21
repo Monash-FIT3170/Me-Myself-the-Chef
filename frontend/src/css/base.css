@@ -28,6 +28,7 @@ h1, h2, h3, h4, h5, h6, p {
 
 .ingredients_search {
     background-color:#7DE081;
+    background-image: url("../../public/static/images/ingredients_art.png");
 }
 
 .horiz_line {
