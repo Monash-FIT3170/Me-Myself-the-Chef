@@ -102,6 +102,10 @@ h1, h2, h3, h4, h5, h6, p {
     text-decoration: underline;
 }
 
+.recipe_number {
+    text-decoration: bold;
+}
+
 #prep-time {
     width: 60%;
     float: right;
