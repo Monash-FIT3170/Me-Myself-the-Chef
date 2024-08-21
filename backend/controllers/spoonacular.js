@@ -8,7 +8,7 @@ const RECIPES = mongoose.connection.collection('recipes')
 
 const complexSearch = async (req, res) => {
     // To use this one send a POST request with query, ingredients and preferences (all are optional)
-    let {query, ingredients, preferences} = req.body
+    let {query, ingredients, preferences, excIngredients} = req.body
     console.log(req.body)
 
     // Process list of ingredients.
@@ -20,6 +20,19 @@ const complexSearch = async (req, res) => {
             ingredientsString += ","
         }
     }
+
+        // Process list of ingredients.
+    let excludeIngredientsString = ""
+    for (let i = 0; i < excIngredients.length; i++) {
+        excludeIngredientsString += excIngredients[i].title
+        // check to add ",+"
+        if (i !== (excIngredients.length - 1)) {
+            excludeIngredientsString += ","
+        }
+    }
+
+    console.log(ingredientsString)
+    console.log(excludeIngredientsString)
 
     // Process list of diets.
     const diets = preferences ? preferences.dietaryRequirements : []
@@ -72,7 +85,7 @@ const complexSearch = async (req, res) => {
 
     console.log("allergies: " + allergiesString)
     console.log("ingredients: " + ingredientsString)
-    
+    console.log("exclude ingredients: " + excludeIngredientsString)
 
     const options = {
         method: 'GET',
@@ -83,6 +96,7 @@ const complexSearch = async (req, res) => {
             diet: dietString,
             intolerances: allergiesString,
             includeIngredients: ingredientsString,
+            excludeIngredients: excludeIngredientsString,
 
             // new prefs
             maxReadyTime: maxPrepTime,
