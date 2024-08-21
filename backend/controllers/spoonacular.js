@@ -48,8 +48,22 @@ const complexSearch = async (req, res) => {
         }
     }
 
+    //--------------------------------------------------------------------              <-OOOO
+    // Process list of cuisines to exclude.
+    const cuisines = preferences ? preferences.cuisines : []
+    let cuisinesString = ""
+    for (i = 0; i < cuisines.length; i++) {
+        if (cuisines[i].state) {
+            cuisinesString += cuisines[i].name
+
+            if (i < (cuisines.length - 1)) {
+                cuisinesString += ","
+            }
+        }
+    }
+
     // Process max prep time
-    const maxPrepTime = 20  // preferences ? preferences.maxPrepTime : 20
+    const maxPrepTime = preferences ? preferences.maxPrepTime : 180
 
     console.log("diet: " + dietString)
     if (query) {
@@ -68,8 +82,12 @@ const complexSearch = async (req, res) => {
             query: query,
             diet: dietString,
             intolerances: allergiesString,
-            includeIngredients: ingredientsString
-            // maxReadyTime: maxPrepTime
+            includeIngredients: ingredientsString,
+
+            // new prefs
+            maxReadyTime: maxPrepTime,
+            cuisine: cuisinesString,
+            
         }
     }
 
