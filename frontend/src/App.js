@@ -7,6 +7,7 @@ import Login from './views/Login';
 import SignUp from './views/SignUp';
 import RecipeRecommendation from "./views/RecipeRecommendation";
 import Ingredients from './views/Ingredients';
+import Disable_Ingredients from './views/Disable_Ingredients';
 import Recipe from './views/Recipe';
 import { Preference, DietaryRequirements, PreparationTime } from './views/Preference'
 import LoggedInPage from './views/LoggedInPage';
@@ -34,6 +35,9 @@ function App() {
 
             {/* Ingredients search page */}
             <Route path="/ingredients" element={<Ingredients />} />
+
+            {/* Ingredients search page */}
+            <Route path="/disable_ingredients" element={<Disable_Ingredients />} />
 
             {/* Single detailed recipe view page */}
             <Route path="/recipe" element={<Recipe />} />
