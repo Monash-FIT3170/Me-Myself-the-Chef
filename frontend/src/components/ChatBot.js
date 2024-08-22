@@ -63,21 +63,28 @@ function Chatbot() {
     },
     message: {
       marginBottom: '5px',
-      marginTop: '5px'
+      marginTop: '5px',
+      display: 'flex',
     },
     botMessage: {
       backgroundColor: '#458D59', // Dark Green ('#007bff' Blue)
       color: 'white',
       padding: '5px 10px',
       borderRadius: '5px',
-      marginLeft: 'auto',
+      marginRight: 'auto',
+      maxWidth: '85%',
+      wordBreak: 'break-word',
+      justifyContent: 'flex-end',
     },
     userMessage: {
       backgroundColor: '#7DE081', // Light Green ('#e0e0e0' Grey),
       padding: '5px 10px',
       borderRadius: '5px',
-      marginRight: 'auto',
-      textAlign: 'right',
+      marginLeft: 'auto',
+      textAlign: 'left',
+      maxWidth: '85%',
+      wordBreak: 'break-word',
+      justifyContent: 'flex-start',
     },
     errorMessage: {
       backgroundColor: '#E4080A',
@@ -110,6 +117,7 @@ function Chatbot() {
   const [input, setInput] = useState('');
   const userInputStorage = useRef('')
   const [isVisible, setIsVisible] = useState(false); // controls wether the chatbox is visible
+  const messageEndRef = useRef(null);
 
   const handleInputChange = (e) => {
       setInput(e.target.value);
@@ -118,12 +126,6 @@ function Chatbot() {
   const toggleChatbotVisibility = () => {
     setIsVisible(prevState => !prevState);
   }
-
-  // This is what allows the chatbox message to scroll to the bottom whenever a message is sent
-  const scrollableDiv = document.getElementById("messagesPane");
-  const scrollToBottom = () => {
-    scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
-  };
 
   const handleGenerateRecipe = async () => {
     const output = await fetch("http://localhost:8080/api/chatbot/recipe", {
@@ -184,6 +186,7 @@ function Chatbot() {
       }
       // Clear the input field
       setInput('');
+
     }  catch (error) {
         console.error('An error occurred:', error.message);
         setMessages(prevMessages => [...prevMessages, { role: 'error', text: "ChatBot error: Please Try Again" }]);
@@ -217,6 +220,9 @@ function Chatbot() {
     };
   }, [isVisible, handleSendMessage]); // Dependencies to ensure the latest values of isVisible and handleSendMessage are used
 
+  useEffect(()=> {
+    messageEndRef.current?.scrollIntoView({behavior: 'smooth'});
+  }, [messages]);
 
   return (
     <div>
@@ -230,7 +236,7 @@ function Chatbot() {
           <Link to="/AIRecipe">
                 <button onClick={handleGenerateRecipe} style={chatbotStyles.button}>Generate Recipe</button>
           </Link>
-          <div id='messagesPane' className="messages" style={chatbotStyles.messages} onChange={scrollToBottom}>
+          <div id='messagesPane' className="messages" style={chatbotStyles.messages}>
             {messages.map((message, index) => (
               <div key={index} className="message" style={chatbotStyles.message}>
                 {message.role === 'bot' ? (
@@ -242,6 +248,7 @@ function Chatbot() {
                 )}
               </div>
             ))}
+            <div ref={messageEndRef} />
           </div>
           <input
             id="chatbotInput"
