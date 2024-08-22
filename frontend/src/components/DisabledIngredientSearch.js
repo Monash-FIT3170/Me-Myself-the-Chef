@@ -20,7 +20,7 @@ function DisabledIngredientSearch({ingredients, addIngredient}) {
                 </div>
 
                 <div className="row mt-4">
-                    <p>Type what ingredients you want to disable here</p>
+                    <p className="mb-0">Type what ingredients you want to disable here</p>
                     <p>When you’re done, generate your recipes!</p>
                 </div>
 
