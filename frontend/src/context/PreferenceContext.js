@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import { baseDietaryList, baseCuisineList, baseNutritionList } from '../utils/preferenceBaseLists';
 import axios from 'axios';
 import { AuthContext } from './AuthContext';
 
@@ -9,7 +10,13 @@ const PreferenceProvider = ({ children }) => {
     const [preferences, setPreferences] = useState({});
     const [searchHistory, setSearchHistory] = useState([]);
     const [allergies, setAllergies] = useState([]); 
+    const [nutrition, setNutrition] = useState(null); 
     const [diet, setDiet] = useState(null); 
+
+    const [prepTime, setPrepTime] = useState('');
+    const [cuisine, setCuisine] = useState([]); 
+    const [servingSize, setServingSize] = useState('');
+
     const { isLoggedIn } = useContext(AuthContext);
     const [alertMessage, setAlertMessage] = useState('');
     const [alertType, setAlertType] = useState('');
@@ -22,16 +29,32 @@ const PreferenceProvider = ({ children }) => {
         if (Object.keys(storedPreferences).length > 0) {
             const storedDiets = storedPreferences.dietaryRequirements; 
             const storedAllergies = storedPreferences.allergies;
+            const storedPrepTime = storedPreferences.prepTime;
+            const storedCuisine = storedPreferences.cuisine;
+            const storedNutrition = storedPreferences.nutrition;
+
+            const storedServingSize = storedPreferences.servingSize;
             
             setDiet(storedDiets);
             setAllergies(storedAllergies);
+            setPrepTime(storedPrepTime);
+            setCuisine(storedCuisine);
+            setNutrition(storedNutrition);
+
+            setServingSize(storedServingSize);
         } else {
-            setDiet(null);
+            setDiet(baseDietaryList);
             setAllergies([]);
+            setPrepTime(null);
+            setCuisine(baseCuisineList);
+            setNutrition(baseNutritionList);
+
+            setServingSize("1")
         }
         
         setPreferences(storedPreferences);
         setSearchHistory(storedSearchHistory);
+        
     }, [isLoggedIn]);
 
     const updatePreferences = async () => {
@@ -40,7 +63,10 @@ const PreferenceProvider = ({ children }) => {
             dietaryRequirements: diet,
             dietaryCombination: "test",
             allergies: allergies,
-            maxPrepTime: 0
+            maxPrepTime: prepTime,
+            cuisines: cuisine,
+            servingSize: servingSize,
+            nutrition: nutrition
         };
 
         setPreferences(newPreferences);
@@ -89,7 +115,16 @@ const PreferenceProvider = ({ children }) => {
     };
 
     return (
-        <PreferenceContext.Provider value={{ preferences, searchHistory, allergies, setAllergies, diet, setDiet, updatePreferences, updateSearchHistory, alertMessage, alertType, setAlertMessage }}>
+        <PreferenceContext.Provider value={{ 
+            preferences, searchHistory, 
+            allergies, setAllergies, 
+            diet, setDiet, 
+            prepTime, setPrepTime, 
+            cuisine, setCuisine,
+            servingSize, setServingSize,
+            nutrition, setNutrition,
+            updatePreferences, updateSearchHistory, 
+            alertMessage, alertType, setAlertMessage }}>
             {children}
         </PreferenceContext.Provider>
     );
