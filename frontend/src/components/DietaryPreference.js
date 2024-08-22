@@ -13,7 +13,6 @@ function DietaryPreference(){
     // obtains the dietary list from localStorage or uses the base one
     // sets the list as an object to handle in js
     const [dietaryList, setDietaryList] = useState(() => {
-        // if (diet === null) return baseDietaryList
         return diet
     })
 

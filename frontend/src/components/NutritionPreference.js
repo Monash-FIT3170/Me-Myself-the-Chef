@@ -24,12 +24,6 @@ function NutritionPreference() {
     // obtains the nutrition list from localStorage or uses the base one
     // sets the list as an object to handle in js
     const [nutritionList, setNutritionList] = useState(() => {
-        // if (nutrition == null){
-        //     return baseNutritionList;
-        // }
-        // else {
-        //     return nutrition
-        // }
         return nutrition
     })
 

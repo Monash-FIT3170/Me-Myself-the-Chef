@@ -39,7 +39,6 @@ function Dropdown({}) {
   //Cuisine List Handlers
 
   const [cuisineList, setCuisineList] = useState(() => {
-    // if (cuisine === undefined) return baseCuisineList;
     return cuisine;
   });
 
