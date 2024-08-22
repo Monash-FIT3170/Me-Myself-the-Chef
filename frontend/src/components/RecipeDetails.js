@@ -53,7 +53,7 @@ function RecipeDetails({ title, image, servings, setServings, prepTime, cookTime
                               edit={false}
                            />
                         ) : (
-                           <p>No Rating</p> // Placeholder while loading average rating or in case of error
+                           <p>No Ratings Yet</p> // Placeholder while loading average rating or in case of error
                         )}
                      </div>
                   </div>
