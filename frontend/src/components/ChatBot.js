@@ -179,7 +179,7 @@ function Chatbot() {
       if (botResponse.error) {
         console.error('AI Error:', botResponse.error.message);
         setMessages(prevMessages => [...prevMessages, { role: 'error', text: "ChatBot error: Please Try Again" }]);
-        setInput(userInputStorage);
+        setInput(userInputStorage.current);
       } else {
         // Add the bot response to the messages array
         setMessages(prevMessages => [...prevMessages, { role: 'bot', text: botResponse.message }]);
@@ -190,7 +190,7 @@ function Chatbot() {
     }  catch (error) {
         console.error('An error occurred:', error.message);
         setMessages(prevMessages => [...prevMessages, { role: 'error', text: "ChatBot error: Please Try Again" }]);
-        setInput(userInputStorage);
+        setInput(userInputStorage.current);
     }
      // ReEnable the user inputs once it's done
      document.getElementById('chatbotInput').removeAttribute("disabled");
