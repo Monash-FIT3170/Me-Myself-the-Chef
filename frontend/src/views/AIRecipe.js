@@ -84,7 +84,7 @@ function Recipe() {
             <div className="col-md-9 d-flex flex-column">
                 <RecipeDetails
                     title={"AI Generated - " + recipeInfo.title}
-                    image={recipeInfo.image}
+                    image={"https://media.istockphoto.com/id/1139274117/photo/question-mark-made-of-different-fruits-and-berries-fruit-alphabet-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=1HGr3K7h_fiKAohDVKmu0NQQxh58MyibGdHgncio0SY="} // recipeInfo.image} 
                     servings={servings}
                     setServings={setServings}
                     prepTime={recipeInfo.preparationMinutes}
