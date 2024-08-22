@@ -3,26 +3,12 @@ import { useEffect, useState, useContext } from 'react';
 import '../css/base.css'
 //import DietaryPane from './DietaryPane';
 import { PreferenceContext } from '../context/PreferenceContext';
+import { baseNutritionList } from '../utils/preferenceBaseLists';
 import NutritionPane from './NutritionPane';
 
 function NutritionPreference() {
     // access to temp list for preferences
     const { nutrition, setNutrition } = useContext(PreferenceContext);
-
-    // base dietary list
-    // ----------------------------
-    // TODO: ADD OTHER NUTRIENTS
-    // ----------------------------
-    // if you make changes to this after running, you must clear localStorage to see changes
-    const baseNutritionList = [
-        {id: 0, name: "Energy", min_amount: 0, max_amount: 5000},
-        {id: 1, name: "Protein", min_amount: 0, max_amount: 100},
-        {id: 2, name: "Total Fat", min_amount: 0, max_amount: 100},
-        {id: 3, name: "Saturated Fat", min_amount: 0, max_amount: 100},
-        {id: 4, name: "Carbohydrate", min_amount: 0, max_amount: 100},
-        {id: 5, name: "Sugars", min_amount: 0, max_amount: 100},
-        {id: 6, name: "Sodium", min_amount: 0, max_amount: 1000},
-    ]
 
     useEffect(
         () => {
@@ -38,12 +24,13 @@ function NutritionPreference() {
     // obtains the nutrition list from localStorage or uses the base one
     // sets the list as an object to handle in js
     const [nutritionList, setNutritionList] = useState(() => {
-        if (nutrition == null){
-            return baseNutritionList;
-        }
-        else {
-            return nutrition
-        }
+        // if (nutrition == null){
+        //     return baseNutritionList;
+        // }
+        // else {
+        //     return nutrition
+        // }
+        return nutrition
     })
 
     // Listen for changes in the nutrition context and update nutritionList

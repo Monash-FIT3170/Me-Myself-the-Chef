@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import { baseDietaryList, baseCuisineList, baseNutritionList } from '../utils/preferenceBaseLists';
 import axios from 'axios';
 import { AuthContext } from './AuthContext';
 
@@ -28,27 +29,27 @@ const PreferenceProvider = ({ children }) => {
         if (Object.keys(storedPreferences).length > 0) {
             const storedDiets = storedPreferences.dietaryRequirements; 
             const storedAllergies = storedPreferences.allergies;
-
             const storedPrepTime = storedPreferences.prepTime;
             const storedCuisine = storedPreferences.cuisine;
-            const storedServingSize = storedPreferences.servingSize;
             const storedNutrition = storedPreferences.nutrition;
+
+            const storedServingSize = storedPreferences.servingSize;
             
             setDiet(storedDiets);
             setAllergies(storedAllergies);
-
             setPrepTime(storedPrepTime);
             setCuisine(storedCuisine);
-            setServingSize(storedServingSize);
             setNutrition(storedNutrition);
-        } else {
-            setDiet(null);
-            setAllergies([]);
 
+            setServingSize(storedServingSize);
+        } else {
+            setDiet(baseDietaryList);
+            setAllergies([]);
             setPrepTime(null);
-            setCuisine([]);
+            setCuisine(baseCuisineList);
+            setNutrition(baseNutritionList);
+
             setServingSize("1")
-            setNutrition(null);
         }
         
         setPreferences(storedPreferences);
