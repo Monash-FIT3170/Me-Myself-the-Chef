@@ -1,6 +1,5 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { useLocation } from 'react-router-dom';
 import RecipeInstructions from '../components/RecipeInstructions';
 import RecipeDetails from '../components/RecipeDetails';
 import NutritionPane from '../components/NutritionPane';

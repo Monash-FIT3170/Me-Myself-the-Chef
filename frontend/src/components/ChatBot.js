@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from "react-router-dom";
 
 // CHATBOT STUFF
@@ -106,14 +106,14 @@ function Chatbot() {
     },
   };
 
-    const [messages, setMessages] = useState([]);
-    const [input, setInput] = useState('');
-    let userInputStorage = "";
-    const [isVisible, setIsVisible] = useState(false); // controls wether the chatbox is visible
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState('');
+  const userInputStorage = useRef('')
+  const [isVisible, setIsVisible] = useState(false); // controls wether the chatbox is visible
 
-    const handleInputChange = (e) => {
-        setInput(e.target.value);
-    };
+  const handleInputChange = (e) => {
+      setInput(e.target.value);
+  };
     
   const toggleChatbotVisibility = () => {
     setIsVisible(prevState => !prevState);
@@ -143,9 +143,8 @@ function Chatbot() {
 
     window.location.reload()
   }
-  
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = useCallback(async () => {
     try {
       // If no input, ignore
       if (input.trim() === '') return;
@@ -159,7 +158,7 @@ function Chatbot() {
       // Disable the user inputs while it waits
       document.getElementById('chatbotInput').setAttribute("disabled", "true");
       document.getElementById('chatbotButton').setAttribute("disabled", "true");
-      userInputStorage = input;
+      userInputStorage.current = input;
       setInput('...Thinking...');
 
       // Send the user message to the CHATBOT API
@@ -197,7 +196,26 @@ function Chatbot() {
      document.getElementById('chatbotButton').focus();
      // scroll to the bottom of the message pane so the message is visible
      // scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
-  };
+  }, [input]);
+  
+  useEffect(() => {
+    // Define the event handler
+    const handleKeyDown = (event) => {
+        if (event.key === "Enter") {
+            if (isVisible) {
+                handleSendMessage();
+            }
+        }
+    }
+
+    // Add the event listener
+    document.addEventListener('keydown', handleKeyDown);
+
+    // Clean up the event listener on component unmount
+    return () => {
+        document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isVisible, handleSendMessage]); // Dependencies to ensure the latest values of isVisible and handleSendMessage are used
 
 
   return (
