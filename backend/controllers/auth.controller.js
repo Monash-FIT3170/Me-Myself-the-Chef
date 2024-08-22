@@ -77,13 +77,15 @@ exports.updatePreferences = async (req, res) => {
     }
     // convert submitted user preference data into a mongoDB
     // preference object, ensuring that lists still contain
-    // appropriatte objects as well
+    // appropriate objects as well
     const preference = new db.preferences.Preferences({
       dietaryRequirements: [],
       dietaryCombination: req.body.dietaryCombination,
       allergies: [],
-      maxPrepTime: req.body.maxPrepTime
+      maxPrepTime: req.body.maxPrepTime,
+      nutrition: []
     });
+
     // dietaryRequirements list
     for(let i = 0; i<req.body.dietaryRequirements.length; i++){
       const dietaryRequirement = new db.preferences.DietaryRequirements({
@@ -93,6 +95,7 @@ exports.updatePreferences = async (req, res) => {
       });
       preference.dietaryRequirements.push(dietaryRequirement);
     }
+
     // allergies list
     for(let i = 0; i<req.body.allergies.length; i++){
       const allergy = new db.preferences.Allergies({
@@ -101,6 +104,18 @@ exports.updatePreferences = async (req, res) => {
       });
       preference.allergies.push(allergy);
     }
+
+    // nutrition list
+    for(let i = 0; i<req.body.nutrition.length; i++){
+      const nutrition = new db.preferences.Nutrition({
+        id: req.body.nutrition[i].id,
+        name: req.body.nutrition[i].name,
+        min_amount: req.body.nutrition[i].min_amount,
+        max_amount: req.body.nutrition[i].max_amount
+      });
+      preference.nutrition.push(nutrition);
+    }
+
     preference.save(); // save the completed object to mongoDB
     user.preferences = preference; // add the object to the user
     user.save(); // save user data

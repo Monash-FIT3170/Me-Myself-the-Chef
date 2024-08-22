@@ -1,12 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import AutoSearchBar from '../components/AutoSearchBar';
 import { Link } from "react-router-dom";
-import Dropdown from './Dropdown';
-import { PreferenceContext } from '../context/PreferenceContext';
 
-
-function IngredientSearch({addIngredient}) {
-    const { updatePreferences } = useContext(PreferenceContext);
+function DisabledIngredientSearch({ingredients, addIngredient}) {
 
     // function to handle the user searching an ingredient
     function onIngredientSearch(ingredient) {
@@ -24,7 +20,7 @@ function IngredientSearch({addIngredient}) {
                 </div>
 
                 <div className="row mt-4">
-                    <p className="mb-0">Type what ingredients you have here</p>
+                    <p>Type what ingredients you want to disable here</p>
                     <p>When you’re done, generate your recipes!</p>
                 </div>
 
@@ -33,16 +29,14 @@ function IngredientSearch({addIngredient}) {
 
                     <div className="search-bar-container">
 
-                        <AutoSearchBar onIngredientSearch={onIngredientSearch}/>
+                        <AutoSearchBar onIngredientSearch={onIngredientSearch}/> 
 
-                        {/* <!--
+                        {/* <!-- FIX THE ABOVE SO THE ITEM GOES INTO THE RIGHT LIST 
                             See:
                             - Tutorial: https://www.dhiwise.com/post/how-to-build-react-search-bar-with-suggestions
                             - Examples: https://www.npmjs.com/package/react-search-autocomplete
 
                         --> */}
-                        
-                        <Dropdown />
 
                     </div>
                 </div>
@@ -50,13 +44,11 @@ function IngredientSearch({addIngredient}) {
 
             {/* <!-- Generate recipe button --> */}
             <Link className="react_link" to="/recipe_recommendation">
-                <button type="button" className="btn btn-light btn-lg" id="gen-button" onClick={updatePreferences}>Generate Recipes</button>
+                <button type="button" className="btn btn-light btn-lg" id="gen-button">Generate Recipes</button>
             </Link>
-
-            
             
         </div>
     );
 }
 
-export default IngredientSearch;
+export default DisabledIngredientSearch;
