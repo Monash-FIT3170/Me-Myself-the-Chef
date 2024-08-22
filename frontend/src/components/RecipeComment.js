@@ -35,24 +35,9 @@ function RecipeComment({ recipeId, fetchAverageRating }) {
     return (
         <div className="row mt-4 text-left" style={{ padding: '20px' }}>
             <div className="col-md-12">
-                <div>
-                    <h2>Reviews</h2>
-                </div>
                 <form onSubmit={handleSubmit}>
+                    <h2 htmlFor="username" className="form-label">Leave a Comment</h2>
                     <div className="mb-3" style={{ border: '1px solid #3E6C4B', borderRadius: '5px', padding: '10px'}}>
-                        <label htmlFor="comment" className="form-label">Add a Comment</label>
-                        <div className="mb-3">
-                            <label htmlFor="username" className="form-label">Username</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="username"
-                                value={userInputName}
-                                onChange={handleUserInputNameChange}
-                                placeholder="Enter your name"
-                                required
-                            />
-                        </div>
                         <div className="mb-3 text-center">
                             <ReactStars
                                 count={5}
@@ -61,6 +46,17 @@ function RecipeComment({ recipeId, fetchAverageRating }) {
                                 value={rating}
                                 onChange={handleRatingChange}
                                 key={rating}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="username"
+                                value={userInputName}
+                                onChange={handleUserInputNameChange}
+                                placeholder="Enter your name"
+                                required
                             />
                         </div>
                         <textarea
@@ -79,6 +75,9 @@ function RecipeComment({ recipeId, fetchAverageRating }) {
                         <button type="submit" className="btn" style={{ backgroundColor: '#3E6C4B', color: 'white' }}>Comment</button>
                     </div>
                 </form>
+                <div>
+                    <h2>Comments</h2>
+                </div>
                 <RecipeCommentsList recipeId={recipeId} comments={comments} setComments={setComments} fetchAverageRating={fetchAverageRating}/>
             </div>
         </div>
