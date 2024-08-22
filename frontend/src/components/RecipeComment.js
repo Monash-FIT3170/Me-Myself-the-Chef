@@ -36,7 +36,7 @@ function RecipeComment({ recipeId, fetchAverageRating }) {
         <div className="row mt-4 text-left" style={{ padding: '20px' }}>
             <div className="col-md-12">
                 <form onSubmit={handleSubmit}>
-                    <h2 htmlFor="username" className="form-label">Leave a Comment</h2>
+                    <h2 className="form-label">Leave a Comment</h2>
                     <div className="mb-3" style={{ border: '1px solid #3E6C4B', borderRadius: '5px', padding: '10px'}}>
                         <div className="mb-3 text-center">
                             <ReactStars
