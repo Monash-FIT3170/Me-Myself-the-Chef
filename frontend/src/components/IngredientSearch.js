@@ -1,12 +1,9 @@
 import React, { useContext } from 'react';
 import AutoSearchBar from '../components/AutoSearchBar';
 import { Link } from "react-router-dom";
-import Dropdown from './Dropdown';
-import { PreferenceContext } from '../context/PreferenceContext';
-
 
 function IngredientSearch({addIngredient}) {
-    const { updatePreferences } = useContext(PreferenceContext);
+    // const { updatePreferences } = useContext(PreferenceContext);
 
     // function to handle the user searching an ingredient
     function onIngredientSearch(ingredient) {
@@ -32,7 +29,7 @@ function IngredientSearch({addIngredient}) {
                 <div className="row mt-3">
 
                     <div className="search-bar-container">
-
+                        {/* <!-- Search bar --> */}
                         <AutoSearchBar onIngredientSearch={onIngredientSearch}/>
 
                         {/* <!--
@@ -41,20 +38,14 @@ function IngredientSearch({addIngredient}) {
                             - Examples: https://www.npmjs.com/package/react-search-autocomplete
 
                         --> */}
-                        
-                        <Dropdown />
 
+                        {/* <!-- Generate recipe button --> */}
+                        <Link className="react_link generate-recipe-button" to="/recipe_recommendation">
+                            <button type="button" className="btn btn-light btn-lg" id="gen-button">Generate Recipes</button>
+                        </Link>
                     </div>
                 </div>
             </div>
-
-            {/* <!-- Generate recipe button --> */}
-            <Link className="react_link" to="/recipe_recommendation">
-                <button type="button" className="btn btn-light btn-lg" id="gen-button" onClick={updatePreferences}>Generate Recipes</button>
-            </Link>
-
-            
-            
         </div>
     );
 }
