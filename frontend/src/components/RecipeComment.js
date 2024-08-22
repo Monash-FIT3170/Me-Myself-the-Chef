@@ -24,7 +24,7 @@ function RecipeComment({ recipeId, fetchAverageRating }) {
             setComments([...comments, response.data]);
             setComment('');
             setRating(0);
-            setUserInputName(isLoggedIn ? username : 'Anonymous');
+            setUserInputName(isLoggedIn ? usernamePrefix : 'Anonymous');
 
             await fetchAverageRating();
         } catch (error) {
