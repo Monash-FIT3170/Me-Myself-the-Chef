@@ -9,19 +9,22 @@ function RecipeComment({ recipeId, fetchAverageRating }) {
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
     const [rating, setRating] = useState(0);
-
+    const usernamePrefix = isLoggedIn && username ? username.split('@')[0] : 'Anonymous'; // Extract the part before '@' in the username
+    const [userInputName, setUserInputName] = useState(isLoggedIn ? usernamePrefix : 'Anonymous');
 
     const handleCommentChange = (e) => setComment(e.target.value);
     const handleRatingChange = (newRating) => setRating(newRating);
+    const handleUserInputNameChange = (e) => setUserInputName(e.target.value);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const author = isLoggedIn ? username : 'Anonymous';
+            const author = userInputName || 'Anonymous';
             const response = await axios.post('http://localhost:8080/api/comments', { recipeId, rating, text: comment, author });
             setComments([...comments, response.data]);
             setComment('');
             setRating(0);
+            setUserInputName(isLoggedIn ? username : 'Anonymous');
 
             await fetchAverageRating();
         } catch (error) {
@@ -36,8 +39,20 @@ function RecipeComment({ recipeId, fetchAverageRating }) {
                     <h2>Reviews</h2>
                 </div>
                 <form onSubmit={handleSubmit}>
-                    <div className="mb-3" style={{ border: ' 1px solid #3E6C4B', borderRadius: '5px', padding: '10px'}}>
+                    <div className="mb-3" style={{ border: '1px solid #3E6C4B', borderRadius: '5px', padding: '10px'}}>
                         <label htmlFor="comment" className="form-label">Add a Comment</label>
+                        <div className="mb-3">
+                            <label htmlFor="username" className="form-label">Username</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="username"
+                                value={userInputName}
+                                onChange={handleUserInputNameChange}
+                                placeholder="Enter your name"
+                                required
+                            />
+                        </div>
                         <div className="mb-3 text-center">
                             <ReactStars
                                 count={5}
