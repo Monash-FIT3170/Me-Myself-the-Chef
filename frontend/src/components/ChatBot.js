@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from "react-router-dom";
 
 // CHATBOT STUFF
-function Chatbot() {
+function Chatbot() { 
   // Inside the Chatbot component
   const chatbotStyles = {
     chatbot: {
@@ -55,7 +55,13 @@ function Chatbot() {
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+      transition: 'all 0.3s ease',
+    },
+    chatbotButtonHover: {
+      boxShadow: '0 8px 16px rgba(0, 0, 0, 0.3)',
+      transform: 'scale(1.1)',
     },
     messages: {
       maxHeight: '300px',
@@ -103,6 +109,9 @@ function Chatbot() {
     button: {
       backgroundColor: '#458D59', // Dark Green
       color: 'white',
+      fontFamily: 'Inter',
+      fontWeight: '600',
+      fontSize: '14px', 
       border: 'none',
       padding: '10px 20px',
       width: '100%',
@@ -114,20 +123,30 @@ function Chatbot() {
     },
   };
 
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
-  const userInputStorage = useRef('')
-  const [isVisible, setIsVisible] = useState(false); // controls wether the chatbox is visible
-  const messageEndRef = useRef(null);
+    const [messages, setMessages] = useState([]);
+    const [input, setInput] = useState('');
+    let userInputStorage = "";
+    const [isVisible, setIsVisible] = useState(false); // controls wether the chatbox is visible
+    const messageEndRef = useRef(null);
+    const [isHovered, setIsHovered] = useState(false);
 
-  const handleInputChange = (e) => {
-      setInput(e.target.value);
-  };
+    const handleInputChange = (e) => {
+        setInput(e.target.value);
+    };
     
   const toggleChatbotVisibility = () => {
     setIsVisible(prevState => !prevState);
+    if (isVisible) {
+      setIsHovered(false);
+    }
   }
 
+    // This is what allows the chatbox message to scroll to the bottom whenever a message is sent
+    const scrollableDiv = document.getElementById("messagesPane");
+    const scrollToBottom = () => {
+      scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
+    };
+    
   const handleGenerateRecipe = async () => {
     const output = await fetch("http://localhost:8080/api/chatbot/recipe", {
       method: 'POST',
@@ -225,9 +244,27 @@ function Chatbot() {
     messageEndRef.current?.scrollIntoView({behavior: 'smooth'});
   }, [messages]);
 
+  // return (
+  //   <div>
+  //     {!isVisible && <button className="chatbotButton" style={chatbotStyles.chatbotButton} onClick={toggleChatbotVisibility}>
+  //     <img src="/static/images/food-serving.png" alt="Chatbot Logo" style={{ width: '35px', height: '35px' }} />
+  //       </button>}
   return (
     <div>
-      {!isVisible && <button className="chatbotButton" style={chatbotStyles.chatbotButton} onClick={toggleChatbotVisibility}>CB</button>}
+      {!isVisible && (
+        <button
+          className="chatbotButton"
+          style={{
+            ...chatbotStyles.chatbotButton,
+            ...(isHovered ? chatbotStyles.chatbotButtonHover : {}),
+          }}
+          onClick={toggleChatbotVisibility}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <img src="/static/images/food-serving.png" alt="Chatbot Logo" style={{ width: '35px', height: '35px' }} />
+        </button>
+      )}
       {isVisible && <div className="chatbot" style={chatbotStyles.chatbot}>
         <div className="chatbotHeader" style={chatbotStyles.chatboxHeader}>
           <h2 style={chatbotStyles.chatboxHeader_h2}>Chatbot</h2>
