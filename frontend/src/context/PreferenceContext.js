@@ -29,8 +29,8 @@ const PreferenceProvider = ({ children }) => {
         if (Object.keys(storedPreferences).length > 0) {
             const storedDiets = storedPreferences.dietaryRequirements; 
             const storedAllergies = storedPreferences.allergies;
-            const storedPrepTime = storedPreferences.prepTime;
-            const storedCuisine = storedPreferences.cuisine;
+            const storedPrepTime = storedPreferences.maxPrepTime;
+            const storedCuisine = storedPreferences.cuisines;
             const storedNutrition = storedPreferences.nutrition;
 
             const storedServingSize = storedPreferences.servingSize;
