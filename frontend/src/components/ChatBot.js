@@ -126,6 +126,7 @@ function Chatbot() {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     let userInputStorage = useRef('');
+    let chatbotOpened = useRef(false);
     const [isVisible, setIsVisible] = useState(false); // controls wether the chatbox is visible
     const messageEndRef = useRef(null);
     const [isHovered, setIsHovered] = useState(false);
@@ -213,7 +214,7 @@ function Chatbot() {
      document.getElementById('chatbotButton').removeAttribute("disabled");
      document.getElementById('chatbotButton').focus();
      // scroll to the bottom of the message pane so the message is visible
-     // scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
+    //  scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
   }, [input]);
   
   useEffect(() => {
@@ -238,6 +239,18 @@ function Chatbot() {
   useEffect(()=> {
     messageEndRef.current?.scrollIntoView({behavior: 'smooth'});
   }, [messages]);
+
+  // Chatbot introduction when opened. 
+  const introductionMessage = `Hello! You are chatting with the "Me Myself the Chef" chatbot. I'm here to offer healthy meal suggestions based on your preferences. Just let me know what you're looking for, and I'll provide recommendations for wholesome, nutritious meals!`;
+  useEffect(() => {
+    if (isVisible) {
+      if (!chatbotOpened.current) {
+        // Add initial message when chatbot is opened
+        setMessages(prevMessages => [...prevMessages, { role: 'bot', text: introductionMessage }]);
+        chatbotOpened.current = true;
+      }
+    }
+  }, [isVisible]);
 
   // return (
   //   <div>
