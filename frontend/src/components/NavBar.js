@@ -39,7 +39,7 @@ function Navbar() {
                             </li>
 
                             <li className="nav-item px-2">
-                                <Link className='react_link' to="/ingredients">
+                                <Link className='react_link' to="/saved_recipe">
                                     <span className="nav-link">Saved Recipes</span>
                                 </Link>
                             </li>

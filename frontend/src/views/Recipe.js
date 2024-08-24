@@ -111,6 +111,7 @@ function Recipe() {
             </div>
             <div className="col-md-9 d-flex flex-column">
                 <RecipeDetails
+                    id={recipeInfo.id}
                     title={recipeInfo.title}
                     image={recipeInfo.image}
                     servings={servings}

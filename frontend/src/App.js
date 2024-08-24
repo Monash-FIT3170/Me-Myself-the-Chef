@@ -11,6 +11,7 @@ import Disable_Ingredients from './views/Disable_Ingredients';
 import Recipe from './views/Recipe';
 import { Preference, DietaryRequirements, NutritionRequirements, PreparationTime } from './views/Preference'
 import LoggedInPage from './views/LoggedInPage';
+import SavedRecipe from './views/SavedRecipe';
 
 function App() {
 
@@ -36,6 +37,10 @@ function App() {
             {/* Ingredients search page */}
             <Route path="/ingredients" element={<Ingredients />} />
 
+            {/* Saved Recipes */}
+            <Route path="/saved_recipe" element={<SavedRecipe />} />
+
+
             {/* Ingredients search page */}
             <Route path="/disable_ingredients" element={<Disable_Ingredients />} />
 
@@ -47,7 +52,7 @@ function App() {
 
             {/* Dietary Requirement Preference page */}
             <Route path="/preferences/dietary_requirements" element={<DietaryRequirements />} />
-            
+
             {/* Nutrition Requirement Preference page */}
             <Route path="/preferences/nutrition_requirements" element={<NutritionRequirements />} />
 

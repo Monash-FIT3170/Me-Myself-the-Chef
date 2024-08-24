@@ -20,6 +20,7 @@ const AuthProvider = ({ children }) => {
         localStorage.setItem('username', data.username);
         //localStorage.setItem('searchHistory', JSON.stringify(data.searchHistory));
         await retrievePreferences();
+        await retrieveSavedRecipes();
         setUsername(data.username);
         setIsLoggedIn(true);
     };
@@ -58,6 +59,22 @@ const AuthProvider = ({ children }) => {
             console.error('Network Error:', error);
         }
     };
+
+    const retrieveSavedRecipes = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/api/auth/getSavedRecipes', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': localStorage.getItem('token')
+                }
+            });
+            const data = await response.json();
+            localStorage.setItem('saved_recipes', JSON.stringify(data));
+        } catch (error) {
+            console.error('Network Error:', error);
+        }
+    }
 
     return (
         <AuthContext.Provider value={{ isLoggedIn, username, login, logout }}>
