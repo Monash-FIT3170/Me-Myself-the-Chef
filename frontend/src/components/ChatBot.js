@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 // CHATBOT STUFF
 function Chatbot() { 
@@ -122,6 +123,16 @@ function Chatbot() {
       textAlign: 'left'
     },
   };
+   
+  const chatbotPageWhiteList = {
+    '/page1' : true,
+    '/recipe_recommendation': true,
+    "/ingredients": true,
+    "/saved_recipe": true,
+    "/disable_ingredients": true,
+    "/recipe": true,
+    "/AIRecipe": true
+  }
 
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
@@ -250,66 +261,65 @@ function Chatbot() {
         chatbotOpened.current = true;
       }
     }
-  }, [isVisible]);
+  }, [isVisible, introductionMessage]);
 
-  // return (
-  //   <div>
-  //     {!isVisible && <button className="chatbotButton" style={chatbotStyles.chatbotButton} onClick={toggleChatbotVisibility}>
-  //     <img src="/static/images/food-serving.png" alt="Chatbot Logo" style={{ width: '35px', height: '35px' }} />
-  //       </button>}
-  return (
-    <div>
-      {!isVisible && (
-        <button
-          className="chatbotButton"
-          style={{
-            ...chatbotStyles.chatbotButton,
-            ...(isHovered ? chatbotStyles.chatbotButtonHover : {}),
-          }}
-          onClick={toggleChatbotVisibility}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          <img src="/static/images/food-serving.png" alt="Chatbot Logo" style={{ width: '35px', height: '35px' }} />
-        </button>
-      )}
-      {isVisible && <div className="chatbot" style={chatbotStyles.chatbot}>
-        <div className="chatbotHeader" style={chatbotStyles.chatboxHeader}>
-          <h2 style={chatbotStyles.chatboxHeader_h2}>Chatbot</h2>
-          <button onClick={toggleChatbotVisibility} style={chatbotStyles.chatboxHeader_button} >&times;</button>
-        </div>
-        <div className="chatbox" style={chatbotStyles.chatbox}>
-          <Link to="/AIRecipe">
-                <button onClick={handleGenerateRecipe} style={chatbotStyles.button}>Generate Recipe</button>
-          </Link>
-          <div id='messagesPane' className="messages" style={chatbotStyles.messages}>
-            {messages.map((message, index) => (
-              <div key={index} className="message" style={chatbotStyles.message}>
-                {message.role === 'bot' ? (
-                  <div className="bot-message" style={chatbotStyles.botMessage}>{message.text}</div>
-                ) : message.role === 'error' ? (
-                  <div className="error-message" style={chatbotStyles.errorMessage}>{message.text}</div>
-                ) : (
-                  <div className="user-message" style={chatbotStyles.userMessage}>{message.text}</div>
-                )}
-              </div>
-            ))}
-            <div ref={messageEndRef} />
+  if (chatbotPageWhiteList[useLocation().pathname] === true) {
+    return (
+      <div>
+        {!isVisible && (
+          <button
+            className="chatbotButton"
+            style={{
+              ...chatbotStyles.chatbotButton,
+              ...(isHovered ? chatbotStyles.chatbotButtonHover : {}),
+            }}
+            onClick={toggleChatbotVisibility}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            <img src="/static/images/food-serving.png" alt="Chatbot Logo" style={{ width: '35px', height: '35px' }} />
+          </button>
+        )}
+        {isVisible && <div className="chatbot" style={chatbotStyles.chatbot}>
+          <div className="chatbotHeader" style={chatbotStyles.chatboxHeader}>
+            <h2 style={chatbotStyles.chatboxHeader_h2}>Chatbot</h2>
+            <button onClick={toggleChatbotVisibility} style={chatbotStyles.chatboxHeader_button} >&times;</button>
           </div>
-          <input
-            id="chatbotInput"
-            type="text"
-            value={input}
-            onChange={handleInputChange}
-            placeholder="Type a message..."
-            style={chatbotStyles.input}
-            autoComplete="off"
-          />
-          <button onClick={handleSendMessage} style={chatbotStyles.button} id="chatbotButton">Send</button>
-        </div>
-      </div>}
-  </div>
-  );
-}
+          <div className="chatbox" style={chatbotStyles.chatbox}>
+            <Link to="/AIRecipe">
+                  <button onClick={handleGenerateRecipe} style={chatbotStyles.button}>Generate Recipe</button>
+            </Link>
+            <div id='messagesPane' className="messages" style={chatbotStyles.messages}>
+              {messages.map((message, index) => (
+                <div key={index} className="message" style={chatbotStyles.message}>
+                  {message.role === 'bot' ? (
+                    <div className="bot-message" style={chatbotStyles.botMessage}>{message.text}</div>
+                  ) : message.role === 'error' ? (
+                    <div className="error-message" style={chatbotStyles.errorMessage}>{message.text}</div>
+                  ) : (
+                    <div className="user-message" style={chatbotStyles.userMessage}>{message.text}</div>
+                  )}
+                </div>
+              ))}
+              <div ref={messageEndRef} />
+            </div>
+            <input
+              id="chatbotInput"
+              type="text"
+              value={input}
+              onChange={handleInputChange}
+              placeholder="Type a message..."
+              style={chatbotStyles.input}
+              autoComplete="off"
+            />
+            <button onClick={handleSendMessage} style={chatbotStyles.button} id="chatbotButton">Send</button>
+          </div>
+        </div>}
+    </div>
+    );
+  } else {
+    return <div></div>}
+} 
+  
 
 export default Chatbot;
