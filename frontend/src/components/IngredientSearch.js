@@ -45,7 +45,7 @@ function IngredientSearch({addIngredient}) {
 
                         {/* <!-- Generate recipe button --> */}
                         <Link className="react_link generate-recipe-button" to="/recipe_recommendation">
-                            <button type="button" className="btn btn-light btn-lg" id="gen-button">Generate Recipes</button>
+                            <button type="button" className="btn btn-light btn-lg" id="gen-button" onClick={updatePreferences}>Generate Recipes</button>
                         </Link>
                     </div>
                 </div>
