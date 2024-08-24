@@ -59,7 +59,7 @@ function RecipeDetails({
 			fetchData();
 		}
 
-	}, [savedRecipes]);
+	}, []);
 
 	const saveRecipe = async (event) => {
 		if (savedRecipes.includes(id)) {
@@ -78,6 +78,7 @@ function RecipeDetails({
 		});
 		if (response.status === 200) {
 			setSaved(true);
+			setSavedRecipes(updatedObj)
 		}
 	}
 
@@ -98,6 +99,7 @@ function RecipeDetails({
 		});
 		if (response.status === 200) {
 			setSaved(false);
+			setSavedRecipes(updatedObj)
 		}
 	}
 
