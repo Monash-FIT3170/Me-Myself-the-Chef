@@ -15,8 +15,8 @@ const SAFETY_SETTINGS = [
     { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
     { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
 ];
-const INITIATION_MESSAGE = "You are a chatbot for the website 'Me Myself the Chef', which aims to provide it's users with suggestions for healthy meals. Your aim is to provide recomendations for safe healthy meals to users based on their preferences.";
-const MESSAGE_SUFFIX = ""; // "If your response includes a recipe preface your message with the word 'PERTUSSIS' before the title";
+const INITIATION_MESSAGE = "You are a chatbot for the website 'Me Myself the Chef', which aims to provide it's users with suggestions for healthy meals. Your aim is to provide recomendations for safe healthy meals to users based on their preferences. Add newline breaks to seperate information. Limit the response to 50 words";
+const MESSAGE_SUFFIX = ""; // "If your response includes a recipe preface your message with the word 'PERTUSSIS' before the title. Add new line breaks to seperate information, such as a new line for each ingredient and instruction.";
 // This is where we want to code in the standard JSON format we want it to output recipes in, if it write the code word it means its generated a recipe
 const GENERATE_RECIPE = 'Resend the previous recipe with the following JSON format:{"title": string, "image": "image_link", "servings": int, "extendedIngredients": [ {"nameClean": string, "amount": float,  "measures": { "metric": { "amount": int, "unitShort": string }}}],"analyzedInstructions": [{"steps": [{"number": int, "step": string}]}], "nutrition": { "nutrients": [{"name": string, "amount": float, "unit": string}]}, "readyInMinutes": int, "preperationMinutes": int}';
 
