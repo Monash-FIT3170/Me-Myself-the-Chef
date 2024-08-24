@@ -3,6 +3,7 @@ require('dotenv').config()  // Attaches env variables to process object
 const express = require("express");
 const path = require("path");
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -16,6 +17,7 @@ app.use((req, res, next) => {
     console.log(req.method, req.path) // Log path to console
     next()
 })
+app.use(bodyParser.json());
 
 // Database setup
 const db = require("../backend/models");
@@ -37,6 +39,10 @@ db.mongoose.connect(dbConfig.uri, {
 // Routes
 require('../backend/routes/auth.routes')(app);
 require('../backend/routes/user.routes')(app);
+
+// Comment Routes
+const commentsRouter = require('./routes/comments');
+app.use('/api/comments', commentsRouter);
 
 // Recipe Routes
 const recipeRoutes = require('./routes/recipes')

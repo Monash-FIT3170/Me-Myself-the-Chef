@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import { useLocation } from 'react-router-dom';
 import RecipeInstructions from '../components/RecipeInstructions';
 import RecipeDetails from '../components/RecipeDetails';
-import NutritionPane from '../components/NutritionPane';
 import IngredientExpandedPane from '../components/IngredientExpandedPane';
+import RecipeComment from '../components/RecipeComment';
+import NutritionInformation from '../components/NutritionInformation';
 
 
 function Recipe() {
@@ -17,26 +18,30 @@ function Recipe() {
     const [nutrition, setNutrition] = useState([]);
     const [servings, setServings] = useState(1);
     const [originalServings, setOriginalServings] = useState(null);
+    const [comments, setComments] = useState([]);
+    const [averageRating, setAverageRating] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await fetch('http://localhost:8080/api/recipes/id/' + recipeId)
                 const json = await response.json()
-                console.log(json);
+                
                 setRecipeInfo(json);
 
-                const initialServings = json.servings;
                 // Set initial servings and original servings only once
                 if (originalServings === null) {
-                    setOriginalServings(initialServings);
-                    setServings(initialServings);
+                    setOriginalServings(json.servings);
+                    setServings(json.servings);
                 }
                 // Format and set instructions, ingredients, and nutrition
                 setInstructions(formatInstructions(json.analyzedInstructions[0].steps));
-                setIngredients(formatIngredients(json.extendedIngredients, initialServings));
+                setIngredients(formatIngredients(json.extendedIngredients, json.servings));
                 setOriginalIngredients(json.extendedIngredients);
                 setNutrition(formatNutrition(json.nutrition.nutrients));
+                
+                fetchComments();
+                fetchAverageRating(); 
             } catch (error) {
                 console.log(error);
             }
@@ -44,6 +49,28 @@ function Recipe() {
 
         fetchData();
     }, [recipeId, originalServings]);
+
+    const fetchComments = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/api/comments/' + recipeId);
+            const json = await response.json();
+            setComments(json);
+        } catch (error) {
+            console.error('Error fetching comments:', error);
+        }
+    };
+
+    const fetchAverageRating = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/comments/average-rating/${recipeId}`);
+            const json = await response.json();
+            setAverageRating(json.averageRating);  
+            return json.averageRating;
+        } catch (error) {
+            console.error('Error fetching average rating:', error);
+        }
+    };
+    
 
     // Format instructions to extract step text
     function formatInstructions(steps) {
@@ -80,7 +107,7 @@ function Recipe() {
         <div className="row flex-fill">
             <div className="col-md-3 d-flex flex-column white-text">
                 <IngredientExpandedPane ingredients={ingredients} />
-                <NutritionPane nutrition={nutrition} />
+                <NutritionInformation nutrition={nutrition} />
             </div>
             <div className="col-md-9 d-flex flex-column">
                 <RecipeDetails
@@ -92,8 +119,10 @@ function Recipe() {
                     prepTime={recipeInfo.preparationMinutes}
                     cookTime={recipeInfo.readyInMinutes}
                     adjustIngredients={adjustIngredients}
+                    averageRating={averageRating}
                 />
                 <RecipeInstructions instructions={instructions} />
+                <RecipeComment recipeId={recipeId} fetchComments={fetchComments} fetchAverageRating={fetchAverageRating}/>
             </div>
         </div>
     );

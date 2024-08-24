@@ -7,8 +7,9 @@ import Login from './views/Login';
 import SignUp from './views/SignUp';
 import RecipeRecommendation from "./views/RecipeRecommendation";
 import Ingredients from './views/Ingredients';
+import Disable_Ingredients from './views/Disable_Ingredients';
 import Recipe from './views/Recipe';
-import { Preference, DietaryRequirements, PreparationTime } from './views/Preference'
+import { Preference, DietaryRequirements, NutritionRequirements, PreparationTime } from './views/Preference'
 import LoggedInPage from './views/LoggedInPage';
 import SavedRecipe from './views/SavedRecipe';
 
@@ -40,6 +41,9 @@ function App() {
             <Route path="/saved_recipe" element={<SavedRecipe />} />
 
 
+            {/* Ingredients search page */}
+            <Route path="/disable_ingredients" element={<Disable_Ingredients />} />
+
             {/* Single detailed recipe view page */}
             <Route path="/recipe" element={<Recipe />} />
 
@@ -48,6 +52,9 @@ function App() {
 
             {/* Dietary Requirement Preference page */}
             <Route path="/preferences/dietary_requirements" element={<DietaryRequirements />} />
+
+            {/* Nutrition Requirement Preference page */}
+            <Route path="/preferences/nutrition_requirements" element={<NutritionRequirements />} />
 
             {/* Preparation Time Preference page */}
             <Route path="/preferences/preparation_time" element={<PreparationTime />} />

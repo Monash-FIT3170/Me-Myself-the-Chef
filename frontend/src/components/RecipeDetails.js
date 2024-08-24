@@ -1,8 +1,9 @@
 import React from 'react';
 import {useState, useEffect} from "react";
+import ReactStars from 'react-rating-stars-component';
 
 // Functional component for displaying recipe details
-function RecipeDetails({ id, title, image, servings, setServings, prepTime, cookTime, adjustIngredients }) {
+function RecipeDetails({ id, title, image, servings, setServings, prepTime, cookTime, adjustIngredients, averageRating }) {
 
    // Function to handle increasing servings
    const handleIncreaseServings = () => {
@@ -20,7 +21,7 @@ function RecipeDetails({ id, title, image, servings, setServings, prepTime, cook
          adjustIngredients(newServings);
       }
    };
- 
+
    const [isSaved, setSaved] = useState(null);
 
    useEffect(() => {
@@ -35,7 +36,7 @@ function RecipeDetails({ id, title, image, servings, setServings, prepTime, cook
                   },
               })
               const json = await response.json()
-            
+
               setSaved(json.includes(id))
           } catch (error) {
               console.log(error);
@@ -56,7 +57,7 @@ function RecipeDetails({ id, title, image, servings, setServings, prepTime, cook
       const data = await response.json();
 
       if (data.includes(id)) {
-         return 
+         return
       }
       const updatedObj = [...data, id]
 
@@ -105,46 +106,80 @@ function RecipeDetails({ id, title, image, servings, setServings, prepTime, cook
 
    // Render recipe details UI
    return (
-      <div className="row pt-5 pb-5 white-text text-center" style={{ backgroundColor: '#3E6C4B' }}>
+      <div className="row pt-5 pb-5 ps-4 white-text text-left" style={{ backgroundColor: '#3E6C4B' }}>
          <div className="container">
-               <div className="row">
-                  <div className="col-md-6">
-                     <div className="d-flex justify-content-between align-items-center ps-3">
-                           <h1>{title}</h1>
-                           {!isSaved &&<button
-                                type="button"
-                                onClick={(e) => {
-                                    saved(e);
-                                }}
-                                className="btn btn-primary btn-sm me-2" 
-                            >
-                                Save
-                            </button>}
-                            {isSaved && <button
-                                type="button"
-                                onClick={(e) => {
-                                    remove(e);
-                                }}
-                                className="btn btn-danger btn-sm"
-                            >
-                                Remove
-                            </button>}
+
+
+            <div className="row">
+               <div className="col-md-7" style={{ paddingLeft: "5%" }}>
+                  <div className="row">
+                     <div className="col-md-8">
+                        <h1>{title}</h1>
+                         {!isSaved &&<button
+                             type="button"
+                             onClick={(e) => {
+                                 saved(e);
+                             }}
+                             className="btn btn-primary btn-sm me-2"
+                         >
+                             Save
+                         </button>}
+                         {isSaved && <button
+                             type="button"
+                             onClick={(e) => {
+                                 remove(e);
+                             }}
+                             className="btn btn-danger btn-sm"
+                         >
+                             Remove
+                         </button>}
                      </div>
-                     <p>Prep Time: {prepTime > 0 ? prepTime + " mins" : "N/A"}</p>
-                     <p>Cook Time: {cookTime} mins</p>
-                     <div className="col-md-6 mx-auto">
-                           <div className="input-group input-group-sm">
-                              <span className="input-group-text">Number of Servings:</span>
-                              <button className="input-group-text" type="button" onClick={handleDecreaseServings}>-</button>
-                              <input type="text" className="form-control text-center" value={servings} readOnly />
-                              <button className="input-group-text" type="button" onClick={handleIncreaseServings}>+</button>
-                           </div>
+
+
+                  </div>
+
+                  <br></br>
+
+                  <div className='row'>
+                     <div className="col-md-6">
+                        <p>Prep Time: {prepTime > 0 ? prepTime + " mins" : "N/A"}</p>
+                        <p>Cook Time: {cookTime} mins</p>
+                        <div className="input-group input-group-sm">
+                           <span className="input-group-text">Number of Servings:</span>
+                           <button className="input-group-text" type="button" onClick={handleDecreaseServings}>-</button>
+                           <input type="text" className="form-control text-center" value={servings} readOnly />
+                           <button className="input-group-text" type="button" onClick={handleIncreaseServings}>+</button>
+                        </div>
+                        <div className="mt-3 d-flex justify-content-center">
+                           {averageRating !== 0 && !isNaN(averageRating) ? (
+                              <ReactStars
+                                 key={averageRating}
+                                 count={5}
+                                 size={24}
+                                 activeColor="#ffd700"
+                                 value={averageRating}
+                                 edit={false}
+                              />
+                           ) : (
+                              <p>No Ratings Yet</p> // Placeholder while loading average rating or in case of error
+                           )}
+                        </div>
                      </div>
                   </div>
-                  <div className="col-md-6 text-end">
-                     <img src={image} alt="Recipe" className="img-fluid pe-5" />
-                  </div>
+
+
                </div>
+
+               <div className="col-md-2 mt-2">
+
+               </div>
+
+               <div className="col-md-3 text-end">
+                  <img src={image} alt="Recipe" className="img-fluid me-5" style={{ height: "200px", border: "5px solid white" }} />
+               </div>
+            </div>
+
+
          </div>
       </div>
    );

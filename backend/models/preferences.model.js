@@ -11,15 +11,24 @@ const AllergySchema = new mongoose.Schema({
   title: String
 })
 
+const NutritionSchema = new mongoose.Schema({
+  id: String,
+  name: String,
+  min_amount: Number,
+  max_amount: Number
+})
+
 const PreferenceSchema = new mongoose.Schema({
   dietaryRequirements: [DietaryRequirementsSchema],
   dietaryCombination: String,
   allergies: [AllergySchema],
-  maxPrepTime: Number
+  maxPrepTime: Number,
+  nutrition: [NutritionSchema],
 })
 
 const DietaryRequirements = mongoose.model("DietaryRequirements", DietaryRequirementsSchema);
 const Allergies = mongoose.model("Allergies", AllergySchema);
+const Nutrition = mongoose.model("Nutrition", NutritionSchema);
 const Preferences = mongoose.model("Preferences", PreferenceSchema);
 
-module.exports = {Preferences, Allergies, DietaryRequirements};
+module.exports = {Preferences, Allergies, DietaryRequirements, Nutrition};

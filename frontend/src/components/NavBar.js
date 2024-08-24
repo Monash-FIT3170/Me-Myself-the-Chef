@@ -22,8 +22,7 @@ function Navbar() {
                 <div className="container-fluid">
                     <Link className='react_link' to="/ingredients">
                         <span className="navbar-brand px-2">
-                            Me Myself the Chef
-                            <img src="/static/images/logo_small.png" height="50" alt="Logo" className="d-inline-block ms-2" />
+                            <img src="/static/images/header_logo.png" height="60" alt="Logo" className="d-inline-block ms-2" />
                         </span>
                     </Link>
 
@@ -58,7 +57,7 @@ function Navbar() {
                             ) : (
                                 <li className="nav-item px-2">
                                     <Link to="/login">
-                                        <button className="btn btn-primary">Sign In</button>
+                                        <button className="btn btn-success">Sign In</button>
                                     </Link>
                                 </li>
                             )}
