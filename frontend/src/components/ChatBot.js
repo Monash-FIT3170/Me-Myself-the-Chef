@@ -155,11 +155,11 @@ function Chatbot() {
 
     
   const handleGenerateRecipe = async () => {
+    localStorage.setItem("AIrecipe", false)
     const output = await fetch("http://localhost:8080/api/chatbot/recipe", {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
     })
-
     if (!output.ok) {
       console.error("Chatbot Error - output did not ok");
     }
