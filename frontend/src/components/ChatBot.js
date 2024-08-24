@@ -125,7 +125,7 @@ function Chatbot() {
 
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
-    let userInputStorage = "";
+    let userInputStorage = useRef('');
     const [isVisible, setIsVisible] = useState(false); // controls wether the chatbox is visible
     const messageEndRef = useRef(null);
     const [isHovered, setIsHovered] = useState(false);
