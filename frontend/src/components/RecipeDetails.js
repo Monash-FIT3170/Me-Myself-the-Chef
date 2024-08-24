@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {useState, useEffect} from "react";
 import ReactStars from 'react-rating-stars-component';
+import {AuthContext} from "../context/AuthContext";
 
 // Functional component for displaying recipe details
 function RecipeDetails({
@@ -32,6 +33,7 @@ function RecipeDetails({
 		}
 	};
 
+	const {isLoggedIn} = useContext(AuthContext);
 	// Whether the recipe is in the user's saved recipes
 	const [isSaved, setSaved] = useState(null);
 	const [savedRecipes, setSavedRecipes] = useState([]);
@@ -53,7 +55,10 @@ function RecipeDetails({
 				console.error(error);
 			}
 		};
-		fetchData();
+		if (isLoggedIn) {
+			fetchData();
+		}
+
 	}, [savedRecipes]);
 
 	const saveRecipe = async (event) => {
@@ -106,13 +111,13 @@ function RecipeDetails({
 						<div className="row">
 							<div className="col-md-8">
 								<h1>{title}</h1>
-								{!isSaved && <button
+								{isLoggedIn && !isSaved && <button
 									type="button"
 									onClick={(e) => saveRecipe(e)}
 									className="btn btn-primary btn-sm me-2">
 									Save
 								</button>}
-								{isSaved && <button
+								{isLoggedIn && isSaved && <button
 									type="button"
 									onClick={(e) => unsaveRecipe(e)}
 									className="btn btn-danger btn-sm">

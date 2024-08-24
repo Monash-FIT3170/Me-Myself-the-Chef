@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import '../css/base.css'
 import IngredientsRecipePane from '../components/IngredientsRecipePane';
 import RecipePane from '../components/RecipePane';
 import {useState, useEffect} from "react";
+import {AuthContext} from "../context/AuthContext";
 
 
 function SavedRecipe() {
+    const { isLoggedIn } = useContext(AuthContext);
 
     const [ingredients, setIngredients] = useState(() => {
         const localValue = localStorage.getItem("INGREDIENTS")
@@ -62,12 +64,19 @@ function SavedRecipe() {
 
     return (
         <div className="row flex-fill">
-            {/* Ingredients Pane */}
-            <IngredientsRecipePane ingredientList={ingredients}/>
+            {(isLoggedIn) ? (
+                <div className="row flex-fill">
+                {/* Ingredients Pane */}
+                <IngredientsRecipePane ingredientList={ingredients}/>
 
-            {/* Display Recipe Pane */}
-            <RecipePane recipeList={recipeList} title={"Saved Recipes"}/>
-
+                {/* Display Recipe Pane */}
+                <RecipePane recipeList={recipeList} title={"Saved Recipes"}/>
+                </div>
+            ) : (
+                <div className="mt-5 text-center">
+                    <h3> You must be logged in! </h3>
+                </div>
+            )}
         </div>
     );
 }
