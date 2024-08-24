@@ -18,7 +18,7 @@ function DisableIngredientsPane({ d_ingredientList, deleteIngredient }) {
                 {/* <!-- Ingredients--> */}
                 <div className="row">
 
-                    {d_ingredientList.length === 0 && "No Ingredients"}
+                    {d_ingredientList.length === 0 && <div style={{textAlign: "center"}}>No Ingredients</div>}
                     {d_ingredientList.map(ingredient => {
                     return (
                         <Ingredient
