@@ -141,11 +141,6 @@ function Chatbot() {
     }
   }
 
-    // This is what allows the chatbox message to scroll to the bottom whenever a message is sent
-    const scrollableDiv = document.getElementById("messagesPane");
-    const scrollToBottom = () => {
-      scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
-    };
     
   const handleGenerateRecipe = async () => {
     const output = await fetch("http://localhost:8080/api/chatbot/recipe", {
