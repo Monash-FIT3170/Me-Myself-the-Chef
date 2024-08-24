@@ -47,40 +47,64 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .search-bar-container {
-    max-width: 500px;
+    max-width: 1000px; 
+    width: 100%;
     margin: auto;
     position: relative;
     z-index: 2001;
 }
 
 #gen-button {
-    position:absolute;
-    bottom:0;
-    right:0;
-    margin-bottom: 5%;
-    margin-right: 5%;
-    width: 15%;
-    height: 8%;
+    position: absolute;
+    top: 0;
+    right: -150px;
+    height: 46;
     font-family: "Inter";
     font-weight: 600;
+    font-size: 14px;
+    padding: 10px 15px;
+    white-space: nowrap; 
+    margin-left: 10px;
     --bs-btn-hover-bg: #f8f9fa;
     --bs-btn-hover-border-color: #e3e3e3;
     --bs-btn-active-bg: #e3e3e3;
+
+    background-color: #458D59; 
+    color: white;
+    border: none;
+    border-radius: 5px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+#gen-button:hover {
+    background-color: #45a049; 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); 
 }
 
 #change-button {
     position:absolute;
     bottom:0;
-    left:0;
+    right:80;
     margin-bottom: 5%;
     margin-left: 3%;
     width: 18%;
-    height: 8%;
+    /* height: 8%; */
+    height: 46;
     font-family: "Inter";
     font-weight: 600;
+    font-size: 14px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition: background-color 0.3s ease, transform 0.2s ease;
     --bs-btn-hover-bg: #f8f9fa;
     --bs-btn-hover-border-color: #e3e3e3;
     --bs-btn-active-bg: #e3e3e3;
+}
+#change-button:hover {
+    background-color: #f8f9fa; 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); 
 }
 
 #expand-button {

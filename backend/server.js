@@ -39,6 +39,7 @@ db.mongoose.connect(dbConfig.uri, {
 // Routes
 require('../backend/routes/auth.routes')(app);
 require('../backend/routes/user.routes')(app);
+require('../backend/routes/chatbot.routes')(app);
 
 // Comment Routes
 const commentsRouter = require('./routes/comments');

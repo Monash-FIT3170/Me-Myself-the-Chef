@@ -11,6 +11,8 @@ import Disable_Ingredients from './views/Disable_Ingredients';
 import Recipe from './views/Recipe';
 import { Preference, DietaryRequirements, NutritionRequirements, PreparationTime } from './views/Preference'
 import LoggedInPage from './views/LoggedInPage';
+import Chatbot from './components/ChatBot';
+import AIRecipe from './views/AIRecipe';
 import SavedRecipe from './views/SavedRecipe';
 
 function App() {
@@ -21,7 +23,6 @@ function App() {
         <Navbar />
 
         <div className="pages d-flex h-100 flex-column">
-
           <Routes>
 
             {/* Page 1 is a test page for making API calls to the backend: can delete if desired */}
@@ -62,9 +63,13 @@ function App() {
             {/* Preference page */}
             <Route path="/logged_in" element={<LoggedInPage />} />
 
+            {/* AI Recipe page */}
+            <Route path="/AIRecipe" element={<AIRecipe />} />
+
           </Routes>
 
         </div>
+        <Chatbot />
 
       </BrowserRouter>
     </div>
