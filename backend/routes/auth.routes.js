@@ -50,4 +50,17 @@ module.exports = function(app) {
     [authJwt.verifyToken],
     controller.getPreferences
   );
+
+  // Update a specific user's saved recipes
+  app.post(
+      "/api/auth/updateSavedRecipes",
+      [authJwt.verifyToken],
+      controller.updateSavedRecipes
+  );
+
+  app.get(
+      "/api/auth/getSavedRecipes",
+      [authJwt.verifyToken],
+      controller.getSavedRecipes
+  );
 };

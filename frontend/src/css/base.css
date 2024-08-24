@@ -50,6 +50,8 @@ h1, h2, h3, h4, h5, h6, p {
     max-width: 1000px; 
     width: 100%;
     margin: auto;
+    position: relative;
+    z-index: 2001;
 }
 
 #gen-button {

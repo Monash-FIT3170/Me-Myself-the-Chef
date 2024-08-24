@@ -173,3 +173,39 @@ exports.getPreferences = async (req, res) => {
     res.status(500).send({ message: error.message})
   }
 }
+
+// SAVED RECIPES ---------------------------------------------------------------
+
+exports.updateSavedRecipes = async (req, res) => {
+  try {
+    // Find the user
+    const user = await db.appuser.findOne({ _id: req.userId });
+    if (!user) {
+      return res.status(404).send({ message: "User not found." });
+    }
+    // Update user's saved recipes
+    user.saved_recipes = req.body.saved_recipes;
+    // Save the updated user
+    const updatedUser = await user.save();
+    // Respond with the updated user
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    // Handle errors
+    res.status(500).json(error);
+  }
+};
+
+
+exports.getSavedRecipes = async (req, res) => {
+  try{
+    // Find the user
+    const user = await db.appuser.findOne({ _id: req.userId });
+    if (!user) {
+      return res.status(404).send({ message: "User not found." });
+    }
+    // Return the user's saved recipes
+    res.status(200).json(user.saved_recipes);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}

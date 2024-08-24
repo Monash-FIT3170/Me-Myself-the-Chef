@@ -5,17 +5,23 @@ export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [username, setUsername] = useState('');
 
     useEffect(() => {
         // Check if the user is logged in by inspecting localStorage or sessionStorage
         const token = localStorage.getItem('token');
+        const storedUsername = localStorage.getItem('username');
         setIsLoggedIn(!!token);
+        setUsername(storedUsername || '');
     }, []);
 
     const login = async (data) => {
         localStorage.setItem('token', data.accessToken);
+        localStorage.setItem('username', data.username);
         //localStorage.setItem('searchHistory', JSON.stringify(data.searchHistory));
         await retrievePreferences();
+        await retrieveSavedRecipes();
+        setUsername(data.username);
         setIsLoggedIn(true);
     };
 
@@ -23,6 +29,8 @@ const AuthProvider = ({ children }) => {
         localStorage.removeItem('token');
         localStorage.removeItem('searchHistory');
         localStorage.removeItem('preferences');
+        localStorage.removeItem('username');
+        setUsername('');
         setIsLoggedIn(false);
     };
 
@@ -52,8 +60,24 @@ const AuthProvider = ({ children }) => {
         }
     };
 
+    const retrieveSavedRecipes = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/api/auth/getSavedRecipes', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': localStorage.getItem('token')
+                }
+            });
+            const data = await response.json();
+            localStorage.setItem('saved_recipes', JSON.stringify(data));
+        } catch (error) {
+            console.error('Network Error:', error);
+        }
+    }
+
     return (
-        <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+        <AuthContext.Provider value={{ isLoggedIn, username, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

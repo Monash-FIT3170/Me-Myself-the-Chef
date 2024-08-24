@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import AutoSearchBar from '../components/AutoSearchBar';
 import { Link } from "react-router-dom";
+import Dropdown from './Dropdown';
+import { PreferenceContext } from '../context/PreferenceContext';
 
 function DisabledIngredientSearch({ingredients, addIngredient}) {
+    const { updatePreferences } = useContext(PreferenceContext);
 
     // function to handle the user searching an ingredient
     function onIngredientSearch(ingredient) {
@@ -20,7 +23,7 @@ function DisabledIngredientSearch({ingredients, addIngredient}) {
                 </div>
 
                 <div className="row mt-4">
-                    <p>Type what ingredients you want to disable here</p>
+                    <p className="mb-0">Type what ingredients you want to disable here</p>
                     <p>When you’re done, generate your recipes!</p>
                 </div>
 
@@ -38,13 +41,15 @@ function DisabledIngredientSearch({ingredients, addIngredient}) {
 
                         --> */}
 
+                        <Dropdown />
+
                     </div>
                 </div>
             </div>
 
             {/* <!-- Generate recipe button --> */}
             <Link className="react_link" to="/recipe_recommendation">
-                <button type="button" className="btn btn-light btn-lg" id="gen-button">Generate Recipes</button>
+                <button type="button" className="btn btn-light btn-lg" id="gen-button" onClick={updatePreferences}>Generate Recipes</button>
             </Link>
             
         </div>
