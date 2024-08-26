@@ -18,7 +18,7 @@ function IngredientsRecipePane({ ingredientList }) {
                 {/* <!-- Ingredients--> */}
                 <div className="row">
 
-                    {ingredientList.length === 0 && "No Ingredients"}
+                    {ingredientList.length === 0 && <div style={{textAlign: "center"}}>No Ingredients</div>}
                     {ingredientList.map(ingredient => {
                     return (
                         <IngredientRecipe

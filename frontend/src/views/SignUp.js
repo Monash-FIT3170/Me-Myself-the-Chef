@@ -81,7 +81,9 @@ const SignUp = () => {
                         </center>
                     </form>
                 </div>
-                <img className="login_image" src="/static/images/login_image.jpg" alt="Placeholder" />
+                <div className="login_image_div">
+                    <img className="login_image" src="/static/images/login_graphic.png" alt="Placeholder" />
+                </div>
             </section>
         </>
     );

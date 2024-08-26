@@ -166,8 +166,8 @@ function RecipeDetails({
 					<div className="col-md-2 mt-2"></div>
 
 					<div className="col-md-3 text-end">
-						<img src={image} alt="Recipe" className="img-fluid me-5"
-							 style={{height: "200px", border: "5px solid white"}}/>
+						<img src={image} alt="Recipe" className="img-fluid"
+							 style={{maxWidth: "100%", height: "auto", border: "5px solid white"}}/>
 					</div>
 
 				</div>
