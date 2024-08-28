@@ -14,6 +14,13 @@ The front end server was initialised using the `create-react-app` library. This 
 4. Run `npm start`
 5. The web app should be launched in your browser. If not, visit `http://localhost:3000/<desired_route>`
 
+## Running the Docker Version of the App
+
+1. You must have Docker installed in VSCode
+2. Open the terminal in the main app folder (not the frontend or backend specific ones)
+3. Run `docker compose up`
+4. Visit `http://localhost:3000/ingredients`
+
 ## Team Members
 
 - Xiao Hao Zheng (29493641): xzhe0014@student.monash.edu

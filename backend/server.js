@@ -20,8 +20,8 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 // Database setup
-const db = require("../backend/models");
-const dbConfig = require("../backend/config/db.config");
+const db = require("./models");
+const dbConfig = require("./config/db.config");
 
 // MongoDB connection
 db.mongoose.connect(dbConfig.uri, {
@@ -37,9 +37,9 @@ db.mongoose.connect(dbConfig.uri, {
     });
 
 // Routes
-require('../backend/routes/auth.routes')(app);
-require('../backend/routes/user.routes')(app);
-require('../backend/routes/chatbot.routes')(app);
+require('./routes/auth.routes')(app);
+require('./routes/user.routes')(app);
+require('./routes/chatbot.routes')(app);
 
 // Comment Routes
 const commentsRouter = require('./routes/comments');
