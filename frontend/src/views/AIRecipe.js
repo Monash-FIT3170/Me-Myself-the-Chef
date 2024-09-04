@@ -16,11 +16,13 @@ function Recipe() {
     const [nutrition, setNutrition] = useState([]);
     const [servings, setServings] = useState(1);
     const [originalServings, setOriginalServings] = useState(null);
+    // for dependencies array?
+    const [recipe, setRecipe] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const recipe = localStorage.getItem("AIrecipe");
+                setRecipe(localStorage.getItem("AIrecipe"));
                 const json = JSON.parse(recipe); // <- High Risk Area for Failure that needs better safeguards
                 setRecipeInfo(json);
 
@@ -41,7 +43,7 @@ function Recipe() {
         };
 
         fetchData();
-    });
+    }, [recipe, originalServings]);
 
     // Format instructions to extract step text
     function formatInstructions(steps) {
