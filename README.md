@@ -1,18 +1,100 @@
 # Me-Myself-the-Chef
 
-## Code Base Overview
+This document is intended to serve as an entry point to understand the project supporting the Me Myself the Chef website. It describes:
+* How to initialise and run the web application
+* The purposes and files contained in each major directory within the code base
+* How the frontend and backend servers are structured
+* Files not committed to the project repository
 
-This web app is run using 2 servers, a front end react server and a back end Express server.
+## Initialisation Steps
 
-The front end server was initialised using the `create-react-app` library. This provided quick and thorough setup of dependencies, but means that certain configuration settings are hidden in its associated node_modules files, such as the entry point JS file. As the node_modules folder is listed in the .gitignore file, edits to these config files will not be tracked by Git. **Please do not eject create-react-app config files without discussing with the team.** For further information on this, see https://stackoverflow.com/questions/44403923/how-does-react-create-app-react-scripts-find-the-entry-point . 
+1.	Install Node.js on the host computer
+2.	Obtain a valid Spoonacular API key
+    * Visit https://spoonacular.com/food-api and register for an API key, or use an existing key
+3.	Obtain a valid Gemini API key
+    * For instructions, see https://ai.google.dev/gemini-api/docs/api-key
+4.	Obtain the project code base (either by cloning the repository or manually receiving the files)
+5.	cd to the `backend` directory in the command line
+6.	Run `npm install` to install backend dependencies
+7.	Create a file name `.env` in the `backend` directory and fill the file with the following lines, substituting your API keys where indicated:
+```
+SPOONACULAR_API_KEY=<YOUR_SPOONACULAR_API_KEY>
+GEMINI_API_KEY =<YOUR_GEMINI_API_KEY>
+```
+8.	cd to the `frontend` directory
+9.	Run `npm install` to install frontend dependencies
 
-## Running the App
+## Running Steps
+1.	cd to the `backend` directory in the command line
+2.	Run `npm run dev`
+3.	cd to the `frontend` directory
+4.	Run `npm start`
+5.	The web app should be launched in your browser. If not, visit `http://localhost:3000/<desired_route>`
 
-1. cd to the `backend` folder in the command line
-2. Run `npm run dev`
-3. cd to the `frontend` folder
-4. Run `npm start`
-5. The web app should be launched in your browser. If not, visit `http://localhost:3000/<desired_route>`
+## Directory Structure
+
+Below is the main directory structure of the main branch of the repository. Descriptions for folders and files are put in parentheses (no directory or file names contain parentheses or spaces). Descriptions are omitted when a folder or file’s purpose is deemed obvious.
+
+* backend
+    * config (configuration information files for user authentication and database systems)
+    * controllers (defines controllers to handle routes)
+    * middleware (middleware files to support user authentication)
+    * models (schema files for backend objects)
+    * routes (declares routes that are handled and what controllers handle them) 
+    * server.js (entry point file for the backend server)
+    * package.json (backend project metadata and dependencies)
+    * packge-lock.json (locks versions of backend dependencies)
+* frontend
+    * public (resource directory accessible to React components during run time)
+        * index.html (base HTML file for React to root from)
+        * static (static web resources to access)
+•	fonts
+•	html_pages
+•	images
+    * src (React JSX systems)
+        * components (React components used to make pages)
+        * context (React context system to share information between pages)
+        * utils (Holds default user preferences)
+        * css
+        * views (React pages to be displayed inside the index.html template)
+    * App.js (base React app component to display the web pages in frontend/src/views via routing)
+    * index.js (loads the base React app into the index.html template)
+    * package.json (frontend project metadata and dependencies)
+    * packge-lock.json (locks versions of frontend dependencies)
+
+
+## Project Architecture Overview
+
+Me Myself the Chef is implemented as a web application using the MERN stack. This web app is run using 2 servers, a front end React server and a back end Express server.
+
+### Front End
+The front end React server is a single page application, meaning it only loads a single web page internally (in index.js) but dynamically rewrites the page data to display new content, including different pages for different web addresses. It does so using React routing, a React module to display different React components for different paths. This is done in App.js, which serves as the single React component that is displayed which changes based on the accessed path. The different React components showing page content to be displayed in App.js are stored in frontend/src/views.
+
+![alt text](docs/images/frontend_architecture.png)
+
+The front end server was initialised using the create-react-app library. This provided quick and thorough setup of dependencies, but means that certain configuration settings are hidden in its associated node_modules files, such as the entry point JS file. As the node_modules folder is listed in the .gitignore file, edits to these config files will not be tracked by Git. Please do not eject create-react-app config files without discussing with the team. For further information on this, see https://stackoverflow.com/questions/44403923/how-does-react-create-app-react-scripts-find-the-entry-point .
+
+### Back End
+The back end Express server functions to support API calls from the front end to handle user authentication and API calls to the 3rd party service we use for recipe generation, Spoonacular, as well as the Gemini service for the chatbot. The back end server handles front end API calls by:
+* Declaring routes that the server will handle in the files found in backend/routes, and assigning routes with controllers to handle them
+* Implementing controllers in backend/controllers to act on an API call from the front end
+
+## .gitignore
+The main files/directories set to be uncommitted to the repository are:
+* frontend/node_modules : front end dependencies (too many small files)
+* backend/node_modules : back end dependencies (too many small files)
+* backend/.env : stores Spoonacular and Gemini API key 
+   * Spoonacular API key on free tier has limited uses of 50/day
+   * Gemini API key in free tier has limited calls (15 requests/minute, 1500 requests/day)
+
+The required node_modules dependency files can be installed by running `npm install` inside the frontend and backend directories.
+The .env file containing the Spoonacular and Gemini API keys must be named .env and populated with the lines below (replacing the API keys where indicated):
+```
+SPOONACULAR_API_KEY=<YOUR_API_KEY>
+GEMINI_API_KEY=<YOUR_API_KEY>
+```
+See the initialisation instructions in this document for how to add these files/directories to your local repository.
+
 
 ## Team Members
 
