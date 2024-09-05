@@ -20,7 +20,7 @@ function RecipeComment({ recipeId, fetchAverageRating }) {
         e.preventDefault();
         try {
             const author = userInputName || 'Anonymous';
-            const response = await axios.post('http://localhost:8080/api/comments', { recipeId, rating, text: comment, author });
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/comments`, { recipeId, rating, text: comment, author });
             setComments([...comments, response.data]);
             setComment('');
             setRating(0);
