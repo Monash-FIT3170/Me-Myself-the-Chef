@@ -24,7 +24,7 @@ function Recipe() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/recipes/id/' + recipeId)
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/recipes/id/` + recipeId)
                 const json = await response.json()
                 
                 setRecipeInfo(json);
@@ -52,7 +52,7 @@ function Recipe() {
 
     const fetchComments = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/comments/' + recipeId);
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/comments/` + recipeId);
             const json = await response.json();
             setComments(json);
         } catch (error) {
@@ -62,7 +62,7 @@ function Recipe() {
 
     const fetchAverageRating = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/api/comments/average-rating/${recipeId}`);
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/comments/average-rating/${recipeId}`);
             const json = await response.json();
             setAverageRating(json.averageRating);  
             return json.averageRating;

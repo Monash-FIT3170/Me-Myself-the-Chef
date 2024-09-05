@@ -41,7 +41,7 @@ function RecipeRecommendation() {
         const fetchData = async () => {
             try {
                 // Cannot use a GET request as we are sending objects to the backend for processing
-                const response = await fetch("http://localhost:8080/api/recipes/complexSearch", {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/recipes/complexSearch`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ingredients, preferences, excIngredients})
