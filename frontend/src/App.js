@@ -14,6 +14,7 @@ import LoggedInPage from './views/LoggedInPage';
 import Chatbot from './components/ChatBot';
 import AIRecipe from './views/AIRecipe';
 import SavedRecipe from './views/SavedRecipe';
+import RedirectToIngredient from './views/RedirectToLogin';
 
 function App() {
 
@@ -24,6 +25,8 @@ function App() {
 
         <div className="pages d-flex h-100 flex-column">
           <Routes>
+
+            <Route path='/' element={<RedirectToIngredient />} />
 
             {/* Page 1 is a test page for making API calls to the backend: can delete if desired */}
             <Route path="/page1" element={<Page1 />} />
