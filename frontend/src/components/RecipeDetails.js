@@ -64,6 +64,10 @@ function RecipeDetails({
 	const saveRecipe = async (event) => {
 		if (savedRecipes.includes(id)) {
 			return  // As the user has already saved this recipe
+		} else if (!id) {
+			// lack of id means the recipe cannot be saved
+			alert("Due to an error this Recipe cannot be saved")
+			return
 		}
 		// Add the new recipe to the list of saved recipes
 		const updatedObj = [...savedRecipes, id]
@@ -79,6 +83,9 @@ function RecipeDetails({
 		if (response.status === 200) {
 			setSaved(true);
 			setSavedRecipes(updatedObj)
+		} else {
+			const data = await response.json();
+    		console.log('Error: ', data);
 		}
 	}
 
@@ -100,6 +107,9 @@ function RecipeDetails({
 		if (response.status === 200) {
 			setSaved(false);
 			setSavedRecipes(updatedObj)
+		} else {
+			const data = await response.json();
+    		console.log('Error: ', data);
 		}
 	}
 

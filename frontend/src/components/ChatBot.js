@@ -164,12 +164,33 @@ function Chatbot() {
       console.error("Chatbot Error - output did not ok");
     }
 
-    // extract the recipe JSON
+    // extract the recipe JSON as string
     const recipe = await output.json();
-    const recipeTEXT = recipe.message; // its in string format to store
+    const recipeJSON = JSON.parse(recipe.message); // Its in JSON format
+
+    // database store
+    recipeJSON.id = "AIRECIPE" + Date.now() // Unique ID stamp
+    recipeJSON.image = "https://media.istockphoto.com/id/1139274117/photo/question-mark-made-of-different-fruits-and-berries-fruit-alphabet-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=1HGr3K7h_fiKAohDVKmu0NQQxh58MyibGdHgncio0SY="; // Default image
+    let recipeTEXT = JSON.stringify(recipeJSON)
+    
+    try {
+      const response = await fetch("http://localhost:8080/api/auth/saveAiRecipe", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(recipeJSON)
+          })
+      if(!response.ok){
+        console.log(" fetch - ok ");
+      }
+    } catch (e){
+      console.log("Error Caching AI recipe - Unable to be saved: ")
+      recipeJSON.id = null // indicator that it cannot be saved
+      recipeTEXT = JSON.stringify(recipeJSON)
+    }
     // store it in local Storage
     localStorage.setItem("AIrecipe", recipeTEXT);
-
     window.location.reload()
   }
 

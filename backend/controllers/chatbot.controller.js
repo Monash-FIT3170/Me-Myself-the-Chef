@@ -92,7 +92,6 @@ exports.generateRecipe = async (req, res) => {
         console.log("INITIAL RESPONSE: " + botResponse);
         jsonRecipe = extractJSON(botResponse);
         console.log("EXTRACTED JSON: " + jsonRecipe);
-        console.log("TYPE IS: " + typeof(jsonRecipe));
 
         if (botResponse.error) {
             return res.status(500).send({ error: botResponse.error.message})
