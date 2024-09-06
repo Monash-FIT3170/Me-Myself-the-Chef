@@ -8,7 +8,7 @@ const Page1 = () => {
 
   useEffect(() => {
     const fetchPage1Data = async () => {
-      const response = await fetch('http://localhost:8080/api/page1data')
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/page1data`)
       const json = await response.json()
 
       if (response.ok) {

@@ -32,7 +32,7 @@ function SavedRecipe() {
         const fetchData = async () => {
             try {
                 // Cannot use a GET request as we are sending objects to the backend for processing
-                const response = await fetch("http://localhost:8080/api/auth/getSavedRecipes", {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/getSavedRecipes`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ function SavedRecipe() {
                 const json = await response.json()
                 const temp = []
                 for (let i = 0; i<json.length; i++) {
-                    const response = await fetch("http://localhost:8080/api/recipes/id/" + json[i], {
+                    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/recipes/id/` + json[i], {
                         method: 'GET',
                     })
                     const recipe = await response.json()

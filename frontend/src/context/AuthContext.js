@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
 
     const retrievePreferences = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/auth/getPreferences', {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/getPreferences`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ const AuthProvider = ({ children }) => {
 
     const retrieveSavedRecipes = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/auth/getSavedRecipes', {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/getSavedRecipes`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

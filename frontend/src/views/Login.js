@@ -26,7 +26,7 @@ const Login = () => {
         };
 
         try {
-            const response = await fetch('http://localhost:8080/api/auth/signin', {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/signin`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

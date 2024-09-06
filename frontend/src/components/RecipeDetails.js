@@ -41,7 +41,7 @@ function RecipeDetails({
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await fetch("http://localhost:8080/api/auth/getSavedRecipes", {
+				const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/getSavedRecipes`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ function RecipeDetails({
 		// Add the new recipe to the list of saved recipes
 		const updatedObj = [...savedRecipes, id]
 		// Send updated list back to backend
-		const response = await fetch('http://localhost:8080/api/auth/updateSavedRecipes', {
+		const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/updateSavedRecipes`, {
 			method: 'POST',
 			body: JSON.stringify({saved_recipes: updatedObj}),
 			headers: {
@@ -89,7 +89,7 @@ function RecipeDetails({
 		// Remove the ID from the array
 		const updatedObj = savedRecipes.filter(recipeId => recipeId !== id);
 		// Send updated list back to backend
-		const response = await fetch('http://localhost:8080/api/auth/updateSavedRecipes', {
+		const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/updateSavedRecipes`, {
 			method: 'POST',
 			body: JSON.stringify({saved_recipes: updatedObj}),
 			headers: {

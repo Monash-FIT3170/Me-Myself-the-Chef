@@ -6,7 +6,7 @@ function RecipeCommentsList({ recipeId, comments, setComments, fetchAverageRatin
     useEffect(() => {
         const fetchComments = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/api/comments/${recipeId}`);
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/comments/${recipeId}`);
                 if (response.ok) {
                     const data = await response.json();
                     setComments(data);

@@ -156,7 +156,7 @@ function Chatbot() {
     
   const handleGenerateRecipe = async () => {
     localStorage.setItem("AIrecipe", false)
-    const output = await fetch("http://localhost:8080/api/chatbot/recipe", {
+    const output = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/chatbot/recipe`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
     })
@@ -191,7 +191,7 @@ function Chatbot() {
       setInput('...Thinking...');
 
       // Send the user message to the CHATBOT API
-      const output = await fetch("http://localhost:8080/api/chatbot", {
+      const output = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/chatbot`, {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({"input": input})
