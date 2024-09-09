@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const config = require("../config/auth.config.js");
 const db = require("../models/index.js");
 const User = db.appuser;
 const Role = db.role;
@@ -11,7 +10,7 @@ const verifyToken = async (req, res, next) => {
       return res.status(403).send({ message: "No token provided!" });
     }
 
-    const decoded = await jwt.verify(token, config.secret);
+    const decoded = await jwt.verify(token, process.env.SECRET_KEY);
     req.userId = decoded.id;
     next();
   } catch (error) {
