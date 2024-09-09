@@ -104,8 +104,10 @@ function RecipeCard({ recipe }) {
                             </div>
                         </div>
                         <div className="col-md-4">
+						<Link className="react_link" to="/recipe" state={recipe.id}>
                             <img src={recipe.image} className="img-fluid rounded-start" alt="..." />
-                        </div>
+                        </Link>
+						</div>
                     </div>
             </div>
         </div>
