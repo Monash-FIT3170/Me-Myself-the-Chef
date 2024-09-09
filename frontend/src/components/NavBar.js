@@ -45,7 +45,7 @@ function Navbar() {
                             </li>
 
                             <li className="nav-item px-2">
-                                <Link className='react_link' to="/preferences">
+                                <Link className='react_link' to="/preferences/dietary_requirements">
                                     <span className="nav-link">Preferences</span>
                                 </Link>
                             </li>
