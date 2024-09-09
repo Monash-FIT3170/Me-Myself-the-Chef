@@ -40,6 +40,14 @@ h1, h2, h3, h4, h5, h6, p {
     margin-bottom: 30px;
 }
 
+.horiz_line2 {
+    height: 2px; 
+    width: 130px; 
+    background-color: white;
+    margin-top: 5px;
+    margin-bottom: 10px; 
+}
+
 .ingredient {
     max-height: fit-content;
     margin-top: auto;
@@ -51,7 +59,7 @@ h1, h2, h3, h4, h5, h6, p {
     width: 100%;
     margin: auto;
     position: relative;
-    z-index: 2001;
+    /* z-index: 2001; */
 }
 
 #gen-button {
