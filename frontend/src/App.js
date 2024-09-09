@@ -14,6 +14,7 @@ import LoggedInPage from './views/LoggedInPage';
 import Chatbot from './components/ChatBot';
 import AIRecipe from './views/AIRecipe';
 import SavedRecipe from './views/SavedRecipe';
+import LoadingScreen from './views/LoadingScreen';
 
 function App() {
 
@@ -65,6 +66,9 @@ function App() {
 
             {/* AI Recipe page */}
             <Route path="/AIRecipe" element={<AIRecipe />} />
+
+            {/* Loading Page */}
+            <Route path="/loading" element={<LoadingScreen />} />
 
           </Routes>
 

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { useNavigate } from "react-router-dom";
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from "react-router-dom";
 
 // CHATBOT STUFF
 function Chatbot() { 
@@ -134,7 +133,8 @@ function Chatbot() {
     "/saved_recipe": true,
     "/disable_ingredients": true,
     "/recipe": true,
-    "/AIRecipe": true
+    "/AIRecipe": true,
+    "/loading": true
   }
 
     const [messages, setMessages] = useState([]);
@@ -165,6 +165,8 @@ function Chatbot() {
     document.getElementById('chatbotButton').setAttribute("disabled", "true");
     userInputStorage.current = input;
     setInput('...Generating Recipe...');
+    // Navigate to loading page
+    navigate("/loading")
     // CHATBOT API CALL
     try {
       const output = await fetch("http://localhost:8080/api/chatbot/recipe", {
@@ -196,6 +198,7 @@ function Chatbot() {
       document.getElementById('chatbotInput').focus();
       document.getElementById('chatbotButton').removeAttribute("disabled");
       document.getElementById('chatbotButton').focus();
+      navigate(-1) // return to previous page
       return
     }
     // SAVE RECIPE API CALL 
@@ -336,7 +339,7 @@ function Chatbot() {
             <button onClick={toggleChatbotVisibility} style={chatbotStyles.chatboxHeader_button} >&times;</button>
           </div>
           <div className="chatbox" style={chatbotStyles.chatbox}>
-            <button onClick={handleGenerateRecipe} style={chatbotStyles.button}>Generate Recipe</button>
+            <button onClick={handleGenerateRecipe} style={chatbotStyles.button}>Export Recipe</button>
             <div id='messagesPane' className="messages" style={chatbotStyles.messages}>
               {messages.map((message, index) => (
                 <div key={index} className="message" style={chatbotStyles.message}>
