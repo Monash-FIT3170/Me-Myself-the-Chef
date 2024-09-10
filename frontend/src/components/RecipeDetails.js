@@ -16,7 +16,7 @@ function RecipeDetails({
 						   averageRating
 					   }) {
 	// Check if the title contains AI Generated
-	const isAIGenerated = id.includes("AIRECIPE")
+	const isAIGenerated = ('string' === typeof id)
 	// Function to handle increasing servings
 	const handleIncreaseServings = () => {
 		const newServings = servings + 1;
