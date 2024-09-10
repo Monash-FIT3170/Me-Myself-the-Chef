@@ -81,7 +81,7 @@ function SavedRecipe() {
                 </div>
             ) : (
                 <div className="mt-5 text-center">
-                    <h3> You must be logged in! </h3>
+                    <h5>  Please sign in to view saved recipes.</h5>
                 </div>
             )}
         </div>

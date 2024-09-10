@@ -21,10 +21,9 @@ app.use(bodyParser.json());
 
 // Database setup
 const db = require("../backend/models");
-const dbConfig = require("../backend/config/db.config");
 
 // MongoDB connection
-db.mongoose.connect(dbConfig.uri, {
+db.mongoose.connect(process.env.MONGO_DATABASE_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })

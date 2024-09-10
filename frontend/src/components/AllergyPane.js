@@ -13,13 +13,13 @@ function AllergyPane({allergyList, addAllergy, deleteAllergy}) {
 
     return (
         <div class="col-md-4">
-            <div class="row text-center p-5">
+            <div class="row text-center pb-4" style={{padding: "10px 0px 20px 50px" }}>
                 <h3> Allergies & Intolerances </h3>
                 {/*<p> * note that these will be omitted from recipes</p>*/}
             </div>
 
             {/* <!-- Auto Complete Searchbar --> */}
-            <div class="container">
+            <div class="container pb-2">
                 <AllergySearchBar onAllergySearch={onAllergySearch}/>
             </div>
             {'       '}

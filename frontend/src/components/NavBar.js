@@ -38,14 +38,14 @@ function Navbar() {
                                 </Link>
                             </li>
 
-                            <li className="nav-item px-2">
+                            {isLoggedIn && <li className="nav-item px-2">
                                 <Link className='react_link' to="/saved_recipe">
                                     <span className="nav-link">Saved Recipes</span>
                                 </Link>
-                            </li>
+                            </li>}
 
                             <li className="nav-item px-2">
-                                <Link className='react_link' to="/preferences">
+                                <Link className='react_link' to="/preferences/dietary_requirements">
                                     <span className="nav-link">Preferences</span>
                                 </Link>
                             </li>

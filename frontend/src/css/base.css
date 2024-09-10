@@ -149,3 +149,11 @@ h1, h2, h3, h4, h5, h6, p {
 .cuisine_select {
     font-size: 10pt;
 }
+
+.recipe_card_text_limit {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp:2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }

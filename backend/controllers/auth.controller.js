@@ -1,4 +1,3 @@
-const config = require("../config/auth.config");
 const db = require("../models"); // access mongoDB models from here
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
@@ -43,7 +42,7 @@ exports.signin = async (req, res) => {
     // Configure a token for the user that last for a time limit
     const token = jwt.sign(
       { id: user.id },
-      config.secret,
+      process.env.SECRET_KEY,
       {
         algorithm: 'HS256',
         allowInsecureKeySizes: true,
