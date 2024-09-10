@@ -86,8 +86,8 @@ function RecipeCard({ recipe }) {
                         <div className="col-md-8">
                             <div className="card-body">
 							<Link className="react_link" to="/recipe" state={recipe.id}>
-                                <h5 className="card-title">{recipe.title}</h5>
-                                <p className="card-text">{text}</p>
+                                <h5 className="card-title recipe_card_text_limit">{recipe.title}</h5>
+                                {/* <p className="card-text">{text}</p> */}
 								</Link>
                                 {isLoggedIn && !isSaved && <button
 									type="button"

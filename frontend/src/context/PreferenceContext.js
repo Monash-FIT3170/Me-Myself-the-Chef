@@ -12,10 +12,10 @@ const PreferenceProvider = ({ children }) => {
     const [allergies, setAllergies] = useState([]); 
     const [nutrition, setNutrition] = useState(null); 
     const [diet, setDiet] = useState(null); 
-
     const [prepTime, setPrepTime] = useState('');
     const [cuisine, setCuisine] = useState([]); 
     const [servingSize, setServingSize] = useState('');
+    const [loading, setLoading] = useState(true);
 
     const { isLoggedIn } = useContext(AuthContext);
     const [alertMessage, setAlertMessage] = useState('');
@@ -32,7 +32,6 @@ const PreferenceProvider = ({ children }) => {
             const storedPrepTime = storedPreferences.maxPrepTime;
             const storedCuisine = storedPreferences.cuisines;
             const storedNutrition = storedPreferences.nutrition;
-
             const storedServingSize = storedPreferences.servingSize;
             
             setDiet(storedDiets);
@@ -40,28 +39,30 @@ const PreferenceProvider = ({ children }) => {
             setPrepTime(storedPrepTime);
             setCuisine(storedCuisine);
             setNutrition(storedNutrition);
-
             setServingSize(storedServingSize);
         } else {
+            // Use base lists if no stored preferences are found
             setDiet(baseDietaryList);
             setAllergies([]);
             setPrepTime(null);
             setCuisine(baseCuisineList);
             setNutrition(baseNutritionList);
-
-            setServingSize("1")
+            setServingSize("1");
         }
-        
+
+        // Set preferences and search history
         setPreferences(storedPreferences);
         setSearchHistory(storedSearchHistory);
-        
+
+        // End the loading state after preferences are loaded
+        setLoading(false);
+
     }, [isLoggedIn]);
 
     const updatePreferences = async () => {
-        // Combine allergies and diet into an object
         const newPreferences = {
             dietaryRequirements: diet,
-            dietaryCombination: "test",
+            dietaryCombination: "test", // Replace with appropriate combination logic
             allergies: allergies,
             maxPrepTime: prepTime,
             cuisines: cuisine,
@@ -71,7 +72,7 @@ const PreferenceProvider = ({ children }) => {
 
         setPreferences(newPreferences);
         localStorage.setItem('preferences', JSON.stringify(newPreferences));
-        setAlertMessage('Preferences saved to <strong>local storage</strong>. Please login to save to database.');
+        setAlertMessage('Preferences saved to <strong>local storage</strong>. Please login to save to the database.');
         setAlertType('success');
 
         if (isLoggedIn) {
@@ -91,7 +92,6 @@ const PreferenceProvider = ({ children }) => {
 
                 setAlertMessage('Preferences saved to the <strong>database</strong> successfully.');
                 setAlertType('success');
-
             } catch (error) {
                 console.error('Network Error:', error);
                 setAlertMessage('Failed to update preferences.');
@@ -114,6 +114,7 @@ const PreferenceProvider = ({ children }) => {
         }
     };
 
+    // Only render children when loading is complete
     return (
         <PreferenceContext.Provider value={{ 
             preferences, searchHistory, 
@@ -124,8 +125,10 @@ const PreferenceProvider = ({ children }) => {
             servingSize, setServingSize,
             nutrition, setNutrition,
             updatePreferences, updateSearchHistory, 
-            alertMessage, alertType, setAlertMessage }}>
-            {children}
+            alertMessage, alertType, setAlertMessage, 
+            loading 
+        }}>
+            {!loading && children}  {/* Only render children when loading is done */}
         </PreferenceContext.Provider>
     );
 };
