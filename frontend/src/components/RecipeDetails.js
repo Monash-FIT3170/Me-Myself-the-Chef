@@ -16,8 +16,7 @@ function RecipeDetails({
 						   averageRating
 					   }) {
 	// Check if the title contains AI Generated
-	const isAIGenerated = title.includes("AI Generated - ")
-	const mainTitle = isAIGenerated ? title.replace("AI Generated - ", "").trim() : title;
+	const isAIGenerated = id.includes("AIRECIPE")
 	// Function to handle increasing servings
 	const handleIncreaseServings = () => {
 		const newServings = servings + 1;
@@ -126,7 +125,7 @@ function RecipeDetails({
 							<div className="col-md-8">
 							{isAIGenerated && <p style={{fontSize: '20px', color: 'fff', fontWeight: 'bold', marginBottom: '0'}}>AI Generated</p>}
 							<div class="horiz_line2"></div>
-							<h1>{mainTitle}</h1>
+							<h1>{title}</h1>
 								{isLoggedIn && !isSaved && <button
 									type="button"
 									onClick={(e) => saveRecipe(e)}

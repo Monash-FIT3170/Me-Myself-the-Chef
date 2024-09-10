@@ -86,7 +86,7 @@ function Recipe() {
             <div className="col-md-9 d-flex flex-column">
                 <RecipeDetails
                     id={recipeInfo.id}
-                    title={"AI Generated - " + recipeInfo.title}
+                    title={recipeInfo.title}
                     image={recipeInfo.image} 
                     servings={servings}
                     setServings={setServings}
