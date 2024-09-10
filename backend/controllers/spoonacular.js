@@ -172,7 +172,7 @@ const getRecipes = async (req, res) => {
 
 const getRecipesByIngredients = async (req, res) => {
     // Returns recipes with the specified ingredients
-    // http://localhost:8080/api/recipes/ingredients/chicken,garlic
+    // .../api/recipes/ingredients/chicken,garlic
     let {ingredients} = req.params
 
     const options = {
