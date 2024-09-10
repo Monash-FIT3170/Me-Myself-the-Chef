@@ -20,7 +20,7 @@ const AppUser = mongoose.model(
         ],
         saved_recipes: [
             {
-                type: Number
+                type: String
             }
         ]
     })

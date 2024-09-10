@@ -202,6 +202,16 @@ const getRecipeInfo = async (req, res) => {
     let recipe
 
     try {
+        // first check if its an AI recipe
+        if (id.includes("AIRECIPE")){
+            recipe = await RECIPES.findOne({_id: id})
+            if (recipe) {
+                console.log('AI Recipe found in MongoDB')
+                return res.json(recipe.recipe)
+            } else {
+                return res.status(500).json({error: 'Could not locate AI recipe'})
+            }
+        }
         // Check if recipe exists in MongoDB
         recipe = await RECIPES.findOne({_id: parseInt(id)})
         if (recipe) {

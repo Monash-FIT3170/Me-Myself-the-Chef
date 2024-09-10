@@ -16,12 +16,15 @@ function Recipe() {
     const [nutrition, setNutrition] = useState([]);
     const [servings, setServings] = useState(1);
     const [originalServings, setOriginalServings] = useState(null);
+    // for dependencies array?
+    const [recipe, setRecipe] = useState(null);
+    const recipeHook = localStorage.getItem('AIRecipe')
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const recipe = localStorage.getItem("AIrecipe");
-                const json = JSON.parse(recipe); // <- High Risk Area for Failure that needs better safeguards
+                setRecipe(localStorage.getItem("AIrecipe"));
+                const json = JSON.parse(recipe); // Safe Parse
                 setRecipeInfo(json);
 
                 const initialServings = json.servings;
@@ -41,7 +44,7 @@ function Recipe() {
         };
 
         fetchData();
-    });
+    }, [recipe, originalServings, recipeHook]);
 
     // Format instructions to extract step text
     function formatInstructions(steps) {
@@ -82,8 +85,9 @@ function Recipe() {
             </div>
             <div className="col-md-9 d-flex flex-column">
                 <RecipeDetails
+                    id={recipeInfo.id}
                     title={"AI Generated - " + recipeInfo.title}
-                    image={"https://media.istockphoto.com/id/1139274117/photo/question-mark-made-of-different-fruits-and-berries-fruit-alphabet-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=1HGr3K7h_fiKAohDVKmu0NQQxh58MyibGdHgncio0SY="} // recipeInfo.image} 
+                    image={recipeInfo.image} 
                     servings={servings}
                     setServings={setServings}
                     prepTime={recipeInfo.preparationMinutes}

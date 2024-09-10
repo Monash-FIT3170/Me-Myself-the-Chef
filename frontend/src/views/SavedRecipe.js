@@ -45,8 +45,15 @@ function SavedRecipe() {
                     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/recipes/id/` + json[i], {
                         method: 'GET',
                     })
-                    const recipe = await response.json()
-                    temp.push({...recipe})
+                    if (response.status === 200) {
+                        const recipe = await response.json()
+                        temp.push({...recipe})
+                    } else {
+                        const data = await response.json();
+                        console.log('Error: ', data);
+                    }
+                    
+    
                 }
                 setRecipeList(temp)
             } catch (error) {

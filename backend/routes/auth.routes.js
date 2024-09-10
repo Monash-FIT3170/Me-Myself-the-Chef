@@ -63,4 +63,9 @@ module.exports = function(app) {
       [authJwt.verifyToken],
       controller.getSavedRecipes
   );
+
+  app.post(
+    "/api/auth/saveAiRecipe",
+    controller.saveAiRecipe
+  )
 };
