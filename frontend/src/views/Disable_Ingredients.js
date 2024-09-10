@@ -4,7 +4,6 @@ import '../css/base.css'
 import DisableIngredientsPane from '../components/DisableIngredientsPane'; // change to disable 
 import DisabledIngredientSearch from '../components/DisabledIngredientSearch'; // change to disbale 
 
-
 function Disable_Ingredients() {
     const [ingredients, setIngredients] = useState(() => {
         const localValue = localStorage.getItem("INGREDIENTS")
@@ -12,7 +11,6 @@ function Disable_Ingredients() {
 
         return JSON.parse(localValue)
     });
-
     const [d_ingredientList, setDIngredientList] = useState(() => {
         const localValue = localStorage.getItem("DINGREDIENTS") // check if we also need to change this 
         if (localValue == null) return []
@@ -43,12 +41,9 @@ function Disable_Ingredients() {
         }
         else{
             console.log("ingredient already in one of the lists - not added again")
+            return 'cannotAdd'
         }
-        
-
     }
-
-    
 
     // function to delete ingredients from list
     function deleteIngredient(id) {
