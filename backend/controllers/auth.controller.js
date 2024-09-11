@@ -208,3 +208,22 @@ exports.getSavedRecipes = async (req, res) => {
     res.status(500).json(error);
   }
 }
+
+// AI SAVED RECIPES 
+const mongoose = require('mongoose')
+const RECIPES = mongoose.connection.collection('recipes');
+
+exports.saveAiRecipe = async (req, res) => {
+  console.log("AI recipe caching starts");
+  console.log(JSON.stringify(req.body));
+  const recipe = req.body;
+  console.log("id: " +  recipe.id +  " \nrecipe: " +  recipe.title);
+  try {
+    await RECIPES.insertOne({_id: recipe.id, recipe: recipe});
+    console.log('AI recipe saved to database');
+    return res.status(200).send({message:"AI recipe succesfully saved to database"})
+  } catch (error) {
+    // Handle errors
+    return res.status(500).json(error);
+  }
+};

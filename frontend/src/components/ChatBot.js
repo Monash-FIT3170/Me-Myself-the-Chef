@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Link } from "react-router-dom";
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from "react-router-dom";
 
 // CHATBOT STUFF
 function Chatbot() { 
+  // variables
+  const navigate = useNavigate();
+
   // Inside the Chatbot component
   const chatbotStyles = {
     chatbot: {
@@ -131,7 +133,8 @@ function Chatbot() {
     "/saved_recipe": true,
     "/disable_ingredients": true,
     "/recipe": true,
-    "/AIRecipe": true
+    "/AIRecipe": true,
+    "/loading": true
   }
 
     const [messages, setMessages] = useState([]);
@@ -155,22 +158,77 @@ function Chatbot() {
 
     
   const handleGenerateRecipe = async () => {
-    localStorage.setItem("AIrecipe", false)
-    const output = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/chatbot/recipe`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-    })
-    if (!output.ok) {
-      console.error("Chatbot Error - output did not ok");
-    }
+    // Variable store
+    let recipeTEXT;
+    // Disable the user inputs while it waits
+    document.getElementById('chatbotInput').setAttribute("disabled", "true");
+    document.getElementById('chatbotButton').setAttribute("disabled", "true");
+    userInputStorage.current = input;
+    setInput('...Generating Recipe...');
+    // Navigate to loading page
+    navigate("/loading")
+    // CHATBOT API CALL
+    try {
+      const output = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/chatbot/recipe`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+      })
+      if (!output.ok) {
+        throw new Error("Chatbot API did not return ok");
+      }
 
-    // extract the recipe JSON
-    const recipe = await output.json();
-    const recipeTEXT = recipe.message; // its in string format to store
+      // extract the recipe JSON then parse it
+      const recipe = await output.json();
+      const recipeJSON = JSON.parse(recipe.message); // Its in JSON format
+
+      // Apply value Defaults
+      recipeJSON.id = "AIRECIPE" + Date.now() // Unique ID stamp
+      recipeJSON.image = "https://media.istockphoto.com/id/1139274117/photo/question-mark-made-of-different-fruits-and-berries-fruit-alphabet-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=1HGr3K7h_fiKAohDVKmu0NQQxh58MyibGdHgncio0SY="; // Default image
+      recipeTEXT = JSON.stringify(recipeJSON)
+
+    } catch (error) {
+      console.log("An Error occurred when calling chatbot: ", error)
+      // Return a chatbot error response
+      setMessages(prevMessages => [...prevMessages, { role: 'error', text: "Recipe Generation error: Please Try Again" }]);
+      setInput(userInputStorage.current);
+      // Clear input
+      setInput('');
+      // Re-enable user inputs
+      document.getElementById('chatbotInput').removeAttribute("disabled");
+      document.getElementById('chatbotInput').focus();
+      document.getElementById('chatbotButton').removeAttribute("disabled");
+      document.getElementById('chatbotButton').focus();
+      navigate(-1) // return to previous page
+      return
+    }
+    // SAVE RECIPE API CALL 
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/saveAiRecipe`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: recipeTEXT
+          })
+      if(!response.ok){
+        throw new Error("Caching API did not return ok");
+      }
+    } catch (error){
+      console.log("An Error Occured when caching AI recipe - Unable to be saved to database: ", error)
+      const unsavableRecipe = JSON.parse(recipeTEXT);
+      unsavableRecipe.id = null // add indicator that it cannot be saved
+      recipeTEXT = JSON.stringify(unsavableRecipe); 
+    }
     // store it in local Storage
     localStorage.setItem("AIrecipe", recipeTEXT);
-
-    window.location.reload()
+    navigate("/AIRecipe")
+    // Clear input
+    setInput('');
+    // ReEnable the user inputs once it's done
+    document.getElementById('chatbotInput').removeAttribute("disabled");
+    document.getElementById('chatbotInput').focus();
+    document.getElementById('chatbotButton').removeAttribute("disabled");
+    document.getElementById('chatbotButton').focus();
   }
 
   const handleSendMessage = useCallback(async () => {
@@ -180,9 +238,6 @@ function Chatbot() {
   
       // Add the user message to the messages array
       setMessages(prevMessages => [...prevMessages, { role: 'user', text: input }]);
-
-      // Scroll to the bottom of the updated message area
-      // scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
 
       // Disable the user inputs while it waits
       document.getElementById('chatbotInput').setAttribute("disabled", "true");
@@ -224,8 +279,6 @@ function Chatbot() {
      document.getElementById('chatbotInput').focus();
      document.getElementById('chatbotButton').removeAttribute("disabled");
      document.getElementById('chatbotButton').focus();
-     // scroll to the bottom of the message pane so the message is visible
-    //  scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
   }, [input]);
   
   useEffect(() => {
@@ -286,9 +339,7 @@ function Chatbot() {
             <button onClick={toggleChatbotVisibility} style={chatbotStyles.chatboxHeader_button} >&times;</button>
           </div>
           <div className="chatbox" style={chatbotStyles.chatbox}>
-            <Link to="/AIRecipe">
-                  <button onClick={handleGenerateRecipe} style={chatbotStyles.button}>Generate Recipe</button>
-            </Link>
+            <button onClick={handleGenerateRecipe} style={chatbotStyles.button}>Export Recipe</button>
             <div id='messagesPane' className="messages" style={chatbotStyles.messages}>
               {messages.map((message, index) => (
                 <div key={index} className="message" style={chatbotStyles.message}>

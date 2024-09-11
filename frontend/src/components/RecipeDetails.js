@@ -15,7 +15,8 @@ function RecipeDetails({
 						   adjustIngredients,
 						   averageRating
 					   }) {
-
+	// Check if the title contains AI Generated
+	const isAIGenerated = ('string' === typeof id)
 	// Function to handle increasing servings
 	const handleIncreaseServings = () => {
 		const newServings = servings + 1;
@@ -64,6 +65,10 @@ function RecipeDetails({
 	const saveRecipe = async (event) => {
 		if (savedRecipes.includes(id)) {
 			return  // As the user has already saved this recipe
+		} else if (!id) {
+			// lack of id means the recipe cannot be saved
+			alert("Due to an error this Recipe cannot be saved")
+			return
 		}
 		// Add the new recipe to the list of saved recipes
 		const updatedObj = [...savedRecipes, id]
@@ -79,6 +84,9 @@ function RecipeDetails({
 		if (response.status === 200) {
 			setSaved(true);
 			setSavedRecipes(updatedObj)
+		} else {
+			const data = await response.json();
+    		console.log('Error: ', data);
 		}
 	}
 
@@ -100,6 +108,9 @@ function RecipeDetails({
 		if (response.status === 200) {
 			setSaved(false);
 			setSavedRecipes(updatedObj)
+		} else {
+			const data = await response.json();
+    		console.log('Error: ', data);
 		}
 	}
 
@@ -112,7 +123,9 @@ function RecipeDetails({
 					<div className="col-md-7" style={{paddingLeft: "5%"}}>
 						<div className="row">
 							<div className="col-md-8">
-								<h1>{title}</h1>
+							{isAIGenerated && <p style={{fontSize: '20px', color: 'fff', fontWeight: 'bold', marginBottom: '0'}}>AI Generated</p>}
+							<div class="horiz_line2"></div>
+							<h1>{title}</h1>
 								{isLoggedIn && !isSaved && <button
 									type="button"
 									onClick={(e) => saveRecipe(e)}
