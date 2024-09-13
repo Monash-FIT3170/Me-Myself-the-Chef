@@ -120,31 +120,34 @@ function RecipeDetails({
 			<div className="container">
 				<div className="row">
 
-					<div className="col-md-7" style={{paddingLeft: "5%"}}>
+					<div className="col-md-9" style={{paddingLeft: "5%"}}>
 						<div className="row">
-							<div className="col-md-8">
-							{isAIGenerated && <p style={{fontSize: '20px', color: 'fff', fontWeight: 'bold', marginBottom: '0'}}>AI Generated</p>}
-							<div class="horiz_line2"></div>
-							<h1>{title}</h1>
+							<div className="col-md-12">
+								{isAIGenerated && <p style={{fontSize: '20px', color: 'fff', fontWeight: 'bold', marginBottom: '0'}}>AI Generated</p>}
+								<div class="horiz_line2"></div>
+								<h1>{title}</h1>
+								
 								{isLoggedIn && !isSaved && <button
 									type="button"
 									onClick={(e) => saveRecipe(e)}
 									className="btn btn-primary btn-sm me-2">
 									Save
 								</button>}
+
 								{isLoggedIn && isSaved && <button
 									type="button"
 									onClick={(e) => unsaveRecipe(e)}
 									className="btn btn-danger btn-sm">
 									Remove
 								</button>}
+
 							</div>
 						</div>
 
 						<br></br>
 
 						<div className='row'>
-							<div className="col-md-6">
+							<div className="col-md-4 col-sm-8">
 								<p>Prep Time: {prepTime > 0 ? prepTime + " mins" : "N/A"}</p>
 								<p>Cook Time: {cookTime} mins</p>
 								<div className="input-group input-group-sm">
@@ -157,28 +160,33 @@ function RecipeDetails({
 											onClick={handleIncreaseServings}>+
 									</button>
 								</div>
-								<div className="mt-3 d-flex justify-content-center">
-									{averageRating !== 0 && !isNaN(averageRating) ? (
-										<ReactStars
-											key={averageRating}
-											count={5}
-											size={24}
-											activeColor="#ffd700"
-											value={averageRating}
-											edit={false}
-										/>
-									) : (
-										<p>No Ratings Yet</p> // Placeholder while loading average rating or in case of error
-									)}
+
+								<div className="col-md-6">
+									<div className="mt-3 d-flex justify-content-left">
+										{averageRating !== 0 && !isNaN(averageRating) ? (
+											<ReactStars
+												key={averageRating}
+												count={5}
+												size={24}
+												activeColor="#ffd700"
+												value={averageRating}
+												edit={false}
+											/>
+										) : (
+											<p style={{textAlign: "left"}}>No Ratings Yet</p> // Placeholder while loading average rating or in case of error
+										)}
 								</div>
 							</div>
+							</div>
+							
+							
 						</div>
 
 					</div>
 
-					<div className="col-md-2 mt-2"></div>
+					{/* <div className="col-md-2 mt-2"></div> */}
 
-					<div className="col-md-3 text-end">
+					<div className="col-md-3 text-end pt-4">
 						<img src={image} alt="Recipe" className="img-fluid"
 							 style={{maxWidth: "100%", height: "auto", border: "5px solid white"}}/>
 					</div>
