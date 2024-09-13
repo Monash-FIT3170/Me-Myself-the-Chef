@@ -107,7 +107,7 @@ function Recipe() {
         <div className="row flex-fill">
             <div className="col-md-3 d-flex flex-column white-text">
                 <IngredientExpandedPane ingredients={ingredients} />
-                <NutritionInformation nutrition={nutrition} />
+                <NutritionInformation nutrition={nutrition} servings={servings} />
             </div>
             <div className="col-md-9 d-flex flex-column">
                 <RecipeDetails
