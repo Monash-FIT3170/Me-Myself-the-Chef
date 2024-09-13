@@ -15,11 +15,13 @@ function Recipe() {
     const [instructions, setInstructions] = useState([]);
     const [ingredients, setIngredients] = useState([]);
     const [originalIngredients, setOriginalIngredients] = useState([]);
-    const [nutrition, setNutrition] = useState([]);
     const [servings, setServings] = useState(1);
     const [originalServings, setOriginalServings] = useState(null);
     const [comments, setComments] = useState([]);
     const [averageRating, setAverageRating] = useState(0);
+
+    const [nutrition, setNutrition] = useState([]);
+    const [scaledNutrition, setScaledNutrition] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -39,6 +41,8 @@ function Recipe() {
                 setIngredients(formatIngredients(json.extendedIngredients, json.servings));
                 setOriginalIngredients(json.extendedIngredients);
                 setNutrition(formatNutrition(json.nutrition.nutrients));
+                
+                setScaledNutrition(formatScaledNutrition(nutrition, json.servings))                
                 
                 fetchComments();
                 fetchAverageRating(); 
@@ -89,13 +93,27 @@ function Recipe() {
     
     // Format nutrition details
     function formatNutrition(nutrients) {
-        return nutrients.map(nutrient => `${nutrient.name}: ${nutrient.amount} ${nutrient.unit}`);
-    }
+        return nutrients.map(nutrient => [
+            nutrient.name,
+            parseInt(nutrient.amount / originalServings, 10),
+            nutrient.unit
+        ]
+    )}
 
-    // Adjust ingredients based on servings
+    function formatScaledNutrition(nutrients, servings) {
+        return nutrients.map(nutrient => [
+            nutrient[0],
+            parseInt(nutrient[1] * servings, 10),
+            nutrient[2]
+        ]
+    )}
+    
+
+    // Adjust ingredients and nutrition based on servings
     function adjustIngredients(newServings) {
         setServings(newServings);
         setIngredients(formatIngredients(originalIngredients, newServings));
+        setScaledNutrition(formatScaledNutrition(nutrition, newServings))     
     }
 
     if (!recipeInfo) {
@@ -107,7 +125,12 @@ function Recipe() {
         <div className="row flex-fill">
             <div className="col-md-3 d-flex flex-column white-text">
                 <IngredientExpandedPane ingredients={ingredients} />
-                <NutritionInformation nutrition={nutrition} />
+                <NutritionInformation 
+                nutrition={nutrition} 
+                setNutrition={setNutrition} 
+                scaledNutrition={scaledNutrition}
+                setScaledNutrition={setScaledNutrition}
+                servings={servings} />
             </div>
             <div className="col-md-9 d-flex flex-column">
                 <RecipeDetails
