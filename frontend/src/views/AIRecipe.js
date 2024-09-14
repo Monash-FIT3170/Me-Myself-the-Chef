@@ -48,7 +48,7 @@ function Recipe() {
         };
 
         fetchData();
-    }, [recipe, originalServings, recipeHook]);
+    }, [recipe, originalServings, recipeHook, nutrition, servings]);
 
     // Format instructions to extract step text
     function formatInstructions(steps) {
