@@ -54,10 +54,6 @@ function Recipe() {
         fetchData();
     }, [recipeId, originalServings, nutrition, servings]);
 
-    // useEffect(() => {
-    //     setScaledNutrition(formatScaledNutrition(nutrition, servings))   
-    // }, [nutrition, servings]);
-
     const fetchComments = async () => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/comments/` + recipeId);
@@ -135,8 +131,6 @@ function Recipe() {
                 scaledNutrition={scaledNutrition}
                 setScaledNutrition={setScaledNutrition}
                 servings={servings} 
-
-                formatScaledNutrition={formatScaledNutrition}
                 />
             </div>
             <div className="col-md-9 d-flex flex-column">
