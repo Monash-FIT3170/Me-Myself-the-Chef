@@ -6,6 +6,13 @@ function NutritionInformation({ nutrition, scaledNutrition, servings }) {
     // Array of nutrients to display
     const nutrientsToDisplay = ['Calories', 'Fat', 'Saturated Fat', 'Carbohydrates', 'Sugar', 'Sodium'];
 
+    console.log("nutrition")
+    console.log(nutrition)
+
+    console.log("scaled nutrition")
+    console.log(scaledNutrition)
+
+
     return (
         <div className="row flex-fill" style={{ backgroundColor: '#458D59' }}>
             <div className="col-md-12">
@@ -38,8 +45,8 @@ function NutritionInformation({ nutrition, scaledNutrition, servings }) {
                                             return <>  
                                                 <tr>
                                                     <th style={{ textAlign: 'left' }} scope="row">{nutrientInfo[0]}</th>
-                                                    <td>{`${nutrientInfo[1]} ${nutrientInfo[2]}`}</td>
-                                                    <td>{`${scaledNutrition[index][1]} ${scaledNutrition[index][2]}`}</td>
+                                                    {nutrientInfo && nutrientInfo.length > 0 && <td>{`${nutrientInfo[1]} ${nutrientInfo[2]}`}</td>}
+                                                    {scaledNutrition[index] && scaledNutrition[index].length > 0 && <td>{`${scaledNutrition[index][1]} ${scaledNutrition[index][2]}`}</td>}
                                                 </tr>
 
                                             </>

@@ -42,8 +42,8 @@ function Recipe() {
                 setOriginalIngredients(json.extendedIngredients);
                 setNutrition(formatNutrition(json.nutrition.nutrients));
                 
-                setScaledNutrition(formatScaledNutrition(nutrition, json.servings))                
-                
+                setScaledNutrition(formatScaledNutrition(nutrition, json.servings))   
+                               
                 fetchComments();
                 fetchAverageRating(); 
             } catch (error) {
