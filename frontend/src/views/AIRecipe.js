@@ -20,6 +20,8 @@ function Recipe() {
     const [recipe, setRecipe] = useState(null);
     const recipeHook = localStorage.getItem('AIRecipe')
 
+    const [scaledNutrition, setScaledNutrition] = useState([]);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -38,6 +40,8 @@ function Recipe() {
                 setIngredients(formatIngredients(json.extendedIngredients, initialServings));
                 setOriginalIngredients(json.extendedIngredients);
                 setNutrition(formatNutrition(json.nutrition.nutrients));
+                setScaledNutrition(formatScaledNutrition(nutrition, json.servings)) 
+                
             } catch (error) {
                 console.log(error);
             }
@@ -61,16 +65,35 @@ function Recipe() {
         });
     }
     
+    // // Format nutrition details
+    // function formatNutrition(nutrients) {
+    //     return nutrients.map(nutrient => `${nutrient.name}: ${nutrient.amount} ${nutrient.unit}`);
+    // }
+
     // Format nutrition details
     function formatNutrition(nutrients) {
-        return nutrients.map(nutrient => `${nutrient.name}: ${nutrient.amount} ${nutrient.unit}`);
-    }
+        return nutrients.map(nutrient => [
+            nutrient.name,
+            parseInt(nutrient.amount / originalServings, 10),
+            nutrient.unit
+        ]
+    )}
+
+    function formatScaledNutrition(nutrients, servings) {
+        return nutrients.map(nutrient => [
+            nutrient[0],
+            parseInt(nutrient[1] * servings, 10),
+            nutrient[2]
+        ]
+    )}
 
     // Adjust ingredients based on servings
     function adjustIngredients(newServings) {
         setServings(newServings);
         setIngredients(formatIngredients(originalIngredients, newServings));
+        setScaledNutrition(formatScaledNutrition(nutrition, newServings));
     }
+
 
     if (!recipeInfo) {
         return <></>;
@@ -81,7 +104,12 @@ function Recipe() {
         <div className="row flex-fill">
             <div className="col-md-3 d-flex flex-column white-text">
                 <IngredientExpandedPane ingredients={ingredients} />
-                <NutritionInformation nutrition={nutrition} />
+                <NutritionInformation 
+                nutrition={nutrition} 
+                setNutrition={setNutrition} 
+                scaledNutrition={scaledNutrition}
+                setScaledNutrition={setScaledNutrition}
+                servings={servings} />
             </div>
             <div className="col-md-9 d-flex flex-column">
                 <RecipeDetails
