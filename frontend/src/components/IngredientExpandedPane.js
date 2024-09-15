@@ -2,7 +2,8 @@ import React from "react";
 
 function IngredientExpandedPane({ ingredients }) {
    return (
-       <div className="row pb-5 flex-fill" style={{ backgroundColor: '#5F926E' }}>
+    // used to have flex fill in here to have colour separation in divs nicely
+       <div className="row pb-5" style={{ backgroundColor: '#458D59' }}>
            <div className="col-md-12">
                <div className="container-fluid">
                    <div className="row pt-5 text-center">

@@ -42,6 +42,7 @@ function Ingredients() {
     }
     else{
         console.log("ingredient already in one of the lists - not added again")
+        return ("cannotAdd")
     }
     }
 
