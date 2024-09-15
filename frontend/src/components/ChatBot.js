@@ -144,6 +144,7 @@ function Chatbot() {
     const [isVisible, setIsVisible] = useState(false); // controls wether the chatbox is visible
     const messageEndRef = useRef(null);
     const [isHovered, setIsHovered] = useState(false);
+    let chatbotHistory = []; // default to None
 
     const handleInputChange = (e) => {
         setInput(e.target.value);
@@ -172,6 +173,9 @@ function Chatbot() {
       const output = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/chatbot/recipe`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          "history": chatbotHistory
+        })
       })
       if (!output.ok) {
         throw new Error("Chatbot API did not return ok");
@@ -179,6 +183,9 @@ function Chatbot() {
 
       // extract the recipe JSON then parse it
       const recipe = await output.json();
+      // update the chatbot history
+      chatbotHistory = recipe.history
+      // convert the recipe to JSON
       const recipeJSON = JSON.parse(recipe.message); // Its in JSON format
 
       // Apply value Defaults
@@ -249,7 +256,11 @@ function Chatbot() {
       const output = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/chatbot`, {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({"input": input})
+          body: JSON.stringify(
+            {
+              "input": input,
+              "history": chatbotHistory
+          })
       })
 
       if (!output.ok) {
@@ -263,6 +274,8 @@ function Chatbot() {
         setMessages(prevMessages => [...prevMessages, { role: 'error', text: "ChatBot error: Please Try Again" }]);
         setInput(userInputStorage.current);
       } else {
+        // update the chatbot history
+        chatbotHistory = botResponse.history
         // Add the bot response to the messages array
         setMessages(prevMessages => [...prevMessages, { role: 'bot', text: botResponse.message }]);
       }
