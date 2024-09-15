@@ -41,27 +41,45 @@ function extractJSON(text) {
 
 // ATTEMPT CONNECTION
 let chat;
-try {
-    const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({ model: MODEL_NAME });
+let DEFAULT_HISTORY;
+async function initialChatbotConnect () {
+    try {
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        const model = genAI.getGenerativeModel({ model: MODEL_NAME });
+    
+        chat = model.startChat({
+            generationConfig: GENERATION_CONFIG,
+            safetySettings: SAFETY_SETTINGS,
+            history: [],
+        });
+        console.log("Chatbot succesfully connected")
+        // Send initiation Message
+        await chat.sendMessage(INITIATION_MESSAGE);
+        DEFAULT_HISTORY = [...chat._history]; // may need to check deep/shallow copy here
+        console.log("Initiation Message Sent and history recorded")
+    
+    }  catch (error) {
+        console.error('An error occurred when connecting to GEMINI chatbot:', error.message);
+        process.exit(1);
+    } 
+}
+initialChatbotConnect()
 
-    chat = model.startChat({
-        generationConfig: GENERATION_CONFIG,
-        safetySettings: SAFETY_SETTINGS,
-        history: [],
-    });
-    console.log("Chatbot succesfully connected")
-    // Send initiation Message
-    const output = chat.sendMessage(INITIATION_MESSAGE);
-    console.log("Initiation Message Sent")
-
-}  catch (error) {
-    console.error('An error occurred when connecting to GEMINI chatbot:', error.message);
-    process.exit(1);
-} 
 
 exports.askChatbot = async (req, res) => {
     try{
+        // check the history given
+        if (req.body.history.length==0) {
+            if (!DEFAULT_HISTORY) {
+                chat.history = []
+            }
+            // if no history use the default
+            chat.history = DEFAULT_HISTORY
+        } else {
+            // else use the given history
+            chat.history = req.body.history
+        }
+
         // Send the user message to the GEMINI AI API
         const output = await chat.sendMessage(req.body.input + MESSAGE_SUFFIX);
 
@@ -74,7 +92,7 @@ exports.askChatbot = async (req, res) => {
             res.status(500).send({ error: botResponse.error.message})
         }
         // Send the bot response back as JSON
-        res.status(200).send({ message: botResponse });
+        res.status(200).send({ message: botResponse, history: chat.history });
     } catch (error) {
         res.status(500).send({ message: error.message });
     }
@@ -82,6 +100,17 @@ exports.askChatbot = async (req, res) => {
 
 exports.generateRecipe = async (req, res) => {
     try{
+        // check the history given
+        if (req.body.history.length==0) {
+            // if no history use the default
+            if (!DEFAULT_HISTORY) {
+                chat.history = []
+            }
+            chat.history = DEFAULT_HISTORY
+        } else {
+            // else use the given history
+            chat.history = req.body.history
+        }
         // Send the user message to the GEMINI AI API
         const output = await chat.sendMessage(GENERATE_RECIPE);
 
@@ -102,7 +131,7 @@ exports.generateRecipe = async (req, res) => {
         } 
        
         // Send the bot response back as JSON
-        return res.status(200).send({ message: jsonRecipe });
+        return res.status(200).send({ message: jsonRecipe, history: chat.history });
     } catch (error) {
         return res.status(500).send({ message: error.message });
     }
