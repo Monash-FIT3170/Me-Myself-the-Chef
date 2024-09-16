@@ -5,22 +5,30 @@ import { Link } from "react-router-dom";
 function IngredientSearch({ addIngredient, addDisabledIngredient }) {
     const [warning, setWarning] = useState(false);
 
+    const [warningList, setWarningList] = useState('');
+
     const [includeIngredients, setIncludeIngredients] = useState(true);
+
+    const [result, setResult] = useState('');
 
     // Function to handle the user searching for an ingredient
     function onIngredientSearch(ingredient) {
         console.log(ingredient);
-        const result = "";
         if(includeIngredients){
-            const result = addIngredient(ingredient);
+            setResult(addIngredient(ingredient));
         }
         else{
-            const result = addDisabledIngredient(ingredient);
+            setResult(addDisabledIngredient(ingredient));
         }
 
-        if (result === 'cannotAdd') {
+        if (result === 'inInclude') {
             setWarning(true);
-        } else {
+            setWarningList('include')
+        } else if (result == 'inExclude') {
+            setWarning(true);
+            setWarningList('exclude')
+        }
+        else {
             setWarning(false);
         }
     }
@@ -37,11 +45,14 @@ function IngredientSearch({ addIngredient, addDisabledIngredient }) {
     }, [warning]);
 
     // Function to render the warning message
+    // TODO - fix output to state correct list the ingredient is already in 
     function warningMessage() {
         if (warning) {
             return (
                 <div className={`alert alert-danger alert-dismissible fade show custom-alert`} role="alert">
-                    <span dangerouslySetInnerHTML={{ __html: 'Cannot add ingredients already in <strong>exclude</strong>' }}></span>
+                    {warningList === 'exclude' ? 
+                    <span dangerouslySetInnerHTML={{ __html: 'Cannot add - ingredient already in <strong>exclude</strong>' }}></span> :
+                    <span dangerouslySetInnerHTML={{ __html: 'Cannot add - ingredient already in <strong>include</strong>' }}></span> }
                     <button type="button" className="btn-close" aria-label="Close" onClick={() => setWarning(false)}></button>
                 </div>
             );

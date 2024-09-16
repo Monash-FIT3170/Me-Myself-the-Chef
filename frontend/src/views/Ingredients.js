@@ -42,8 +42,14 @@ function Ingredients() {
         })
     }
     else{
+        if(isFoundInDList){
+            return("inExclude");
+        }
+        else{
+            return("inInclude");
+        }
         console.log("ingredient already in one of the lists - not added again")
-        return ("cannotAdd")
+        //return ("cannotAdd")
     }
     }
 
@@ -77,7 +83,12 @@ function Ingredients() {
             }
             else{
                 console.log("ingredient already in one of the lists - not added again")
-                return 'cannotAdd'
+                if(isFoundInThisList){
+                    return("inExclude");
+                }
+                else{
+                    return("inInclude");
+                }
             }
         }
 

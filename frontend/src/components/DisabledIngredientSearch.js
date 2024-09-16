@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import Dropdown from './Dropdown';
 import { PreferenceContext } from '../context/PreferenceContext';
 
+// NOT CURRENTLY IN USE --> BEEN MERGED WITH INGREDIENTSEARCH
+
 function DisabledIngredientSearch({addIngredient }) {
     const [warning, setWarning] = useState(false); // useState to manage warning state
 

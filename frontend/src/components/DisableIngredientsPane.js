@@ -2,6 +2,8 @@ import React from 'react';
 import Ingredient from './Ingredient';
 import { Link } from "react-router-dom";
 
+// NOT CURRENTLY IN USE .. HAS BEEN MERGED WITH INGREDIENTSPANE
+
 // this is the ingredients pane that appears before recipes have been generated 
 function DisableIngredientsPane({ d_ingredientList, deleteIngredient }) {
 
