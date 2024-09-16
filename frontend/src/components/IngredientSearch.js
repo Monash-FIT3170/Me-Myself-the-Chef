@@ -1,20 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AutoSearchBar from '../components/AutoSearchBar';
 import { Link } from "react-router-dom";
-import Dropdown from './Dropdown';
-import { PreferenceContext } from '../context/PreferenceContext';
 
-function IngredientSearch({addIngredient}) {
-    const { updatePreferences } = useContext(PreferenceContext);
+function IngredientSearch({ addIngredient }) {
     const [warning, setWarning] = useState(false);
 
-    // function to handle the user searching an ingredient
+    // Function to handle the user searching for an ingredient
     function onIngredientSearch(ingredient) {
         console.log(ingredient);
         const result = addIngredient(ingredient);
-        console.log("result: " + result);
 
-        // check if warning needs to be displayed
         if (result === 'cannotAdd') {
             setWarning(true);
         } else {
@@ -22,14 +17,14 @@ function IngredientSearch({addIngredient}) {
         }
     }
 
-    // Automatically hide the warning message after a certain time
+    // Automatically hide the warning message after a certain time (e.g., 3 seconds)
     useEffect(() => {
         if (warning) {
             const timer = setTimeout(() => {
                 setWarning(false); // Hide the warning after 3 seconds
             }, 5000); // 5000ms = 5 seconds
 
-            return () => clearTimeout(timer); // Cleanup the timer
+            return () => clearTimeout(timer); // Cleanup the timer if the component unmounts or warning changes
         }
     }, [warning]);
 
@@ -48,9 +43,7 @@ function IngredientSearch({addIngredient}) {
 
     return (
         <div className="col-md-9 text-center ingredients_search">
-                    
             <div className="container">
-                
                 <div className="row search_section">
                     <h1 className="heading">Select your Ingredients</h1>
                 </div>
@@ -62,30 +55,19 @@ function IngredientSearch({addIngredient}) {
 
                 {/* <!-- Search bar--> */}
                 <div className="row mt-3">
-
                     <div className="search-bar-container">
-                        {/* <!-- Search bar --> */}
-                        <AutoSearchBar onIngredientSearch={onIngredientSearch}/>
-
-                        {/* <!--
-                            See:
-                            - Tutorial: https://www.dhiwise.com/post/how-to-build-react-search-bar-with-suggestions
-                            - Examples: https://www.npmjs.com/package/react-search-autocomplete
-
-                        --> */}
-
-                        <Dropdown />
-
-                        {/* <!-- Generate recipe button --> */}
-                        <Link className="react_link generate-recipe-button" to="/recipe_recommendation">
-                            <button type="button" className="btn btn-light btn-lg" id="gen-button" onClick={updatePreferences}>Generate Recipes</button>
-                        </Link>
+                        <AutoSearchBar onIngredientSearch={onIngredientSearch} />
                     </div>
-                    <div className="warning">
+                    <div className="component">
                         {warningMessage()}
                     </div>
                 </div>
             </div>
+
+            {/* <!-- Generate recipe button --> */}
+            <Link className="react_link" to="/recipe_recommendation">
+                <button type="button" className="btn btn-light btn-lg" id="gen-button">Generate Recipes</button>
+            </Link>
         </div>
     );
 }
