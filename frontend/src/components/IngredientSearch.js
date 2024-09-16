@@ -2,13 +2,21 @@ import React, { useState, useEffect } from 'react';
 import AutoSearchBar from '../components/AutoSearchBar';
 import { Link } from "react-router-dom";
 
-function IngredientSearch({ addIngredient }) {
+function IngredientSearch({ addIngredient, addDisabledIngredient }) {
     const [warning, setWarning] = useState(false);
+
+    const [includeIngredients, setIncludeIngredients] = useState(true);
 
     // Function to handle the user searching for an ingredient
     function onIngredientSearch(ingredient) {
         console.log(ingredient);
-        const result = addIngredient(ingredient);
+        const result = "";
+        if(includeIngredients){
+            const result = addIngredient(ingredient);
+        }
+        else{
+            const result = addDisabledIngredient(ingredient);
+        }
 
         if (result === 'cannotAdd') {
             setWarning(true);
@@ -41,6 +49,11 @@ function IngredientSearch({ addIngredient }) {
         return null;
     }
 
+    // function to change which list ingredients are being added to 
+    function changeIngredientsToAdd(){
+        setIncludeIngredients(!includeIngredients);
+    }
+
     return (
         <div className="col-md-9 text-center ingredients_search">
             <div className="container">
@@ -49,14 +62,15 @@ function IngredientSearch({ addIngredient }) {
                 </div>
 
                 <div className="row mt-4">
-                    <p className="mb-0">Type what ingredients you have here</p>
+                    <p className="mb-0">{includeIngredients ? 'Type what ingredients you have here' : 'Type what ingredients you don’t have here'}</p>
                     <p>When you’re done, generate your recipes!</p>
                 </div>
 
                 {/* <!-- Search bar--> */}
                 <div className="row mt-3">
                     <div className="search-bar-container">
-                        <AutoSearchBar onIngredientSearch={onIngredientSearch} />
+                        <AutoSearchBar includeIngredients = {includeIngredients} onIngredientSearch={onIngredientSearch} />
+                        <button className="change-button-2" onClick={changeIngredientsToAdd}>{includeIngredients ? 'Add ingredients to disable' : 'Add ingredients to include'}</button>
                     </div>
                     <div className="component">
                         {warningMessage()}
