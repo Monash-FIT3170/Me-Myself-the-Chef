@@ -57,11 +57,11 @@ function NutritionPane({ nutritionList, updateNutrition }) {
                                 <div class="form_control">
                                     <div class="form_control_container">
                                         <div class="form_control_container__time">Min</div>
-                                        <p class="form_control_container__time__input">{nutrient.min_amount}</p>
+                                        <p class="form_control_container__time__input">{nutrient.min_amount} {getFormInfo(nutrient.id).unit}</p>
                                     </div>
                                     <div class="form_control_container">
                                         <div class="form_control_container__time">Max</div>
-                                        <p class="form_control_container__time__input">{nutrient.max_amount}</p>
+                                        <p class="form_control_container__time__input">{nutrient.max_amount} {getFormInfo(nutrient.id).unit}</p>
                                     </div>
                                 </div>
                             </div>
