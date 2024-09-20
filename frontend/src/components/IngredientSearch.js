@@ -22,11 +22,11 @@ function IngredientSearch({ addIngredient, addDisabledIngredient }) {
         }
 
         if (result === 'inInclude') {
-            setWarning(true);
             setWarningList('include')
-        } else if (result == 'inExclude') {
             setWarning(true);
+        } else if (result == 'inExclude') {
             setWarningList('exclude')
+            setWarning(true);
         }
         else {
             setWarning(false);
