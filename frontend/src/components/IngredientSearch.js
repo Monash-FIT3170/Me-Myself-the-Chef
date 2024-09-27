@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState  } from 'react';
 import AutoSearchBar from '../components/AutoSearchBar';
 import { Link } from "react-router-dom";
+import Dropdown from './Dropdown';
+import { PreferenceContext } from '../context/PreferenceContext';
 
 function IngredientSearch({ addIngredient, addDisabledIngredient }) {
     const [warning, setWarning] = useState(false);
@@ -87,12 +89,13 @@ function IngredientSearch({ addIngredient, addDisabledIngredient }) {
                 <div className="row mt-3">
                     <div className="search-bar-container">
                         <AutoSearchBar includeIngredients = {includeIngredients} onIngredientSearch={onIngredientSearch} />
+                        <Dropdown/>
                         <button className="change-button-2" onClick={changeIngredientsToAdd}>{includeIngredients ? 'Add ingredients to disable' : 'Add ingredients to include'}</button>
                         <Link className="react_link" to="/recipe_recommendation">
                             <button type="button" className="btn btn-light btn-lg" id="gen-button">Generate Recipes</button>
                         </Link>
                     </div>
-                    <div className="component">
+                    <div className="warning">
                         {warningMessage()}
                     </div>
                 </div>
