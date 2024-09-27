@@ -40,17 +40,16 @@ function Ingredients() {
                 {id: crypto.randomUUID(), title: name}
             ]
         })
-    }
-    else{
-        if(isFoundInDList){
-            return("inExclude");
         }
         else{
-            return("inInclude");
+            console.log("result returned")
+            if(isFoundInDList){
+                return("inExclude");
+            }
+            else{
+                return("inInclude");
+            }
         }
-        console.log("ingredient already in one of the lists - not added again")
-        //return ("cannotAdd")
-    }
     }
 
     // function to delete ingredients from list
@@ -67,30 +66,30 @@ function Ingredients() {
     }
 
         // function to add ingredients to list
-        function addDisabledIngredient(name) {
-            const isFoundInThisList = d_ingredientList.some(ing => ing.title === name); // will be true if item is already in ingredients to exclude list 
-            const isFoundInIngList = ingredientList.some(ing => ing.title === name);   // will be true if item is in ingredients to include list 
+    function addDisabledIngredient(name) {
+        const isFoundInThisList = d_ingredientList.some(ing => ing.title === name); // will be true if item is already in ingredients to exclude list 
+        const isFoundInIngList = ingredientList.some(ing => ing.title === name);   // will be true if item is in ingredients to include list 
             
             //console.log(d_ingredientList)
-            if(!isFoundInThisList && !isFoundInIngList){
-                console.log("ingredient added to list ")
-                setDIngredientList((currentDIngredients) => {
-                return [
-                    ...currentDIngredients,
-                    {id: crypto.randomUUID(), title: name}
-                ]
-            })
+        if(!isFoundInThisList && !isFoundInIngList){
+            console.log("ingredient added to list ")
+            setDIngredientList((currentDIngredients) => {
+            return [
+                ...currentDIngredients,
+                {id: crypto.randomUUID(), title: name}
+            ]
+        })
+        }
+        else{
+            console.log("ingredient already in one of the lists - not added again")
+            if(isFoundInThisList){
+                return("inExclude");
             }
             else{
-                console.log("ingredient already in one of the lists - not added again")
-                if(isFoundInThisList){
-                    return("inExclude");
-                }
-                else{
-                    return("inInclude");
-                }
+                return("inInclude");
             }
         }
+    }
 
     return (
 

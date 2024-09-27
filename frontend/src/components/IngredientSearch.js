@@ -20,18 +20,23 @@ function IngredientSearch({ addIngredient, addDisabledIngredient }) {
         else{
             setResult(addDisabledIngredient(ingredient));
         }
-
-        if (result === 'inInclude') {
-            setWarningList('include')
-            setWarning(true);
-        } else if (result == 'inExclude') {
-            setWarningList('exclude')
-            setWarning(true);
-        }
-        else {
-            setWarning(false);
-        }
     }
+
+    // once result has been set, check if 
+    useEffect(() => {
+        if (result) {
+            if (result === 'inInclude') {
+                setWarningList('include')
+                setWarning(true);
+            } else if (result == 'inExclude') {
+                setWarningList('exclude')
+                setWarning(true);
+            }
+            else {
+                setWarning(false);
+            }
+        }
+    }, [result]);
 
     // Automatically hide the warning message after a certain time (e.g., 3 seconds)
     useEffect(() => {
@@ -44,8 +49,9 @@ function IngredientSearch({ addIngredient, addDisabledIngredient }) {
         }
     }, [warning]);
 
+
+
     // Function to render the warning message
-    // TODO - fix output to state correct list the ingredient is already in 
     function warningMessage() {
         if (warning) {
             return (
@@ -82,6 +88,9 @@ function IngredientSearch({ addIngredient, addDisabledIngredient }) {
                     <div className="search-bar-container">
                         <AutoSearchBar includeIngredients = {includeIngredients} onIngredientSearch={onIngredientSearch} />
                         <button className="change-button-2" onClick={changeIngredientsToAdd}>{includeIngredients ? 'Add ingredients to disable' : 'Add ingredients to include'}</button>
+                        <Link className="react_link" to="/recipe_recommendation">
+                            <button type="button" className="btn btn-light btn-lg" id="gen-button">Generate Recipes</button>
+                        </Link>
                     </div>
                     <div className="component">
                         {warningMessage()}

@@ -42,7 +42,7 @@ function IngredientsPane({ ingredientList, deleteIngredient, disabledIngredients
                             <Ingredient
                             {...ingredient}
                             key={ingredient.id}
-                            deleteDisabledIngredient={deleteDisabledIngredient}
+                            deleteIngredient={deleteDisabledIngredient}
                             />
                         )
                     })}
