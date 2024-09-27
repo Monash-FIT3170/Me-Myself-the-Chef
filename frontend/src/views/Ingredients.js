@@ -4,7 +4,6 @@ import '../css/base.css'
 import '../css/dropdown.css'
 import IngredientsPane from '../components/IngredientsPane';
 import IngredientSearch from '../components/IngredientSearch';
-import DisableIngredientsPane from '../components/DisableIngredientsPane';
 
 
 function Ingredients() {
@@ -17,13 +16,12 @@ function Ingredients() {
     });
 
     const [d_ingredientList, setDIngredientList] = useState(() => {
-        const localValue = localStorage.getItem("DINGREDIENTS") // check if we also need to change this 
+        const localValue = localStorage.getItem("DINGREDIENTS") 
         if (localValue == null) return []
 
         return JSON.parse(localValue)
     });
 
-    // is called everytime the page reloads/renders
     useEffect(() => {
         localStorage.setItem("INGREDIENTS", JSON.stringify(ingredientList))
     }, [ingredientList]);
@@ -59,6 +57,7 @@ function Ingredients() {
         })
     }
 
+    // function to delete ingredients from disabled list 
     function deleteDisabledIngredient(id) {
         setDIngredientList(currentDIngredients => {
             return currentDIngredients.filter(ingredient => ingredient.id !== id)
@@ -97,8 +96,7 @@ function Ingredients() {
                 
                 {/* <!-- Ingredients Pane--> */}
                 <IngredientsPane ingredientList={ingredientList} deleteIngredient={deleteIngredient} disabledIngredients={d_ingredientList} deleteDisabledIngredient={deleteDisabledIngredient}/>
-                {/*<DisableIngredientsPane d_ingredientList={d_ingredientList} deleteIngredient={deleteIngredient}/>*/}
-                
+
                 {/* <!-- Ingredient search section of page--> */}
                 <IngredientSearch addIngredient={addIngredient} addDisabledIngredient={addDisabledIngredient}/>
 

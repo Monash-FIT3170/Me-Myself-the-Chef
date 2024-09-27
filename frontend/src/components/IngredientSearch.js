@@ -22,7 +22,7 @@ function IngredientSearch({ addIngredient, addDisabledIngredient }) {
         }
     }
 
-    // once result has been set, check if 
+    // once result has been set, check if the item repeated in either list --> triggers warning message if required 
     useEffect(() => {
         if (result) {
             if (result === 'inInclude') {
