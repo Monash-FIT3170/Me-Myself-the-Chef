@@ -9,6 +9,8 @@ function IngredientSearch({ addIngredient, addDisabledIngredient }) {
 
     const [warningList, setWarningList] = useState('');
 
+    const { updatePreferences } = useContext(PreferenceContext);
+
     const [includeIngredients, setIncludeIngredients] = useState(true);
 
     const [result, setResult] = useState('');
@@ -89,10 +91,19 @@ function IngredientSearch({ addIngredient, addDisabledIngredient }) {
                 <div className="row mt-3">
                     <div className="search-bar-container">
                         <AutoSearchBar includeIngredients = {includeIngredients} onIngredientSearch={onIngredientSearch} />
+                        {/* <!--
+                            See:
+                            - Tutorial: https://www.dhiwise.com/post/how-to-build-react-search-bar-with-suggestions
+                            - Examples: https://www.npmjs.com/package/react-search-autocomplete
+                        --> */}
+
                         <Dropdown/>
+
                         <button className="change-button-2" onClick={changeIngredientsToAdd}>{includeIngredients ? 'Add ingredients to disable' : 'Add ingredients to include'}</button>
+                        
+                        {/* <!-- Generate recipe button --> */}
                         <Link className="react_link" to="/recipe_recommendation">
-                            <button type="button" className="btn btn-light btn-lg" id="gen-button">Generate Recipes</button>
+                            <button type="button" className="btn btn-light btn-lg" id="gen-button" onClick={updatePreferences} >Generate Recipes</button>
                         </Link>
                     </div>
                     <div className="warning">
