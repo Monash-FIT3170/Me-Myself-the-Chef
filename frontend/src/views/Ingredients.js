@@ -23,8 +23,9 @@ function Ingredients() {
     });
 
     useEffect(() => {
-        localStorage.setItem("INGREDIENTS", JSON.stringify(ingredientList))
-    }, [ingredientList]);
+        localStorage.setItem("INGREDIENTS", JSON.stringify(ingredientList));
+        localStorage.setItem("DINGREDIENTS", JSON.stringify(d_ingredientList))
+    }, [ingredientList, d_ingredientList]);
 
     // function to add ingredients to list
     function addIngredient(name) {
