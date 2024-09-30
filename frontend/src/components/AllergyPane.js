@@ -26,7 +26,6 @@ function AllergyPane({allergyList, addAllergy, deleteAllergy}) {
 
             {/* <!-- Selected allergies list --> */}
             <div class="row text-left" style= {{paddingLeft: "25px", paddingTop: "10px" }}>
-                <h5>Allergies/Intolerances:</h5>
                 <h8>{allergyList.length === 0 && "No Allergies or Intolerances Recorded"}</h8>
             </div>
             <div class="container px-4">

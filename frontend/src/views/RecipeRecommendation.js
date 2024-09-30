@@ -15,7 +15,7 @@ function RecipeRecommendation() {
     });
 
     const [excIngredients, setDIngredientList] = useState(() => {
-        const localValue = localStorage.getItem("DINGREDIENTS") // check if we also need to change this 
+        const localValue = localStorage.getItem("DINGREDIENTS") 
         if (localValue == null) return []
 
         return JSON.parse(localValue)
@@ -65,7 +65,7 @@ function RecipeRecommendation() {
     return (
         <div className="row flex-fill">
             {/* Ingredients Pane */}
-            <IngredientsRecipePane ingredientList={ingredients}/>
+            <IngredientsRecipePane ingredientList={ingredients} disabledIngredients = {excIngredients}/>
 
             {/* Display Recipe Pane */}
             <RecipePane recipeList={recipeList} title={"Recipe Recommendations"}/>
