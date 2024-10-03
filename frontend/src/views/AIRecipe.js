@@ -48,8 +48,14 @@ function Recipe() {
         };
 
         fetchData();
-    }, [recipe, originalServings, recipeHook, nutrition, servings]);
+    }, [recipe, recipeHook, servings]);
 
+    useEffect(() => {
+            
+        setScaledNutrition(formatScaledNutrition(nutrition, servings))   
+
+    }, [nutrition]);
+    
     // Format instructions to extract step text
     function formatInstructions(steps) {
         return steps.map(step => step.step);

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import '../css/searchbar.css'
 
-function SearchBar({ onIngredientSearch }) {
+function SearchBar({ includeIngredients, onIngredientSearch }) {
 
     // set ingredients list to search from here, can also be fed into this component from outside
     // tutorial used here: https://www.dhiwise.com/post/how-to-build-react-search-bar-with-suggestions
@@ -1031,7 +1031,7 @@ function SearchBar({ onIngredientSearch }) {
     <div className="search-bar-container">
       <ReactSearchAutocomplete
         items={items}
-        placeholder="Enter ingredient ..."
+        placeholder={includeIngredients ? "Enter ingredient to include ..." : "Enter ingredient to disable ..."}
         onSearch={handleOnSearch}
         onHover={handleOnHover}
         onSelect={handleOnSelect}

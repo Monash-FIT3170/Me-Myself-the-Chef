@@ -16,16 +16,16 @@ function Ingredients() {
     });
 
     const [d_ingredientList, setDIngredientList] = useState(() => {
-        const localValue = localStorage.getItem("DINGREDIENTS") // check if we also need to change this 
+        const localValue = localStorage.getItem("DINGREDIENTS") 
         if (localValue == null) return []
 
         return JSON.parse(localValue)
     });
 
-    // is called everytime the page reloads/renders
     useEffect(() => {
-        localStorage.setItem("INGREDIENTS", JSON.stringify(ingredientList))
-    }, [ingredientList]);
+        localStorage.setItem("INGREDIENTS", JSON.stringify(ingredientList));
+        localStorage.setItem("DINGREDIENTS", JSON.stringify(d_ingredientList))
+    }, [ingredientList, d_ingredientList]);
 
     // function to add ingredients to list
     function addIngredient(name) {
@@ -39,11 +39,16 @@ function Ingredients() {
                 {id: crypto.randomUUID(), title: name}
             ]
         })
-    }
-    else{
-        console.log("ingredient already in one of the lists - not added again")
-        return ("cannotAdd")
-    }
+        }
+        else{
+            console.log("result returned")
+            if(isFoundInDList){
+                return("inExclude");
+            }
+            else{
+                return("inInclude");
+            }
+        }
     }
 
     // function to delete ingredients from list
@@ -53,15 +58,48 @@ function Ingredients() {
         })
     }
 
+    // function to delete ingredients from disabled list 
+    function deleteDisabledIngredient(id) {
+        setDIngredientList(currentDIngredients => {
+            return currentDIngredients.filter(ingredient => ingredient.id !== id)
+        })
+    }
+
+        // function to add ingredients to list
+    function addDisabledIngredient(name) {
+        const isFoundInThisList = d_ingredientList.some(ing => ing.title === name); // will be true if item is already in ingredients to exclude list 
+        const isFoundInIngList = ingredientList.some(ing => ing.title === name);   // will be true if item is in ingredients to include list 
+            
+            //console.log(d_ingredientList)
+        if(!isFoundInThisList && !isFoundInIngList){
+            console.log("ingredient added to list ")
+            setDIngredientList((currentDIngredients) => {
+            return [
+                ...currentDIngredients,
+                {id: crypto.randomUUID(), title: name}
+            ]
+        })
+        }
+        else{
+            console.log("ingredient already in one of the lists - not added again")
+            if(isFoundInThisList){
+                return("inExclude");
+            }
+            else{
+                return("inInclude");
+            }
+        }
+    }
+
     return (
 
         <div className="row flex-fill">
                 
                 {/* <!-- Ingredients Pane--> */}
-                <IngredientsPane ingredientList={ingredientList} deleteIngredient={deleteIngredient}/>
-                
+                <IngredientsPane ingredientList={ingredientList} deleteIngredient={deleteIngredient} disabledIngredients={d_ingredientList} deleteDisabledIngredient={deleteDisabledIngredient}/>
+
                 {/* <!-- Ingredient search section of page--> */}
-                <IngredientSearch addIngredient={addIngredient}/>
+                <IngredientSearch addIngredient={addIngredient} addDisabledIngredient={addDisabledIngredient}/>
 
                 {/*  CONSIDER ADDING GENERATE RECIPE BUTTON HERE, so we only call api once */}
 

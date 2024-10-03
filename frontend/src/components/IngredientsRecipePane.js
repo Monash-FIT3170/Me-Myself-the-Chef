@@ -3,7 +3,7 @@ import IngredientRecipe from './IngredientRecipe';
 import { Link } from "react-router-dom";
 
 //this is the ingredients pane that appears when recipes have been generated 
-function IngredientsRecipePane({ ingredientList }) {
+function IngredientsRecipePane({ ingredientList, disabledIngredients }) {
 
     return (
         <div className="col-md-3 white-text ingredients_pane">
@@ -28,6 +28,24 @@ function IngredientsRecipePane({ ingredientList }) {
                         )
                     })}
 
+                </div>
+                <div className="row pt-5 text-center">
+                    <h5>Disabled Ingredients</h5>
+                    
+                    <div className="horiz_line"></div>
+                </div>
+                <div className="row">
+                    <div>
+                        {disabledIngredients.length === 0 && <div style={{textAlign: "center"}}>No Ingredients</div>}
+                            {disabledIngredients.map(ingredient => {
+                            return (
+                                <IngredientRecipe
+                                {...ingredient}
+                                key={ingredient.id}
+                                />
+                            )
+                        })}
+                    </div>
                 </div>
                 
                 <Link className="react_link" to="/ingredients">

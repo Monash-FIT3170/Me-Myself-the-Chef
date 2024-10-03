@@ -38,11 +38,11 @@ function Recipe() {
                 }
                 // Format and set instructions, ingredients, and nutrition
                 setInstructions(formatInstructions(json.analyzedInstructions[0].steps));
-                setIngredients(formatIngredients(json.extendedIngredients, json.servings));
+                setIngredients(formatIngredients(json.extendedIngredients, servings));
                 setOriginalIngredients(json.extendedIngredients);
                 setNutrition(formatNutrition(json.nutrition.nutrients));
                 
-                setScaledNutrition(formatScaledNutrition(nutrition, json.servings))   
+                setScaledNutrition(formatScaledNutrition(nutrition, servings))   
                                
                 fetchComments();
                 fetchAverageRating(); 
@@ -52,7 +52,13 @@ function Recipe() {
         };
 
         fetchData();
-    }, [recipeId, originalServings, nutrition, servings]);
+    }, [recipeId, servings]);
+
+    useEffect(() => {
+            
+        setScaledNutrition(formatScaledNutrition(nutrition, servings))   
+
+    }, [nutrition]);
 
     const fetchComments = async () => {
         try {
@@ -113,7 +119,9 @@ function Recipe() {
     function adjustIngredients(newServings) {
         setServings(newServings);
         setIngredients(formatIngredients(originalIngredients, newServings));
-        setScaledNutrition(formatScaledNutrition(nutrition, newServings))     
+        setScaledNutrition(formatScaledNutrition(nutrition, newServings))   
+        
+        
     }
 
     if (!recipeInfo) {
