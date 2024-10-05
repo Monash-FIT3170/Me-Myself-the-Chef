@@ -36,7 +36,7 @@ function Recipe() {
                 }
                 // Format and set instructions, ingredients, and nutrition
                 setInstructions(formatInstructions(json.analyzedInstructions[0].steps));
-                setIngredients(formatIngredients(json.extendedIngredients, initialServings));
+                setIngredients(formatIngredients(json.extendedIngredients, servings));
                 setOriginalIngredients(json.extendedIngredients);
                 setNutrition(formatNutrition(json.nutrition.nutrients));
                 setScaledNutrition(formatScaledNutrition(nutrition, json.servings)) 
