@@ -18,7 +18,6 @@ function Recipe() {
     const [originalServings, setOriginalServings] = useState(null);
     // for dependencies array?
     const [recipe, setRecipe] = useState(null);
-    const recipeHook = localStorage.getItem('AIRecipe')
 
     const [scaledNutrition, setScaledNutrition] = useState([]);
 
@@ -37,7 +36,7 @@ function Recipe() {
                 }
                 // Format and set instructions, ingredients, and nutrition
                 setInstructions(formatInstructions(json.analyzedInstructions[0].steps));
-                setIngredients(formatIngredients(json.extendedIngredients, initialServings));
+                setIngredients(formatIngredients(json.extendedIngredients, servings));
                 setOriginalIngredients(json.extendedIngredients);
                 setNutrition(formatNutrition(json.nutrition.nutrients));
                 setScaledNutrition(formatScaledNutrition(nutrition, json.servings)) 
@@ -48,7 +47,7 @@ function Recipe() {
         };
 
         fetchData();
-    }, [recipe, recipeHook, servings]);
+    }, [recipe, servings, originalServings]);
 
     useEffect(() => {
             
