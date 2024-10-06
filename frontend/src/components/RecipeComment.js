@@ -1,30 +1,37 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import ReactStars from 'react-rating-stars-component';
 import RecipeCommentsList from './RecipeCommentsList';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 
 function RecipeComment({ recipeId, fetchAverageRating }) {
-    const { isLoggedIn, username } = useContext(AuthContext);
+    const { isLoggedIn } = useContext(AuthContext);
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
     const [rating, setRating] = useState(0);
-    const usernamePrefix = isLoggedIn && username ? username.split('@')[0] : 'Anonymous'; // Extract the part before '@' in the username
-    const [userInputName, setUserInputName] = useState(isLoggedIn ? usernamePrefix : 'Anonymous');
+    const [username, setUsername] = useState('Anonymous');
+
+    useEffect(() => {
+        // Retrieve username from local storage if logged in
+        if (isLoggedIn) {
+            const storedUsername = localStorage.getItem('username');
+            if (storedUsername) {
+                setUsername(storedUsername.split('@')[0]); // Extract the part before '@' in the username
+            }
+        }
+    }, [isLoggedIn]);
 
     const handleCommentChange = (e) => setComment(e.target.value);
     const handleRatingChange = (newRating) => setRating(newRating);
-    const handleUserInputNameChange = (e) => setUserInputName(e.target.value);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const author = userInputName || 'Anonymous';
+            const author = username;
             const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/comments`, { recipeId, rating, text: comment, author });
             setComments([...comments, response.data]);
             setComment('');
             setRating(0);
-            setUserInputName(isLoggedIn ? usernamePrefix : 'Anonymous');
 
             await fetchAverageRating();
         } catch (error) {
@@ -46,17 +53,6 @@ function RecipeComment({ recipeId, fetchAverageRating }) {
                                 value={rating}
                                 onChange={handleRatingChange}
                                 key={rating}
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="username"
-                                value={userInputName}
-                                onChange={handleUserInputNameChange}
-                                placeholder="Enter your name"
-                                required
                             />
                         </div>
                         <textarea
