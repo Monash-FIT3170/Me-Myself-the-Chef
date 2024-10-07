@@ -20,13 +20,21 @@ exports.signup = async (req, res) => {
 
 exports.signin = async (req, res) => {
   try {
-    // searches for the username and returns a 404 error if not found
-    const user = await db.appuser.findOne({
-      username: req.body.username
+    // searches for the email or username and returns a 404 error if not found
+    let user = await db.appuser.findOne({ 
+      $or: [{ email: req.body.email }, 
+      { username: req.body.email }] 
     });
     if (!user) {
       return res.status(404).send({ message: "User Not found." });
     }
+
+    // If email is missing, update to include email
+    if (!user.email) {
+      user.email = user.username; // Assuming username holds the email value
+      await user.save();
+    }
+    
     // confirm that the encrypted password matches the password submitted,
     // returning a 401 error if it is incorrect
     const passwordIsValid = bcrypt.compareSync(

@@ -5,6 +5,7 @@ import '../css/login-signup.css';
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [signupSuccess, setSignupSuccess] = useState(false);
     const [signupError, setSignupError] = useState('');
@@ -21,7 +22,8 @@ const SignUp = () => {
         e.preventDefault();
 
         const userData = {
-            username: email,
+            username: username,
+            email: email,
             password: password
         };
 
@@ -68,6 +70,8 @@ const SignUp = () => {
                     )}
                     <form onSubmit={handleSignUp}>
                         <center>
+                            <input name="username" placeholder="Username" className='input form-control form_width' value={username} onChange={(e) => setUsername(e.target.value)} />
+                            <br />
                             <input name="email" placeholder="Email" className='input form-control form_width' value={email} onChange={(e) => setEmail(e.target.value)} />
                             <br />
                             <input name="password" placeholder="Password" className='input form-control form_width' type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
