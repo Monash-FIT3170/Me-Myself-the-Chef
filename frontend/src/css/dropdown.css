@@ -6,6 +6,10 @@
   text-align: center;
   transition: height 0.25s ease;
 }
+.slide-open {
+  height: 80px;
+  transition: height 0.25s ease;
+}
 
 .slide li {padding : 30px;}
 

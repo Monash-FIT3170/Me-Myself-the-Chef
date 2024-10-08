@@ -99,6 +99,35 @@ h1, h2, h3, h4, h5, h6, p {
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); 
 }
 
+#ingredient-button {
+    position: relative;
+    height: 46px; 
+    font-family: "Inter";
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 15px;
+    white-space: nowrap; 
+    margin-left: 10px;
+    --bs-btn-hover-bg: #f8f9fa;
+    --bs-btn-hover-border-color: #e3e3e3;
+    --bs-btn-active-bg: #e3e3e3;
+
+    background-color: #458D59; 
+    color: white;
+    border: none;
+    border-radius: 5px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: block;
+    margin-left: auto;
+    margin-right: auto; 
+}
+#ingredient-button:hover {
+    background-color: #45a049; 
+    top: -2px;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); 
+}
+
 #change-button {
     position:absolute;
     bottom:0;
