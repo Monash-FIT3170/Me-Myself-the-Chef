@@ -5,6 +5,7 @@ import '../css/login-signup.css';
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [signupSuccess, setSignupSuccess] = useState(false);
     const [signupError, setSignupError] = useState('');
@@ -20,8 +21,23 @@ const SignUp = () => {
     const handleSignUp = async (e) => {
         e.preventDefault();
 
+        // Basic validation before sending to backend
+        if (username.trim() === "") {
+            setSignupError("Username cannot be empty.");
+            return;
+        }
+        if (email.trim() === "") {
+            setSignupError("Email cannot be empty.");
+            return;
+        }
+        if (password.trim() === "") {
+            setSignupError("Password cannot be empty.");
+            return;
+        }
+
         const userData = {
-            username: email,
+            username: username,
+            email: email,
             password: password
         };
 
@@ -35,7 +51,9 @@ const SignUp = () => {
             });
 
             if (!response.ok) {
-                throw new Error('Sign up failed');
+                const data = await response.json();
+                setSignupError(data.message);
+                return;
             }
 
             setSignupSuccess(true);
@@ -68,6 +86,8 @@ const SignUp = () => {
                     )}
                     <form onSubmit={handleSignUp}>
                         <center>
+                            <input name="username" placeholder="Username" className='input form-control form_width' value={username} onChange={(e) => setUsername(e.target.value)} />
+                            <br />
                             <input name="email" placeholder="Email" className='input form-control form_width' value={email} onChange={(e) => setEmail(e.target.value)} />
                             <br />
                             <input name="password" placeholder="Password" className='input form-control form_width' type="password" value={password} onChange={(e) => setPassword(e.target.value)} />

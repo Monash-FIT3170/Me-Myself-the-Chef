@@ -50,4 +50,42 @@ router.post('/', async (req, res) => {
     }
 });
 
+// Update thumbsUp for a specific comment by commentId
+router.post('/:commentId/thumbs-up', async (req, res) => {
+    try {
+        const { commentId } = req.params;
+
+        // Find the specific comment based on commentId
+        const comment = await Comment.findById(commentId);
+        if (!comment) {
+            return res.status(404).json({ message: 'Comment not found' });
+        }
+
+        comment.thumbsUp += 1;  
+        await comment.save();
+        res.json(comment);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+router.post('/:commentId/thumbs-down', async (req, res) => {
+    try {
+        const { commentId } = req.params;
+
+        // Find the specific comment based on commentId
+        const comment = await Comment.findById(commentId);
+        if (!comment) {
+            return res.status(404).json({ message: 'Comment not found' });
+        }
+
+        comment.thumbsDown += 1;  
+        await comment.save();
+        res.json(comment);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
 module.exports = router;

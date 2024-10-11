@@ -21,7 +21,7 @@ const Login = () => {
         e.preventDefault();
 
         const userData = {
-            username: email,
+            email: email,
             password: password
         };
 
