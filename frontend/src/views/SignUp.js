@@ -21,6 +21,20 @@ const SignUp = () => {
     const handleSignUp = async (e) => {
         e.preventDefault();
 
+        // Basic validation before sending to backend
+        if (username.trim() === "") {
+            setSignupError("Username cannot be empty.");
+            return;
+        }
+        if (email.trim() === "") {
+            setSignupError("Email cannot be empty.");
+            return;
+        }
+        if (password.trim() === "") {
+            setSignupError("Password cannot be empty.");
+            return;
+        }
+
         const userData = {
             username: username,
             email: email,
@@ -37,7 +51,9 @@ const SignUp = () => {
             });
 
             if (!response.ok) {
-                throw new Error('Sign up failed');
+                const data = await response.json();
+                setSignupError(data.message);
+                return;
             }
 
             setSignupSuccess(true);
