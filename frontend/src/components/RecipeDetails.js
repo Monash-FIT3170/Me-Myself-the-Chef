@@ -50,7 +50,7 @@ function RecipeDetails({
 					},
 				})
 				const json = await response.json()
-				setSaved(json.includes(id))
+				setSaved(json.includes(id.toString()))
 				setSavedRecipes(json)
 			} catch (error) {
 				console.error(error);
@@ -63,15 +63,16 @@ function RecipeDetails({
 	}, []);
 
 	const saveRecipe = async (event) => {
-		if (savedRecipes.includes(id)) {
-			return  // As the user has already saved this recipe
-		} else if (!id) {
+		if (!id) {
 			// lack of id means the recipe cannot be saved
 			alert("Due to an error this Recipe cannot be saved")
 			return
 		}
+		if (savedRecipes.includes(id.toString())) {
+			return  // As the user has already saved this recipe
+		}
 		// Add the new recipe to the list of saved recipes
-		const updatedObj = [...savedRecipes, id]
+		const updatedObj = [...savedRecipes, id.toString()]
 		// Send updated list back to backend
 		const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/updateSavedRecipes`, {
 			method: 'POST',
@@ -91,11 +92,11 @@ function RecipeDetails({
 	}
 
 	const unsaveRecipe = async (event) => {
-		if (!savedRecipes.includes(id)) {
+		if (!savedRecipes.includes(id.toString())) {
 			return;  // As the user never saved this recipe
 		}
 		// Remove the ID from the array
-		const updatedObj = savedRecipes.filter(recipeId => recipeId !== id);
+		const updatedObj = savedRecipes.filter(recipeId => recipeId !== id.toString());
 		// Send updated list back to backend
 		const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/updateSavedRecipes`, {
 			method: 'POST',
