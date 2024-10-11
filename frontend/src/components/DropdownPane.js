@@ -26,7 +26,7 @@ function DropdownPane({ prepTimeList, prepTime, updatePrepTime, cuisineList, upd
 
                     <div className='col preference-options'>
                         <select name='prep-time' id='prep-time' className="form-select form-select-sm" value={prepTime} onChange={updatePrepTime}>
-                            {prepTimeList.map((prepTime) => (
+                            {prepTimeList && prepTimeList.map((prepTime) => (
                                 <option key={prepTime.id} value={prepTime.value}>{prepTime.label}</option>
                             ))}
                         </select>
@@ -45,7 +45,7 @@ function DropdownPane({ prepTimeList, prepTime, updatePrepTime, cuisineList, upd
                         <div className="dropdown">
                             <button className="cuisine_select btn btn-light .btn-sm">Select Cuisine</button>
                             <div className="dropdown-content">
-                                {cuisineList.map((cuisine) => (
+                                {cuisineList && cuisineList.map((cuisine) => (
                                     <label key={cuisine.id} className="cuisine_select">
                                         <input type="checkbox" name="cuisines" className="cuisine_select" style={{ marginRight: "10px" }}
                                             id={cuisine.id} value={cuisine.value}
