@@ -18,8 +18,8 @@ function IngredientsRecipePane({ ingredientList, disabledIngredients }) {
                 {/* <!-- Ingredients--> */}
                 <div className="row">
 
-                    {ingredientList.length === 0 && <div style={{textAlign: "center"}}>No Ingredients</div>}
-                    {ingredientList.map(ingredient => {
+                    {!ingredientList && <div style={{textAlign: "center"}}>No Ingredients</div>}
+                    {ingredientList && ingredientList.map(ingredient => {
                     return (
                         <IngredientRecipe
                         {...ingredient}
@@ -36,8 +36,8 @@ function IngredientsRecipePane({ ingredientList, disabledIngredients }) {
                 </div>
                 <div className="row">
                     <div>
-                        {disabledIngredients.length === 0 && <div style={{textAlign: "center"}}>No Ingredients</div>}
-                            {disabledIngredients.map(ingredient => {
+                        {!disabledIngredients && <div style={{textAlign: "center"}}>No Ingredients</div>}
+                            {disabledIngredients && disabledIngredients.map(ingredient => {
                             return (
                                 <IngredientRecipe
                                 {...ingredient}

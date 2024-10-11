@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
+import { marked } from "marked"
 
 // CHATBOT STUFF
 function Chatbot() { 
@@ -276,8 +277,9 @@ function Chatbot() {
       } else {
         // update the chatbot history
         chatbotHistory = botResponse.history
+        botResponse.message = marked(botResponse.message).replace(/<p>/g, '').replace(/<\/p>/g, '').trim();
         // Add the bot response to the messages array
-        setMessages(prevMessages => [...prevMessages, { role: 'bot', text: botResponse.message }]);
+        setMessages(prevMessages => [...prevMessages, { role: 'bot', text: botResponse.message}]);
       }
       // Clear the input field
       setInput('');
@@ -357,7 +359,7 @@ function Chatbot() {
               {messages.map((message, index) => (
                 <div key={index} className="message" style={chatbotStyles.message}>
                   {message.role === 'bot' ? (
-                    <div className="bot-message" style={chatbotStyles.botMessage}>{message.text}</div>
+                    <div className="bot-message" style={chatbotStyles.botMessage} dangerouslySetInnerHTML={{__html: message.text}}></div>
                   ) : message.role === 'error' ? (
                     <div className="error-message" style={chatbotStyles.errorMessage}>{message.text}</div>
                   ) : (

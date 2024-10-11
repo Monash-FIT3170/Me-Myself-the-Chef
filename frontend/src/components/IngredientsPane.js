@@ -31,7 +31,7 @@ function IngredientsPane({ ingredientList, deleteIngredient, disabledIngredients
 
                 </div>
                 <div className="row pt-5 text-center">
-                    <h5>Disabled Ingredients</h5>
+                    <h5>Excluded Ingredients</h5>
                     
                     <div className="horiz_line"></div>
                 </div>

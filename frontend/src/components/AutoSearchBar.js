@@ -1031,10 +1031,11 @@ function SearchBar({ includeIngredients, onIngredientSearch }) {
     <div className="search-bar-container">
       <ReactSearchAutocomplete
         items={items}
-        placeholder={includeIngredients ? "Enter ingredient to include ..." : "Enter ingredient to disable ..."}
+        placeholder={includeIngredients ? "Enter ingredient to include ..." : "Enter ingredient to exclude ..."}
         onSearch={handleOnSearch}
         onHover={handleOnHover}
         onSelect={handleOnSelect}
+        styling={{ zIndex: 1000 }}
       />
     </div>
   );

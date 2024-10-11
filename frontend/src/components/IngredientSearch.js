@@ -96,10 +96,9 @@ function IngredientSearch({ addIngredient, addDisabledIngredient }) {
                             - Tutorial: https://www.dhiwise.com/post/how-to-build-react-search-bar-with-suggestions
                             - Examples: https://www.npmjs.com/package/react-search-autocomplete
                         --> */}
-
                         <Dropdown/>
-
-                        <button className="change-button-2" onClick={changeIngredientsToAdd}>{includeIngredients ? 'Add ingredients to disable' : 'Add ingredients to include'}</button>
+                        
+                        <button type="button" class="btn btn-light btn-lg" id="ingredient-button" onClick={changeIngredientsToAdd}>{includeIngredients ? 'Add Ingredients to Exclude' : 'Add Ingredients to Include'}</button>
                         
                         {/* <!-- Generate recipe button --> */}
                         <Link className="react_link" to="/recipe_recommendation">
