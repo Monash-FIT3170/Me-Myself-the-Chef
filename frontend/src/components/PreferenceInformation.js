@@ -1,4 +1,4 @@
-import { React, useContext } from 'react';
+import { useEffect, React, useContext } from 'react';
 import AllergyPreference from './AllergyPreference';
 import DietaryPreference from './DietaryPreference';
 import NutritionPreference from './NutritionPreference';
@@ -8,6 +8,18 @@ import { PreferenceContext } from '../context/PreferenceContext';
 
 export function DietaryInformation() {
     const { updatePreferences, alertMessage, alertType, setAlertMessage } = useContext(PreferenceContext);
+
+    // Use useEffect to set a timeout to automatically clear the alert
+    useEffect(() => {
+        if (alertMessage) {
+            const timer = setTimeout(() => {
+                setAlertMessage('');
+            }, 5000); // 5 seconds
+
+            // Clean up the timeout if the component is unmounted or if alertMessage changes
+            return () => clearTimeout(timer);
+        }
+    }, [alertMessage, setAlertMessage]);
 
     return (
         <div className="row">
