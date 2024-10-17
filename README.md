@@ -1,12 +1,21 @@
 # Me-Myself-the-Chef
 
 This document is intended to serve as an entry point to understand the project supporting the Me Myself the Chef website. It describes:
-* How to initialise and run the web application
+* How to initialise and run the web application locally 
+* How to access the deployed web application 
 * The purposes and files contained in each major directory within the code base
 * How the frontend and backend servers are structured
 * Files not committed to the project repository
+* The project versioning strategy 
+* The project pull request strategy
 
-## Initialisation Steps
+Github repository link: https://github.com/Monash-FIT3170/Me-Myself-the-Chef 
+
+## Local Running
+
+To run the web app on a local machine, follow the steps below. 
+
+### Initialisation Steps
 
 1.	Install Node.js on the host computer
 2.	Obtain a valid Spoonacular API key
@@ -23,13 +32,29 @@ GEMINI_API_KEY =<YOUR_GEMINI_API_KEY>
 ```
 8.	cd to the `frontend` directory
 9.	Run `npm install` to install frontend dependencies
-
-## Running Steps
+10. In the .env file in the `frontend` directory, replace the first line with: 
+```
+REACT_APP_BACKEND_URL=https://localhost:8080
+```
+### Running Steps
 1.	cd to the `backend` directory in the command line
 2.	Run `npm run dev`
 3.	cd to the `frontend` directory
 4.	Run `npm start`
 5.	The web app should be launched in your browser. If not, visit `http://localhost:3000/<desired_route>`
+
+## Deployment 
+
+The app is currently deployed on cloud platforms on free tier plans. 
+
+The front end is deployed using Netlify and can be accessed through this link: https://celebrated-axolotl-0c9cf8.netlify.app/ 
+
+The back end is deployed using Render and can be reached through this link: https://me-myself-the-chef.onrender.com 
+
+As the back end server is deployed on a Render free plan, the server will go into a sleep mode if the back end is not contacted for a certain amount of time, and the server will take approximately 1 minute to spin up from inactivity. So, using any functionality of the app relying on the backend immediately from an inactive state will likely result in errors. Please give the app some time after the initial page load before use. 
+
+The deployment is currently configured to deploy the servers from the main branch automatically after an update. To obtain the access credentials to the Netlify and Render accounts for this app, please contact the team by sending an email to chef@memyselfthechef.eml.monster . This email will remain active for up to a year after project completion. 
+ 
 
 ## Directory Structure
 
@@ -48,9 +73,9 @@ Below is the main directory structure of the main branch of the repository. Desc
     * public (resource directory accessible to React components during run time)
         * index.html (base HTML file for React to root from)
         * static (static web resources to access)
-•	fonts
-•	html_pages
-•	images
+    	* fonts
+        * html_pages
+        * images
     * src (React JSX systems)
         * components (React components used to make pages)
         * context (React context system to share information between pages)
@@ -60,7 +85,8 @@ Below is the main directory structure of the main branch of the repository. Desc
     * App.js (base React app component to display the web pages in frontend/src/views via routing)
     * index.js (loads the base React app into the index.html template)
     * package.json (frontend project metadata and dependencies)
-    * packge-lock.json (locks versions of frontend dependencies)
+    * package-lock.json (locks versions of frontend dependencies)
+    * .env (specifies backend endpoint URL) 
 
 
 ## Project Architecture Overview
@@ -95,6 +121,18 @@ GEMINI_API_KEY=<YOUR_API_KEY>
 ```
 See the initialisation instructions in this document for how to add these files/directories to your local repository.
 
+## Versioning Strategy 
+
+The versioning strategy for Me Myself the Chef is based on semantic versioning, which is a system where a number with three parts is used. The first number is the major version, the second is the minor version, and the third is for patches. The major number should be increased when making a very significant change, the minor number should be increased when making a smaller change, and patch is for very small changes such as fixing bugs. 
+
+We will start at version 1.0.0 when Milestone 4 is completed. 
+
+## Pull Request Strategy 
+
+As no further work on this project is currently planned by the team, pull requests made to work on the Me Myself the Chef app will not be monitored. 
+
+However, it is possible for anyone to fork the project and make a copy of the app for their own purposes. To do this, go to the project code repository, and click the "Fork" button near the top right of the page. For further information, please read the Maintenance Plan. 
+
 
 ## Team Members
 
@@ -103,7 +141,6 @@ See the initialisation instructions in this document for how to add these files/
 - Shekah Alayadhi (32248407): shekah0023@student.monash.edu
 - Yuhan Zhou (31468748): yzho0151@student.monash.edu
 - Shekah Alayadhi (32248407): sala0023@student.monash.edu
-- Yuhan Zhou (31468748): yzho0151@student.monash.edu
 - Emily Jap (29680433): emil0009@student.monash.edu
 - Vincent Ha (32518714): vhaa0001@student.monash.edu
 - Lachlan Lu (33107327): lluu0029@student.monash.edu
